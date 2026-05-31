@@ -16,6 +16,9 @@ export function Footer() {
           {/* Brand */}
           <div>
             <div className="text-3xl font-extrabold display">3TDream</div>
+            <p className="mt-1 text-sm font-semibold text-paper/80">
+              by Michael Shigrin Sokol
+            </p>
             <p
               className="mt-2 text-sm text-paper/60"
               style={{ fontFamily: "var(--font-mono)" }}

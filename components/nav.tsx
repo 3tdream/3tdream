@@ -29,8 +29,14 @@ export function Nav() {
             >
               3
             </span>
-            <span className="text-lg font-extrabold tracking-tight display">
-              3TDream
+            <span className="flex flex-col leading-none">
+              <span className="text-lg font-extrabold tracking-tight display">3TDream</span>
+              <span
+                className="hidden sm:block text-[10px] text-muted tracking-wide"
+                style={{ fontFamily: "var(--font-mono)" }}
+              >
+                by Michael Shigrin Sokol
+              </span>
             </span>
           </Link>
 
