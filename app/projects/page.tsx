@@ -17,7 +17,7 @@ export default function ProjectsPage() {
     { id: "wip", label: L("В разработке", "In progress", "בפיתוח") },
   ];
 
-  const visible = PROJECTS.filter((p) => filter === "all" || p.status === filter);
+  const visible = PROJECTS.filter((p) => filter === "all" || p.statuses.includes(filter));
 
   return (
     <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-14 sm:py-20">

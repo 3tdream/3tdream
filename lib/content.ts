@@ -198,7 +198,7 @@ export type Project = {
   slug: string;
   title: string;
   year: string;
-  status: ProjectStatus;
+  statuses: ProjectStatus[]; // one or both of "live" / "wip"
   tagline: Localized;
   description: Localized;
   role: Localized;
@@ -212,8 +212,9 @@ export const PROJECTS: Project[] = [
     slug: "mission-control",
     title: "Mission Control",
     year: "2026",
-    status: "wip",
+    statuses: ["live", "wip"],
     accent: true,
+    url: "https://mc-landing-swart.vercel.app",
     tagline: L(
       "Команда AI-агентов, которая превращает бриф в задеплоенный код.",
       "A team of AI agents that turns a brief into shipped code.",
@@ -228,10 +229,11 @@ export const PROJECTS: Project[] = [
     tags: ["AI", "Multi-agent", "Next.js", "Pipeline"],
   },
   {
-    slug: "master-salon",
-    title: "Master Salon",
+    slug: "master-daily",
+    title: "Master Daily",
     year: "2026",
-    status: "live",
+    statuses: ["live", "wip"],
+    url: "https://master-daily.vercel.app",
     tagline: L(
       "Система записи для салона в Израиле — чат, Telegram, Google Calendar.",
       "A booking system for a salon in Israel — chat, Telegram, Google Calendar.",
@@ -249,7 +251,7 @@ export const PROJECTS: Project[] = [
     slug: "remi",
     title: "Remi",
     year: "2026",
-    status: "live",
+    statuses: ["wip"],
     tagline: L(
       "Голосовой компаньон для людей 65+ в Израиле.",
       "A voice companion for people 65+ in Israel.",
@@ -268,7 +270,8 @@ export const PROJECTS: Project[] = [
     slug: "zdorovdv",
     title: "ZdorovDV",
     year: "2025",
-    status: "live",
+    statuses: ["live", "wip"],
+    url: "https://zdorovdv.vercel.app",
     tagline: L(
       "Сайт медицинской клиники с записью и AI-чатом.",
       "A medical clinic site with booking and an AI chat.",
@@ -286,7 +289,8 @@ export const PROJECTS: Project[] = [
     slug: "uxi-course",
     title: "UXI Course",
     year: "2025",
-    status: "live",
+    statuses: ["live", "wip"],
+    url: "https://uxi-entry-course.vercel.app",
     tagline: L(
       "Платформа живого курса по UX/UI — 13 встреч.",
       "A live UX/UI course platform — 13 meetings.",
@@ -304,7 +308,8 @@ export const PROJECTS: Project[] = [
     slug: "cv-creator",
     title: "CV Creator",
     year: "2025",
-    status: "live",
+    statuses: ["wip"],
+    url: "https://cv-creator.vercel.app",
     tagline: L(
       "AI-конструктор резюме с публикацией на хостинге.",
       "An AI résumé builder that publishes to a hosted page.",

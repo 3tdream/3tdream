@@ -30,7 +30,11 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         >
           {num}
         </span>
-        <StatusBadge status={project.status} />
+        <div className="flex flex-wrap items-center justify-end gap-1.5">
+          {project.statuses.map((s) => (
+            <StatusBadge key={s} status={s} />
+          ))}
+        </div>
       </div>
 
       {/* title */}
