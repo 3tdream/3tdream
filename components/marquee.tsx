@@ -3,7 +3,10 @@
 export function Marquee({ items }: { items: string[] }) {
   const row = [...items, ...items];
   return (
-    <div className="overflow-hidden border-y-2 border-ink bg-accent text-paper select-none">
+    <div
+      aria-hidden
+      className="overflow-hidden border-y-2 border-ink bg-accent text-paper select-none"
+    >
       <div className="flex w-max animate-marquee py-2.5">
         {row.map((item, i) => (
           <span

@@ -19,18 +19,7 @@ const I18nContext = createContext<Ctx | null>(null);
 
 const STORAGE_KEY = "3td-lang";
 
-// Cast around a known monorepo @types/react version skew (18 vs 19) that
-// otherwise trips Context.Provider's JSX element-type check.
-const Provider = I18nContext.Provider as unknown as React.FC<{
-  value: Ctx;
-  children?: React.ReactNode;
-}>;
-
-export function I18nProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}): React.JSX.Element {
+export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Lang>("ru");
 
   // hydrate from storage / browser once on mount
@@ -65,9 +54,13 @@ export function I18nProvider({
     }
   }, []);
 
-  const t = useCallback((entry: Localized) => entry[lang] ?? entry.en, [lang]);
+  const t = useCallback((entry: Localized) => entry[lang] || entry.en, [lang]);
 
-  return <Provider value={{ lang, dir, setLang, t }}>{children}</Provider>;
+  return (
+    <I18nContext.Provider value={{ lang, dir, setLang, t }}>
+      {children}
+    </I18nContext.Provider>
+  );
 }
 
 export function useI18n() {

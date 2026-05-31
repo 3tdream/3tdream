@@ -10,11 +10,9 @@
   --color-paper-alt: #e8e5db;
   --color-ink: #0c0c0c;
   --color-ink-soft: #2b2b2b;
-  --color-muted: #6b6b63;
+  --color-muted: #5e5e57; /* darkened to clear WCAG AA (4.5:1) on paper for small text */
   --color-accent: #2540ff;
-  --color-accent-ink: #ffffff;
   --color-lime: #d8ff3e;
-  --color-line: #0c0c0c;
 }
 
 html {
@@ -51,17 +49,11 @@ body {
 .hard-shadow-sm {
   box-shadow: 4px 4px 0 0 var(--color-ink);
 }
-.hard-shadow-accent {
-  box-shadow: 6px 6px 0 0 var(--color-accent);
-}
 [dir="rtl"] .hard-shadow {
   box-shadow: -6px 6px 0 0 var(--color-ink);
 }
 [dir="rtl"] .hard-shadow-sm {
   box-shadow: -4px 4px 0 0 var(--color-ink);
-}
-[dir="rtl"] .hard-shadow-accent {
-  box-shadow: -6px 6px 0 0 var(--color-accent);
 }
 
 /* Hover-only hard shadows (custom classes can't take Tailwind's hover: prefix) */
@@ -125,4 +117,25 @@ body {
 }
 .link-reveal:hover {
   background-size: 100% 2px;
+}
+/* RTL: grow the underline from the inline-end (right) edge */
+[dir="rtl"] .link-reveal {
+  background-position: 100% 100%;
+}
+
+/* Respect reduced-motion: stop the marquee + smooth-scroll, soften transitions */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-marquee {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

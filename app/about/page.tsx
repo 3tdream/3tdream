@@ -107,7 +107,7 @@ export default function AboutPage() {
       <section className="border-t-2 border-ink bg-accent text-paper">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 sm:py-20 text-center">
           <h2 className="display text-[clamp(2.2rem,7vw,5rem)] uppercase">
-            {t(L("Поработаем вместе?", "Let's work together?", "?נעבוד יחד"))}
+            {t(L("Поработаем вместе?", "Let's work together?", "נעבוד יחד?"))}
           </h2>
           <Link
             href="/contact"

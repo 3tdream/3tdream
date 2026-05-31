@@ -41,7 +41,7 @@ export function Nav() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav aria-label="Primary" className="hidden md:flex items-center gap-1">
             {NAV.map((item) => {
               const active = isActive(item.href);
               return (
@@ -76,6 +76,7 @@ export function Nav() {
               onClick={() => setOpen((v) => !v)}
               aria-label="Menu"
               aria-expanded={open}
+              aria-controls="mobile-nav"
               className="grid place-items-center w-10 h-10 hard-border bg-paper"
             >
               {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -88,6 +89,8 @@ export function Nav() {
       <AnimatePresence>
         {open && (
           <motion.nav
+            id="mobile-nav"
+            aria-label="Mobile"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
