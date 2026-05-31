@@ -139,7 +139,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 sm:py-24">
           <div className="label text-accent mb-2">/ 03 — {t(L("Услуги", "Services", "שירותים"))}</div>
           <h2 className="text-3xl sm:text-5xl font-extrabold display mb-10 max-w-3xl">
-            {t(L("Беру заказ целиком — от идеи до живого продукта", "I take the whole thing — idea to a live product", "לוקח את הכל — מרעיון למוצר חי"))}
+            {t(L("Ведём проект целиком — от идеи до живого продукта", "We oversee the whole project — idea to a live one", "מלווים את הפרויקט מקצה לקצה — מרעיון למוצר חי"))}
           </h2>
           <div className="grid gap-px bg-ink hard-border md:grid-cols-2">
             {SERVICES.map((s, i) => (
