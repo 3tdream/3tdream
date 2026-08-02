@@ -32,7 +32,7 @@ export default function AboutPage() {
       {/* hero */}
       <section className="grid-paper border-b-2 border-ink">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-14 sm:py-20">
-          <div className="label text-accent mb-3">/ 03 — {t(L("Обо мне", "About", "אודות"))}</div>
+          <div className="label text-accent mb-3">/ 04 — {t(L("Обо мне", "About", "אודות"))}</div>
           <h1 className="display text-[clamp(2.2rem,7vw,5.5rem)] uppercase max-w-5xl">
             {t(PROFILE.headline)}
           </h1>

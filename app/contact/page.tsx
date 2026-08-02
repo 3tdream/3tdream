@@ -14,7 +14,7 @@ export default function ContactPage() {
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           {/* left */}
           <div className="lg:col-span-7">
-            <div className="label text-accent mb-3">/ 04 — {t(L("Контакт", "Contact", "צור קשר"))}</div>
+            <div className="label text-accent mb-3">/ 05 — {t(L("Контакт", "Contact", "צור קשר"))}</div>
             <h1 className="display text-[clamp(2.5rem,10vw,8rem)] uppercase">
               {t(L("Поговорим", "Let's talk", "בואו נדבר"))}
             </h1>

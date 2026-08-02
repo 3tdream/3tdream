@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, GraduationCap } from "lucide-react";
 import { useI18n, L } from "@/lib/i18n";
-import { BRAND, STATS, SERVICES, PROJECTS } from "@/lib/content";
+import { BRAND, STATS, SERVICES, PROJECTS, COURSES } from "@/lib/content";
 import { Marquee } from "@/components/marquee";
 import { ProjectCard } from "@/components/project-card";
 
@@ -154,6 +154,62 @@ export default function HomePage() {
                 <p className="text-sm text-muted leading-relaxed">{t(s.desc)}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* COURSES teaser */}
+      <section className="border-t-2 border-ink">
+        <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 sm:py-24">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="lg:col-span-7">
+              <div className="label text-accent mb-2">/ 04 — {t(L("Курсы", "Courses", "קורסים"))}</div>
+              <h2 className="text-3xl sm:text-5xl font-extrabold display max-w-2xl">
+                {t(L("Не только строю — ещё и учу", "I don't just build — I teach", "לא רק בונה — גם מלמד"))}
+              </h2>
+              <p className="mt-4 max-w-xl text-base text-ink-soft">
+                {t(
+                  L(
+                    "Живой курс UX/UI с нуля: практика в Figma, разбор работ и реальный кейс в портфолио.",
+                    "A live UX/UI course from scratch: hands-on Figma, live critique and a real portfolio case.",
+                    "קורס UX/UI חי מאפס: תרגול ב-Figma, ביקורת חיה וקייס אמיתי לתיק."
+                  )
+                )}
+              </p>
+              <Link
+                href="/courses"
+                className="group mt-6 inline-flex items-center gap-2 bg-ink text-paper px-6 py-3.5 font-bold hard-shadow hover:bg-accent transition-colors"
+              >
+                {t(L("Все курсы", "See courses", "לכל הקורסים"))}
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform rtl:rotate-180" />
+              </Link>
+            </div>
+
+            {/* mini course card */}
+            <div className="lg:col-span-5">
+              <Link href="/courses" className="group block bg-paper hard-border p-6 sm:p-7 hover-shadow hover:-translate-y-1 transition-transform">
+                <div className="flex items-center justify-between">
+                  <span className="grid place-items-center w-11 h-11 bg-ink text-paper">
+                    <GraduationCap className="w-6 h-6" />
+                  </span>
+                  <span className="label text-accent">{t(COURSES[0].level)}</span>
+                </div>
+                <h3 className="mt-5 text-2xl font-extrabold display">{COURSES[0].title}</h3>
+                <p className="mt-2 text-sm text-muted leading-relaxed">
+                  {t(COURSES[0].tagline)}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {COURSES[0].meta.map((m, mi) => (
+                    <span
+                      key={mi}
+                      className="px-2 py-0.5 text-[11px] font-medium bg-paper-alt text-ink-soft border border-ink/15"
+                    >
+                      {t(m)}
+                    </span>
+                  ))}
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

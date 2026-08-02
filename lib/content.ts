@@ -124,8 +124,9 @@ export const TIMELINE: TimelineEntry[] = [
 export const NAV: { href: string; label: Localized; index: string }[] = [
   { href: "/", label: L("Главная", "Home", "בית"), index: "01" },
   { href: "/projects", label: L("Проекты", "Work", "עבודות"), index: "02" },
-  { href: "/about", label: L("Обо мне", "About", "אודות"), index: "03" },
-  { href: "/contact", label: L("Контакт", "Contact", "צור קשר"), index: "04" },
+  { href: "/courses", label: L("Курсы", "Courses", "קורסים"), index: "03" },
+  { href: "/about", label: L("Обо мне", "About", "אודות"), index: "04" },
+  { href: "/contact", label: L("Контакт", "Contact", "צור קשר"), index: "05" },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -322,6 +323,53 @@ export const PROJECTS: Project[] = [
     ),
     role: L("Продукт и интеграция", "Product & integration", "מוצר ואינטגרציה"),
     tags: ["AI", "Generator", "Next.js"],
+  },
+];
+
+/* ------------------------------------------------------------------ */
+/* COURSES                                                             */
+/* ------------------------------------------------------------------ */
+
+export type Course = {
+  slug: string;
+  title: string;
+  level: Localized;
+  tagline: Localized;
+  description: Localized;
+  meta: Localized[]; // short bullets (format, length, language…)
+  audience: Localized;
+  url: string;
+  cta: Localized;
+};
+
+export const COURSES: Course[] = [
+  {
+    slug: "uxi",
+    title: "UXI — UX/UI",
+    level: L("С нуля · для начинающих", "From scratch · beginners", "מאפס · למתחילים"),
+    tagline: L(
+      "Живой курс UX/UI дизайна — от первого экрана до готового кейса.",
+      "A live UX/UI design course — from your first screen to a finished case.",
+      "קורס עיצוב UX/UI חי — מהמסך הראשון ועד קייס מוגמר."
+    ),
+    description: L(
+      "Авторский курс, где я веду с нуля к профессии дизайнера: теория маленькими порциями, практика в Figma на каждой встрече и живой разбор работ. К концу — реальный проект в портфолио.",
+      "An author-led course where I take you from zero to designer: theory in small doses, hands-on Figma every session, and live critique of your work. You finish with a real portfolio project.",
+      "קורס אישי שבו אני מלווה מאפס למקצוע: תיאוריה במנות קטנות, תרגול ב-Figma בכל מפגש וביקורת חיה על העבודות. בסוף — פרויקט אמיתי לתיק."
+    ),
+    meta: [
+      L("13 живых встреч", "13 live meetings", "13 מפגשים חיים"),
+      L("Практика в Figma", "Hands-on Figma", "תרגול ב-Figma"),
+      L("Разбор домашних заданий", "Homework critique", "בדיקת שיעורי בית"),
+      L("Кейс в портфолио", "A portfolio case", "קייס לתיק עבודות"),
+    ],
+    audience: L(
+      "Для тех, кто начинает в дизайне с нуля или переходит в UX/UI.",
+      "For anyone starting design from scratch or switching into UX/UI.",
+      "למי שמתחיל בעיצוב מאפס או עובר ל-UX/UI."
+    ),
+    url: "https://uxi-entry-course.vercel.app/",
+    cta: L("Открыть курс", "Open the course", "לפתיחת הקורס"),
   },
 ];
 
