@@ -403,3 +403,55 @@ export const CONTACT_CTA = L(
   "Got a project? Tell me in two lines — I reply fast.",
   "יש פרויקט? ספרו בשתי שורות — אני עונה מהר."
 );
+
+/* ------------------------------------------------------------------ */
+/* DESIGN  — the craft side (links out to the full Behance gallery)    */
+/* ------------------------------------------------------------------ */
+
+export type Discipline = {
+  id: string;
+  title: Localized;
+  credit: string; // where it was honed
+  desc: Localized;
+  tags: string[];
+};
+
+export const DESIGN = {
+  behance: "https://www.behance.net/3TDream",
+  creatives: "https://creatives.co.il/3tdream/",
+  disciplines: [
+    {
+      id: "brand",
+      title: L("Бренд и реклама", "Brand & advertising", "מיתוג ופרסום"),
+      credit: "McCann Erickson · FIRMA",
+      desc: L(
+        "Айдентика и рекламная графика для крупных кампаний.",
+        "Identity and advertising graphics for major campaigns.",
+        "זהות וגרפיקת פרסום לקמפיינים גדולים."
+      ),
+      tags: ["Brand", "Identity", "Advertising"],
+    },
+    {
+      id: "product",
+      title: L("Продуктовый UX/UI", "Product UX/UI", "UX/UI מוצרי"),
+      credit: "Figma · 3TDream",
+      desc: L(
+        "Интерфейсы, прототипы и дизайн-системы для веб-продуктов.",
+        "Interfaces, prototypes and design systems for web products.",
+        "ממשקים, אבות-טיפוס ומערכות עיצוב למוצרי web."
+      ),
+      tags: ["UX", "UI", "Figma", "Design systems"],
+    },
+    {
+      id: "motion",
+      title: L("3D и моушн", "3D & motion", "תלת-ממד ומושן"),
+      credit: "IAC · After Effects · Three.js",
+      desc: L(
+        "Анимация, 3D и движение — от рекламных роликов до вебовых сцен.",
+        "Animation, 3D and motion — from ad spots to web scenes.",
+        "אנימציה, תלת-ממד ותנועה — מפרסומות ועד סצנות web."
+      ),
+      tags: ["3D", "Motion", "Animation"],
+    },
+  ] as Discipline[],
+};

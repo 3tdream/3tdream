@@ -2,11 +2,17 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, GraduationCap } from "lucide-react";
+import { ArrowRight, ArrowUpRight, GraduationCap, Palette, PenTool, Boxes } from "lucide-react";
 import { useI18n, L } from "@/lib/i18n";
-import { BRAND, STATS, SERVICES, PROJECTS, COURSES } from "@/lib/content";
+import { BRAND, STATS, SERVICES, PROJECTS, COURSES, DESIGN } from "@/lib/content";
 import { Marquee } from "@/components/marquee";
 import { ProjectCard } from "@/components/project-card";
+
+const DISC_ICONS: Record<string, React.ElementType> = {
+  brand: Palette,
+  product: PenTool,
+  motion: Boxes,
+};
 
 export default function HomePage() {
   const { t } = useI18n();
@@ -134,10 +140,73 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* DESIGN */}
+      <section className="border-t-2 border-ink">
+        <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 sm:py-24">
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
+            <div>
+              <div className="label text-accent mb-2">/ 03 — {t(L("Дизайн", "Design", "עיצוב"))}</div>
+              <h2 className="text-3xl sm:text-5xl font-extrabold display max-w-2xl">
+                {t(L("Дизайн — моя первая профессия", "Design is my first craft", "עיצוב הוא המקצוע הראשון שלי"))}
+              </h2>
+              <p className="mt-4 max-w-xl text-base text-ink-soft">
+                {t(
+                  L(
+                    "10+ лет в визуале: бренд и реклама, продуктовый UX/UI, 3D и моушн. Продукты я не просто кодирую — я их проектирую.",
+                    "10+ years in the visual craft: brand & advertising, product UX/UI, 3D & motion. I don't just code products — I design them.",
+                    "10+ שנים בקראפט החזותי: מיתוג ופרסום, UX/UI מוצרי, תלת-ממד ומושן. אני לא רק מקודד מוצרים — אני מעצב אותם."
+                  )
+                )}
+              </p>
+            </div>
+            <a
+              href={DESIGN.behance}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-reveal inline-flex items-center gap-1.5 font-bold text-ink"
+            >
+              {t(L("Портфолио на Behance", "Portfolio on Behance", "הפורטפוליו ב-Behance"))}
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+          </div>
+
+          <div className="grid gap-px bg-ink hard-border md:grid-cols-3">
+            {DESIGN.disciplines.map((d) => {
+              const Icon = DISC_ICONS[d.id] ?? Palette;
+              return (
+                <div key={d.id} className="bg-paper p-7 sm:p-8 flex flex-col">
+                  <span className="grid place-items-center w-11 h-11 bg-ink text-paper mb-5">
+                    <Icon className="w-6 h-6" />
+                  </span>
+                  <h3 className="text-xl font-extrabold">{t(d.title)}</h3>
+                  <p
+                    className="mt-1 text-[11px] font-bold uppercase tracking-wider text-accent"
+                    style={{ fontFamily: "var(--font-mono)" }}
+                  >
+                    {d.credit}
+                  </p>
+                  <p className="mt-3 text-sm text-muted leading-relaxed flex-1">{t(d.desc)}</p>
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {d.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-0.5 text-[11px] font-medium bg-paper-alt text-ink-soft border border-ink/15"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* SERVICES */}
       <section className="border-t-2 border-ink bg-paper-alt">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 sm:py-24">
-          <div className="label text-accent mb-2">/ 03 — {t(L("Услуги", "Services", "שירותים"))}</div>
+          <div className="label text-accent mb-2">/ 04 — {t(L("Услуги", "Services", "שירותים"))}</div>
           <h2 className="text-3xl sm:text-5xl font-extrabold display mb-10 max-w-3xl">
             {t(L("Ведём проект целиком — от идеи до живого продукта", "We oversee the whole project — idea to a live one", "מלווים את הפרויקט מקצה לקצה — מרעיון למוצר חי"))}
           </h2>
@@ -163,7 +232,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 sm:py-24">
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <div className="lg:col-span-7">
-              <div className="label text-accent mb-2">/ 04 — {t(L("Курсы", "Courses", "קורסים"))}</div>
+              <div className="label text-accent mb-2">/ 05 — {t(L("Курсы", "Courses", "קורסים"))}</div>
               <h2 className="text-3xl sm:text-5xl font-extrabold display max-w-2xl">
                 {t(L("Не только строю — ещё и учу", "I don't just build — I teach", "לא רק בונה — גם מלמד"))}
               </h2>
