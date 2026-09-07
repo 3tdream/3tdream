@@ -21,9 +21,9 @@ export default function CoursesPage() {
           <p className="mt-4 max-w-2xl text-base sm:text-lg text-ink-soft">
             {t(
               L(
-                "Учу дизайну так же, как строю продукты — на практике и от результата. Ниже — живой курс, куда можно попасть.",
-                "I teach design the way I build products — hands-on and outcome-first. Below is a live course you can join.",
-                "אני מלמד עיצוב כמו שאני בונה מוצרים — בפרקטיקה ומהתוצאה. למטה קורס חי שאפשר להצטרף אליו."
+                "Учу так же, как строю продукты — на практике и от результата. Ниже — живой курс по дизайну и практикум по инженерии.",
+                "I teach the way I build products — hands-on and outcome-first. Below: a live design course, and an engineering one you can read right now.",
+                "אני מלמד כמו שאני בונה מוצרים — בפרקטיקה ומהתוצאה. למטה: קורס עיצוב חי, וקורס הנדסי לקריאה מיידית."
               )
             )}
           </p>
@@ -56,15 +56,25 @@ export default function CoursesPage() {
                 </p>
 
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <a
-                    href={c.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2 bg-ink text-paper px-6 py-3.5 font-bold hard-shadow-sm hover:bg-accent transition-colors"
-                  >
-                    {t(c.cta)}
-                    <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </a>
+                  {c.url.startsWith("/") ? (
+                    <Link
+                      href={c.url}
+                      className="group inline-flex items-center gap-2 bg-ink text-paper px-6 py-3.5 font-bold hard-shadow-sm hover:bg-accent transition-colors"
+                    >
+                      {t(c.cta)}
+                      <ArrowRight className="w-5 h-5 rtl:rotate-180 group-hover:translate-x-0.5 transition-transform" />
+                    </Link>
+                  ) : (
+                    <a
+                      href={c.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-2 bg-ink text-paper px-6 py-3.5 font-bold hard-shadow-sm hover:bg-accent transition-colors"
+                    >
+                      {t(c.cta)}
+                      <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </a>
+                  )}
                   <Link
                     href="/contact"
                     className="inline-flex items-center gap-2 bg-paper text-ink px-6 py-3.5 font-bold hard-border hover-shadow transition-all"

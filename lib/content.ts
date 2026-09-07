@@ -338,6 +338,8 @@ export type Course = {
   description: Localized;
   meta: Localized[]; // short bullets (format, length, language…)
   audience: Localized;
+  /** An internal route ("/courses/...") is rendered as a Link; anything else
+   *  opens in a new tab. The bridge-agent course lives on this site. */
   url: string;
   cta: Localized;
 };
@@ -370,6 +372,34 @@ export const COURSES: Course[] = [
     ),
     url: "https://uxi-entry-course.vercel.app/",
     cta: L("Открыть курс", "Open the course", "לפתיחת הקורס"),
+  },
+  {
+    slug: "bridge-agent",
+    title: "Build a Bridge Agent",
+    level: L("Для инженеров · практикум", "For engineers · hands-on", "למהנדסים · פרקטי"),
+    tagline: L(
+      "Снять числа с экрана программы, к которой нет API — и довести их до своего эндпоинта.",
+      "Read numbers off a desktop application nobody will give you an API for — and get them to your own endpoint.",
+      "לקרוא מספרים ממסך של תוכנה שאין לה API — ולהעביר אותם ל-endpoint שלכם."
+    ),
+    description: L(
+      "Восемь модулей на английском, собранных из системы, которая работает в проде: снимает экран раз в сутки и пережила четырнадцатичасовой обрыв связи, не потеряв ни одного показания. Каждый модуль заканчивается проверкой, которую вы запускаете, а не абзацем «должно работать». Семь модулей из восьми ничего не стоят — платит только чтение экрана, на вашем ключе.",
+      "Eight modules, assembled from a system that runs in production: it reads a screen once a day and survived a fourteen-hour network outage without losing a reading. Every module ends with a check you run, not a paragraph saying it should work. Seven of the eight cost nothing — only reading the screen spends, on your own key.",
+      "שמונה מודולים, מתוך מערכת שרצה בפרודקשן: קוראת מסך פעם ביום ושרדה ניתוק רשת של ארבע-עשרה שעות בלי לאבד קריאה. כל מודול נגמר בבדיקה שאתם מריצים. שבעה מתוך שמונה לא עולים דבר."
+    ),
+    meta: [
+      L("8 модулей + вступление", "8 modules + an opening", "8 מודולים + פתיחה"),
+      L("Песочница с готовыми ответами", "A sandbox with the answers written down", "סביבת תרגול עם התשובות"),
+      L("Проверка в конце каждого модуля", "A check at the end of each module", "בדיקה בסוף כל מודול"),
+      L("~$0.02 за чтение, на своём ключе", "~$0.02 a reading, on your own key", "~$0.02 לקריאה, במפתח שלכם"),
+    ],
+    audience: L(
+      "Для тех, кто пишет код и упёрся в программу без API: Windows, PowerShell, Node.",
+      "For people who write code and have hit an application with no API: Windows, PowerShell, Node.",
+      "למי שכותב קוד ונתקל בתוכנה בלי API: Windows, PowerShell, Node."
+    ),
+    url: "/courses/bridge-agent",
+    cta: L("Читать курс", "Read the course", "לקריאת הקורס"),
   },
 ];
 

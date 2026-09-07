@@ -1,0 +1,17 @@
+{
+  "title": "Build a bridge agent",
+  "tagline": "Read numbers off a desktop application nobody will give you an API for.",
+  "note": "The order, titles and which module spends. Data, not prose, because more than one place renders this course and a second hand-kept list is a second thing to be wrong.",
+  "modules": [
+    { "file": "README.md", "slug": "start", "n": "—", "title": "How this works", "sub": "what you need and what you get", "cost": null },
+    { "file": "00-two-shapes.md", "slug": "two-shapes", "n": "00", "title": "Two shapes: with a receiver, or without", "sub": "vA and vB share every file you write", "cost": "free" },
+    { "file": "01-capture.md", "slug": "capture", "n": "01", "title": "Find the window and capture it", "sub": "title, not process. Maximise. PrintWindow.", "cost": "free" },
+    { "file": "02-the-kit.md", "slug": "the-kit", "n": "02", "title": "The kit: install, run, check", "sub": "five commands for a machine you will never touch", "cost": "free" },
+    { "file": "03-unreliable-network.md", "slug": "unreliable-network", "n": "03", "title": "Survive an unreliable network", "sub": "capture first, send second", "cost": "free" },
+    { "file": "04-machine-identity.md", "slug": "machine-identity", "n": "04", "title": "Give the machine an identity", "sub": "a secret the machine fetches itself", "cost": "free" },
+    { "file": "05-read-the-screen.md", "slug": "read-the-screen", "n": "05", "title": "Read the screen", "sub": "the only module that spends — and how good it is", "cost": "paid" },
+    { "file": "06-decide-what-to-trust.md", "slug": "decide-what-to-trust", "n": "06", "title": "Decide what to trust", "sub": "yesterday is sharper than any range", "cost": "free" },
+    { "file": "07-deliver.md", "slug": "deliver", "n": "07", "title": "Deliver, and mean it", "sub": "their vocabulary, exactly once", "cost": "free" },
+    { "file": "08-operate-it.md", "slug": "operate-it", "n": "08", "title": "Operate it when you are not looking", "sub": "silence, spend caps, the runbook", "cost": "free" }
+  ]
+}
