@@ -5,6 +5,12 @@ touch, and a scheduled task that keeps working after they walk away.
 
 **Model needed:** none. **Cost:** none.
 
+**Before you start:** `install.bat` refuses without a `SERVER` and a way in, so
+the receiver has to exist before this module does. Stand it up now —
+**[docs/deploy.md](../docs/deploy.md)** walks it end to end: database, tables,
+project, environment, smoke test. Running it costs nothing until module 5, and
+it is the same receiver modules 4 and 7 talk to.
+
 ---
 
 ## The situation you are actually designing for
@@ -84,8 +90,11 @@ send you. That is the whole reason it exists.
 
 ## Configuration lives in one file, applied by one command
 
-The operator edits `agent/agent.env` and the two `config/Agent_config.*.txt`
-files. Nothing else.
+The operator copies `agent/target.env.example` to `agent/target.env`, fills it
+in, and edits the two `config/Agent_config.*.txt` files. Nothing else.
+
+`target.env` holds your enrol key, so it is in `.gitignore` — check that it
+still is before your first commit, and never let it travel as chat text.
 
 And here is the rule that surprises everyone, including the person who wrote
 it:
@@ -121,7 +130,7 @@ capture is a phone call three days later.
 | what you see | why |
 |---|---|
 | `Please run as administrator` | registering a scheduled task needs it. Right-click → Run as administrator |
-| `agent.env is missing` | you skipped the copy from `agent.env.example` |
+| `target.env is missing` | you skipped the copy from `target.env.example` |
 | install refuses and names a line | it means it — the value cannot be used. Fix that line |
 | the task exists but never fires | the user is signed out, or the machine sleeps. `diagnose.bat` will say which |
 

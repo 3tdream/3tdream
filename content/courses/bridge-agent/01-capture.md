@@ -86,12 +86,40 @@ PNG.
 
 ## Run it
 
+Nothing is installed yet — module 2 does that. For now run the script where it
+sits in the repository, against a config of your own. Copy the example and
+point it at the workbook you just opened:
+
 ```powershell
-powershell -ExecutionPolicy Bypass -File C:\bridge-agent\capture.ps1 -DryRun
+copy agent\src\config.example.json agent\src\config.json
+```
+
+Two values in it matter here, and they are the ones §1 is about. The example
+ships placeholders on purpose, so this is your first look at the only thing
+that identifies the screen:
+
+```json
+"target": {
+  "processName": "EXCEL",
+  "windowTitleRegex": "grid-mock"
+}
+```
+
+`processName` is the process without `.exe`; `windowTitleRegex` matches the
+title bar. If you have other workbooks open, that regex is what keeps this from
+capturing one of them. Then:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File agent\src\capture.ps1 `
+  -ConfigPath agent\src\config.json -DryRun
 ```
 
 `-DryRun` captures and writes to disk, and sends nothing. Everything in this
 course that touches a network has a switch like this. Build the habit now.
+
+> From module 2 onwards the same script runs from `C:\bridge-agent\capture.ps1`,
+> where `install.bat` puts it with a config it writes for you, and you no longer
+> pass `-ConfigPath`.
 
 ## Check
 
@@ -107,6 +135,7 @@ course that touches a network has a switch like this. Build the habit now.
 
 | what you see | why |
 |---|---|
+| `cannot find path ... config.json` | you skipped the `copy` above, or ran it from somewhere other than the repository root |
 | `target window not present` | the workbook is closed, or `windowTitleRegex` does not match its title. Check the title bar, literally |
 | a tiny PNG | you captured a splash or a minimised window — see §1 |
 | a black or blank PNG | `PrintWindow` without flag `2`, or a window that was never painted |

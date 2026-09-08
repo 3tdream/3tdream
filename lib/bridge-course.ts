@@ -58,15 +58,28 @@ export function neighbours(slug: string): { prev?: BridgeModule; next?: BridgeMo
  */
 function rewriteLinks(md: string): string {
   const byFile = new Map(modules().map((m) => [m.file, m.slug]));
-  return md.replace(/\]\(([^)\s]+\.md)(#[^)]*)?\)/g, (whole, file: string, hash = "") => {
-    const slug = byFile.get(file.replace(/^\.\//, ""));
-    return slug ? `](${BASE}/${slug}${hash})` : whole;
-  });
+  return md.replace(
+    /\[([^\]]+)\]\(([^)\s]+\.md)(#[^)]*)?\)/g,
+    (whole, label: string, file: string, hash = "") => {
+      const slug = byFile.get(file.replace(/^\.\//, ""));
+      if (slug) return `[${label}](${BASE}/${slug}${hash})`;
+      // A link to something else in the repository — `../docs/deploy.md`. That
+      // path means nothing to a reader on this site, so the link is dropped and
+      // the path kept as text: better a filename they can find in their own
+      // checkout than a link that 404s.
+      const inRepo = file.replace(/^(\.\.\/)+/, "");
+      // Most such links are already labelled with the path; repeating it reads
+      // like a stutter.
+      return label.includes(inRepo) ? `\`${label}\`` : `${label} (\`${inRepo}\`)`;
+    },
+  );
 }
 
 export function renderModule(m: BridgeModule): string {
   const raw = fs.readFileSync(path.join(DIR, m.file), "utf8");
   // The page header already carries the title; a leading H1 would repeat it.
-  const body = raw.replace(/^#\s+.*\n+/, "");
+  // \r?\n matters: the files arrive through git on Windows with CRLF, and a
+  // pattern anchored on \n alone left every module's title in its own body.
+  const body = raw.replace(/^#\s+.*(\r?\n)+/, "");
   return marked.parse(rewriteLinks(body), { async: false, gfm: true });
 }
