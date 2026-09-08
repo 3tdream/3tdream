@@ -128,7 +128,9 @@ reading with no values.
 
 Module 1 wrote the answers down. Now use them.
 
-1. Rebuild the sandbox and capture it:
+1. Rebuild the sandbox and capture it. **Close the workbook in Excel first.**
+   Module 1 told you to leave it open and Excel holds the file, so a rebuild
+   while it is open is refused; reopen it before the capture:
    ```powershell
    powershell -File agent\src\mock\build-mock.ps1 -Seed 11
    powershell -File C:\bridge-agent\capture.ps1

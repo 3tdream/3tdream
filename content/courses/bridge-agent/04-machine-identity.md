@@ -109,7 +109,7 @@ if (!auth.ok) {
     if (known && (await rateOk(claimed))) {
       await db.insert(heartbeats).values({
         machineId: claimed, status: "stale_token",
-        detail: "agent presented a token that does not match — re-run install.bat",
+        detail: "agent presented a token that does not match — run `install.bat prod reenroll` on this PC, as administrator, to issue a fresh one",
       });
     }
   }
