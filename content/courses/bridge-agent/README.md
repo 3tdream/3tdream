@@ -66,6 +66,11 @@ Two scripts in this folder do the work no prose can:
   to a page that does not exist. A course that teaches a renamed command
   teaches a lie, and the reader blames themselves.
 
+The sandbox and the scorer are **free and stand alone**, so you can measure a
+reading before you own anything:
+[github.com/3tdream/bridge-agent-sandbox](https://github.com/3tdream/bridge-agent-sandbox)
+— MIT, three files, no account.
+
 ## A note on where this comes from
 
 The agent you are building is real. It runs unattended on production machines,

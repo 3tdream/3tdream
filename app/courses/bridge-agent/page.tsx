@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowRight, BookOpen, Check } from "lucide-react";
 import { BASE, courseMeta, modules } from "@/lib/bridge-course";
-import { priceLabel } from "@/lib/course-product";
+import { SANDBOX_URL, priceLabel } from "@/lib/course-product";
 import { BuyCourseButton } from "@/components/buy-course-button";
 
 // The course is written in English and stays in English — it is engineering
@@ -62,7 +62,12 @@ export default function BridgeCoursePage() {
             The course is the method — read it and you could build this yourself. The
             repository is the built thing: four of the nine modules end in a command
             that runs a file from it, so <strong className="text-ink">running the agent
-            needs the repository</strong>.
+            needs the repository</strong>. The{" "}
+            <a href={SANDBOX_URL} target="_blank" rel="noopener noreferrer" className="text-accent underline underline-offset-2">
+              sandbox is free either way
+            </a>{" "}
+            — draw the screen, score a reading against the answers it wrote down, and
+            see what the method is worth before paying for anything.
           </p>
           <div className="grid gap-6 lg:grid-cols-2">
             {/* free side */}
@@ -78,6 +83,7 @@ export default function BridgeCoursePage() {
                 {[
                   "Nine modules, start to finish",
                   "Every failure mode, named and explained",
+                  "The sandbox, free and separate — a screen that knows its own answers",
                   "Enough to write your own from scratch",
                   "Readable now, no sign-up",
                 ].map((t) => (
@@ -95,7 +101,11 @@ export default function BridgeCoursePage() {
                   Start reading
                 </Link>
                 <p className="mt-3 min-h-[2.5rem] text-xs text-muted" style={{ fontFamily: "var(--font-mono)" }}>
-                  Reading only. Modules 2, 3, 5 and 8 run files from the repository.
+                  Reading, plus the{" "}
+                  <a href={SANDBOX_URL} target="_blank" rel="noopener noreferrer" className="text-accent underline underline-offset-2">
+                    sandbox
+                  </a>
+                  . Modules 2, 3, 5 and 8 run files from the repository.
                 </p>
               </div>
             </div>

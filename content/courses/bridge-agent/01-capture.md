@@ -11,6 +11,11 @@ machine and saves exactly what it shows to a PNG.
 
 You need a screen to read that is not a customer's.
 
+The sandbox is **free and stands alone** —
+[github.com/3tdream/bridge-agent-sandbox](https://github.com/3tdream/bridge-agent-sandbox),
+MIT, three files, no account. Clone it and work from there, or use the copy in
+this repository at `agent/src/mock/` if you have it:
+
 ```powershell
 powershell -ExecutionPolicy Bypass -File agent\src\mock\build-mock.ps1 -Seed 11
 ```

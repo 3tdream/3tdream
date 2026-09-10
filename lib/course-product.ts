@@ -20,6 +20,10 @@ export const REPO_URL = `https://github.com/${COURSE_PRODUCT.repo.owner}/${COURS
 /** GitHub's "copy this repository" link — works once the buyer has access. */
 export const REPO_COPY_URL = `${REPO_URL}/generate`;
 
+/** The free rig: the synthetic screen and the scorer, MIT, no account. It is
+ *  what makes the course's central claim checkable before anyone pays. */
+export const SANDBOX_URL = "https://github.com/3tdream/bridge-agent-sandbox";
+
 /** "$149" — for display, from the same number Stripe charges. */
 export function priceLabel(): string {
   const whole = COURSE_PRODUCT.amount / 100;
