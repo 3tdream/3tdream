@@ -41,7 +41,7 @@ export function BuyCourseButton({ label }: { label: string }) {
         type="button"
         onClick={go}
         disabled={busy}
-        className="mt-8 inline-flex items-center justify-center gap-2 bg-ink text-paper px-6 py-3.5 font-bold hard-shadow-sm hover:bg-accent transition-colors disabled:opacity-60"
+        className="w-full inline-flex items-center justify-center gap-2 bg-ink text-paper border-2 border-ink px-6 py-3.5 font-bold hard-shadow-sm hover:bg-accent hover:border-accent transition-colors disabled:opacity-60"
       >
         {busy ? "Opening checkout…" : label}
         {busy ? <Loader2 className="w-5 h-5 animate-spin" /> : <ArrowRight className="w-5 h-5" />}

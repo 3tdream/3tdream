@@ -36,7 +36,7 @@ export default function BridgeCoursePage() {
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
               href={`${BASE}/${opening.slug}`}
-              className="group inline-flex items-center gap-2 bg-ink text-paper px-6 py-3.5 font-bold hard-shadow-sm hover:bg-accent transition-colors"
+              className="group inline-flex items-center gap-2 bg-ink text-paper border-2 border-ink px-6 py-3.5 font-bold hard-shadow-sm hover:bg-accent hover:border-accent transition-colors"
             >
               Start reading — free
               <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
@@ -55,7 +55,15 @@ export default function BridgeCoursePage() {
           when it builds the Checkout session, and this page reads the same value. */}
       <section id="get-the-code" className="border-b-2 border-ink bg-paper-alt">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-14 sm:py-20">
-          <div className="label text-ink/50 mb-6">What you get</div>
+          <div className="label text-ink/50 mb-2">What you get</div>
+          {/* Say the difference in one line, at the top. A visitor should not have
+              to infer from two bullet lists whether they can actually run this. */}
+          <p className="mb-6 max-w-3xl text-sm text-ink-soft leading-relaxed">
+            The course is the method — read it and you could build this yourself. The
+            repository is the built thing: four of the nine modules end in a command
+            that runs a file from it, so <strong className="text-ink">running the agent
+            needs the repository</strong>.
+          </p>
           <div className="grid gap-6 lg:grid-cols-2">
             {/* free side */}
             <div className="bg-paper hard-border p-7 sm:p-9 flex flex-col">
@@ -63,14 +71,14 @@ export default function BridgeCoursePage() {
               <p className="display text-4xl sm:text-5xl mt-2">FREE</p>
               <p className="mt-4 text-sm text-ink-soft leading-relaxed">
                 All nine modules, in full, for anyone. No account, no email, no drip.
-                It is the whole method: what breaks, why, and the check that proves
-                each part works.
+                What breaks, why it breaks, and the code that matters quoted and
+                explained where it is used.
               </p>
               <ul className="mt-6 space-y-2.5 text-sm">
                 {[
                   "Nine modules, start to finish",
                   "Every failure mode, named and explained",
-                  "The check that ends each module",
+                  "Enough to write your own from scratch",
                   "Readable now, no sign-up",
                 ].map((t) => (
                   <li key={t} className="flex gap-3">
@@ -79,12 +87,17 @@ export default function BridgeCoursePage() {
                   </li>
                 ))}
               </ul>
-              <Link
-                href={`${BASE}/${opening.slug}`}
-                className="mt-8 inline-flex items-center justify-center gap-2 bg-paper text-ink px-6 py-3.5 font-bold hard-border hover-shadow transition-all"
-              >
-                Start reading
-              </Link>
+              <div className="mt-auto pt-8">
+                <Link
+                  href={`${BASE}/${opening.slug}`}
+                  className="w-full inline-flex items-center justify-center gap-2 bg-paper text-ink px-6 py-3.5 font-bold hard-border hover-shadow transition-all"
+                >
+                  Start reading
+                </Link>
+                <p className="mt-3 min-h-[2.5rem] text-xs text-muted" style={{ fontFamily: "var(--font-mono)" }}>
+                  Reading only. Modules 2, 3, 5 and 8 run files from the repository.
+                </p>
+              </div>
             </div>
 
             {/* paid side */}
@@ -108,7 +121,7 @@ export default function BridgeCoursePage() {
                   "The sandbox that writes down its own answers",
                   "19 tests, and the scorer that makes module 5 mean something",
                   "Source and target specs — a second application is JSON, not code",
-                  "Commit history and every later fix",
+                  "Every later fix, pushed to the repository you hold",
                 ].map((t) => (
                   <li key={t} className="flex gap-3">
                     <Check className="w-4 h-4 mt-0.5 shrink-0 text-accent" />
@@ -116,10 +129,12 @@ export default function BridgeCoursePage() {
                   </li>
                 ))}
               </ul>
-              <BuyCourseButton label={`Buy access — ${price}`} />
-              <p className="mt-3 text-xs text-muted" style={{ fontFamily: "var(--font-mono)" }}>
-                One payment. Private GitHub access, yours to keep. No subscription.
-              </p>
+              <div className="mt-auto pt-8">
+                <BuyCourseButton label={`Buy access — ${price}`} />
+                <p className="mt-3 min-h-[2.5rem] text-xs text-muted" style={{ fontFamily: "var(--font-mono)" }}>
+                  One payment. Private GitHub access, yours to keep. No subscription.
+                </p>
+              </div>
             </div>
           </div>
         </div>
