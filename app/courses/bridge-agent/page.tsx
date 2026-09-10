@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowRight, BookOpen, Check } from "lucide-react";
 import { BASE, courseMeta, modules } from "@/lib/bridge-course";
+import { priceLabel } from "@/lib/course-product";
+import { BuyCourseButton } from "@/components/buy-course-button";
 
 // The course is written in English and stays in English — it is engineering
 // documentation, and translating it would mean three versions to keep true.
@@ -15,6 +17,7 @@ export default function BridgeCoursePage() {
   const { title, tagline } = courseMeta();
   const all = modules();
   const [opening, ...rest] = all;
+  const price = priceLabel();
 
   return (
     <div>
@@ -42,13 +45,14 @@ export default function BridgeCoursePage() {
               href="#get-the-code"
               className="inline-flex items-center gap-2 bg-paper text-ink px-6 py-3.5 font-bold hard-border hover-shadow transition-all"
             >
-              Get the code — $149
+              Get the code — {price}
             </a>
           </div>
         </div>
       </section>
 
-      {/* PRICING — MOCKUP. Nothing here is wired to a payment provider yet. */}
+      {/* Pricing. The amount lives in lib/course-product.ts — the server reads it
+          when it builds the Checkout session, and this page reads the same value. */}
       <section id="get-the-code" className="border-b-2 border-ink bg-paper-alt">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-14 sm:py-20">
           <div className="label text-ink/50 mb-6">What you get</div>
@@ -90,7 +94,7 @@ export default function BridgeCoursePage() {
               </span>
               <div className="label text-ink/40">The repository</div>
               <p className="display text-4xl sm:text-5xl mt-2">
-                $149 <span className="text-lg align-middle text-muted font-normal">once</span>
+                {price} <span className="text-lg align-middle text-muted font-normal">once</span>
               </p>
               <p className="mt-4 text-sm text-ink-soft leading-relaxed">
                 The course tells you to open <code className="text-[13px]">agent/src/capture.ps1</code> and
@@ -112,13 +116,7 @@ export default function BridgeCoursePage() {
                   </li>
                 ))}
               </ul>
-              <button
-                type="button"
-                className="mt-8 inline-flex items-center justify-center gap-2 bg-ink text-paper px-6 py-3.5 font-bold hard-shadow-sm hover:bg-accent transition-colors"
-              >
-                Buy access — $149
-                <ArrowRight className="w-5 h-5" />
-              </button>
+              <BuyCourseButton label={`Buy access — ${price}`} />
               <p className="mt-3 text-xs text-muted" style={{ fontFamily: "var(--font-mono)" }}>
                 One payment. Private GitHub access, yours to keep. No subscription.
               </p>
