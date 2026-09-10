@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, BookOpen } from "lucide-react";
+import { ArrowRight, BookOpen, Check } from "lucide-react";
 import { BASE, courseMeta, modules } from "@/lib/bridge-course";
 
 // The course is written in English and stays in English — it is engineering
@@ -30,13 +30,100 @@ export default function BridgeCoursePage() {
             reading the screen spends, on your own key, about $0.02 a reading. Every module
             ends with a check you run, not a paragraph saying it should work.
           </p>
-          <Link
-            href={`${BASE}/${opening.slug}`}
-            className="group mt-8 inline-flex items-center gap-2 bg-ink text-paper px-6 py-3.5 font-bold hard-shadow-sm hover:bg-accent transition-colors"
-          >
-            Start reading
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
-          </Link>
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <Link
+              href={`${BASE}/${opening.slug}`}
+              className="group inline-flex items-center gap-2 bg-ink text-paper px-6 py-3.5 font-bold hard-shadow-sm hover:bg-accent transition-colors"
+            >
+              Start reading — free
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+            <a
+              href="#get-the-code"
+              className="inline-flex items-center gap-2 bg-paper text-ink px-6 py-3.5 font-bold hard-border hover-shadow transition-all"
+            >
+              Get the code — $149
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* PRICING — MOCKUP. Nothing here is wired to a payment provider yet. */}
+      <section id="get-the-code" className="border-b-2 border-ink bg-paper-alt">
+        <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-14 sm:py-20">
+          <div className="label text-ink/50 mb-6">What you get</div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            {/* free side */}
+            <div className="bg-paper hard-border p-7 sm:p-9 flex flex-col">
+              <div className="label text-ink/40">The course</div>
+              <p className="display text-4xl sm:text-5xl mt-2">FREE</p>
+              <p className="mt-4 text-sm text-ink-soft leading-relaxed">
+                All nine modules, in full, for anyone. No account, no email, no drip.
+                It is the whole method: what breaks, why, and the check that proves
+                each part works.
+              </p>
+              <ul className="mt-6 space-y-2.5 text-sm">
+                {[
+                  "Nine modules, start to finish",
+                  "Every failure mode, named and explained",
+                  "The check that ends each module",
+                  "Readable now, no sign-up",
+                ].map((t) => (
+                  <li key={t} className="flex gap-3">
+                    <Check className="w-4 h-4 mt-0.5 shrink-0 text-ink/40" />
+                    <span className="text-ink-soft">{t}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href={`${BASE}/${opening.slug}`}
+                className="mt-8 inline-flex items-center justify-center gap-2 bg-paper text-ink px-6 py-3.5 font-bold hard-border hover-shadow transition-all"
+              >
+                Start reading
+              </Link>
+            </div>
+
+            {/* paid side */}
+            <div className="bg-paper hard-border hard-shadow p-7 sm:p-9 flex flex-col relative">
+              <span className="absolute -top-3 left-7 bg-lime text-ink label px-3 py-1 border-2 border-ink">
+                the working thing
+              </span>
+              <div className="label text-ink/40">The repository</div>
+              <p className="display text-4xl sm:text-5xl mt-2">
+                $149 <span className="text-lg align-middle text-muted font-normal">once</span>
+              </p>
+              <p className="mt-4 text-sm text-ink-soft leading-relaxed">
+                The course tells you to open <code className="text-[13px]">agent/src/capture.ps1</code> and
+                nineteen other files. This is those files — the system the course was
+                written from, running in production today.
+              </p>
+              <ul className="mt-6 space-y-2.5 text-sm">
+                {[
+                  "The agent kit: install, run, check, diagnose, uninstall",
+                  "The receiver: enroll, ingest, read, gate, deliver, watchdog",
+                  "The sandbox that writes down its own answers",
+                  "19 tests, and the scorer that makes module 5 mean something",
+                  "Source and target specs — a second application is JSON, not code",
+                  "Commit history and every later fix",
+                ].map((t) => (
+                  <li key={t} className="flex gap-3">
+                    <Check className="w-4 h-4 mt-0.5 shrink-0 text-accent" />
+                    <span className="text-ink-soft">{t}</span>
+                  </li>
+                ))}
+              </ul>
+              <button
+                type="button"
+                className="mt-8 inline-flex items-center justify-center gap-2 bg-ink text-paper px-6 py-3.5 font-bold hard-shadow-sm hover:bg-accent transition-colors"
+              >
+                Buy access — $149
+                <ArrowRight className="w-5 h-5" />
+              </button>
+              <p className="mt-3 text-xs text-muted" style={{ fontFamily: "var(--font-mono)" }}>
+                One payment. Private GitHub access, yours to keep. No subscription.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -58,12 +145,15 @@ export default function BridgeCoursePage() {
                   </span>
                   <span className="block mt-1 text-sm text-muted leading-relaxed">{m.sub}</span>
                 </span>
+                {/* Runtime cost, NOT price: this says whether the module needs a
+                    model key to run. Beside a price tag "free/$" would read as
+                    paid content, which is a different thing entirely. */}
                 <span
-                  className={`label shrink-0 self-start border px-2 py-0.5 ${
+                  className={`label shrink-0 self-start border px-2 py-0.5 whitespace-nowrap ${
                     m.cost === "paid" ? "text-accent border-accent/40" : "text-ink/40 border-ink/20"
                   }`}
                 >
-                  {m.cost === "paid" ? "$" : "free"}
+                  {m.cost === "paid" ? "needs a key" : "no key"}
                 </span>
               </Link>
             </li>
