@@ -57,6 +57,25 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true, waiting: session.payment_status });
   }
 
+  // What was actually bought.
+  //
+  // A verified signature proves Stripe sent this, not that it was a purchase of
+  // THIS product. The same account will one day sell something else, and a
+  // handler that grants repository access to any paid session would hand the
+  // repository to whoever bought the other thing. So the session has to name
+  // this repository and have paid this price.
+  const repo = `${COURSE_PRODUCT.repo.owner}/${COURSE_PRODUCT.repo.name}`;
+  if (session.metadata?.repo !== repo) {
+    console.log(`[stripe/webhook] ${session.id} is not for ${repo} (metadata.repo=${session.metadata?.repo ?? "none"}) — nothing to grant`);
+    return NextResponse.json({ ok: true, ignored: "different_product" });
+  }
+  if (session.amount_total !== COURSE_PRODUCT.amount) {
+    // Never grant on an amount we did not set. A short payment is a person to
+    // talk to, not a door to open.
+    console.error(`[stripe/webhook] ${session.id} paid ${session.amount_total} ${session.currency}, expected ${COURSE_PRODUCT.amount} ${COURSE_PRODUCT.currency} — held for a human`);
+    return NextResponse.json({ ok: true, manual: "unexpected_amount" });
+  }
+
   const username = githubUsernameFrom(session);
   if (!username) {
     console.error(`[stripe/webhook] ${session.id} paid but named no GitHub account — grant by hand`);
