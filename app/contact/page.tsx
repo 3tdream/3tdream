@@ -12,7 +12,7 @@ export default function ContactPage() {
   return (
     <div className="grid-paper min-h-[70vh]">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 sm:py-24">
-        <div className="grid lg:grid-cols-12 gap-12 items-start mb-16" id="lead-form">
+        <div className="grid lg:grid-cols-12 gap-12 items-start">
           {/* left */}
           <div className="lg:col-span-7">
             <div className="label text-accent mb-3">/ 05 — {t(L("Контакт", "Contact", "צור קשר"))}</div>
@@ -46,8 +46,15 @@ export default function ContactPage() {
             transition={{ duration: 0.45 }}
             className="lg:col-span-5"
           >
+            {/* RUN-219 recovery: the agents imported LeadForm but never rendered it. */}
+            <section id="lead-form" className="mb-10 scroll-mt-24">
+              <div className="label mb-4 text-ink/50">
+                {t(L("Опишите задачу", "Describe the project", "תארו את המשימה"))}
+              </div>
+              <LeadForm />
+            </section>
             <div className="label mb-4 text-ink/50">
-              {t(L("Выберите канал", "Pick a channel", "בחרו ערוץ"))}
+              {t(L("Или выберите канал", "Or pick a channel", "או בחרו ערוץ"))}
             </div>
             <ContactButtons variant="grid" />
             <p
