@@ -73,7 +73,7 @@ export default function HomePage() {
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform rtl:rotate-180" />
                 </Link>
                 <Link
-                  href="/contact"
+                  href="/contact#lead-form"
                   className="inline-flex items-center gap-2 bg-paper text-ink px-6 py-3.5 font-bold hard-border hover-shadow transition-all"
                 >
                   {t(L("Обсудить заказ", "Start a project", "להתחיל פרויקט"))}
@@ -290,7 +290,7 @@ export default function HomePage() {
             {t(L("Запустим ваш продукт", "Let's ship your product", "בואו נשיק את המוצר"))}
           </h2>
           <Link
-            href="/contact"
+            href="/contact#lead-form"
             className="mt-8 inline-flex items-center gap-2 bg-paper text-ink px-7 py-4 font-bold hard-shadow hover:bg-lime transition-colors"
           >
             {t(L("Написать мне", "Get in touch", "דברו איתי"))}

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useI18n, L } from "@/lib/i18n";
 import { BRAND, CONTACT_CTA } from "@/lib/content";
 import { ContactButtons } from "@/components/contact-buttons";
+import { LeadForm } from "@/components/lead-form";
 
 export default function ContactPage() {
   const { t } = useI18n();
@@ -45,8 +46,15 @@ export default function ContactPage() {
             transition={{ duration: 0.45 }}
             className="lg:col-span-5"
           >
+            {/* RUN-219 recovery: the agents imported LeadForm but never rendered it. */}
+            <section id="lead-form" className="mb-10 scroll-mt-24">
+              <div className="label mb-4 text-ink/50">
+                {t(L("Опишите задачу", "Describe the project", "תארו את המשימה"))}
+              </div>
+              <LeadForm />
+            </section>
             <div className="label mb-4 text-ink/50">
-              {t(L("Выберите канал", "Pick a channel", "בחרו ערוץ"))}
+              {t(L("Или выберите канал", "Or pick a channel", "או בחרו ערוץ"))}
             </div>
             <ContactButtons variant="grid" />
             <p

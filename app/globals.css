@@ -34,6 +34,21 @@ body {
   text-align: right;
 }
 
+/* Honeypot: visually hidden but still present in the DOM/tab order so bots
+ * that fill every field still populate it — screen readers and sighted
+ * users never encounter it. Do NOT use display:none (some bots skip those). */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 ::selection {
   background: var(--color-accent);
   color: #fff;
