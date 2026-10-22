@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useI18n, L } from "@/lib/i18n";
 import { BRAND, CONTACT_CTA } from "@/lib/content";
 import { ContactButtons } from "@/components/contact-buttons";
+import { LeadForm } from "@/components/lead-form";
 
 export default function ContactPage() {
   const { t } = useI18n();
@@ -11,7 +12,7 @@ export default function ContactPage() {
   return (
     <div className="grid-paper min-h-[70vh]">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 sm:py-24">
-        <div className="grid lg:grid-cols-12 gap-12 items-start">
+        <div className="grid lg:grid-cols-12 gap-12 items-start mb-16" id="lead-form">
           {/* left */}
           <div className="lg:col-span-7">
             <div className="label text-accent mb-3">/ 05 — {t(L("Контакт", "Contact", "צור קשר"))}</div>

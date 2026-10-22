@@ -1,4 +1,5 @@
 import { L, type Localized } from "./i18n";
+import { LEAD_ROLE_VALUES, LEAD_INDUSTRY_VALUES, LEAD_COMPANY_SIZE_VALUES } from "./lead-values";
 
 /* ------------------------------------------------------------------ */
 /* BRAND                                                               */
@@ -485,3 +486,74 @@ export const DESIGN = {
     },
   ] as Discipline[],
 };
+
+/* ------------------------------------------------------------------ */
+/* LEAD FORM — /contact (components/lead-form.tsx, POST /api/lead)     */
+/* Values are fixed slugs the API validates; labels are trilingual.    */
+/* ------------------------------------------------------------------ */
+
+export { LEAD_ROLE_VALUES, LEAD_INDUSTRY_VALUES, LEAD_COMPANY_SIZE_VALUES };
+
+export type LeadOption<V extends string> = { value: V; label: Localized };
+
+export const LEAD_ROLE_OPTIONS: LeadOption<(typeof LEAD_ROLE_VALUES)[number]>[] = [
+  { value: "founder", label: L("Основатель / владелец", "Founder / owner", "מייסד / בעלים") },
+  { value: "product", label: L("Продукт или маркетинг", "Product or marketing", "מוצר או שיווק") },
+  { value: "engineering", label: L("Разработка", "Engineering", "פיתוח") },
+  { value: "other", label: L("Другое", "Other", "אחר") },
+];
+
+export const LEAD_INDUSTRY_OPTIONS: LeadOption<(typeof LEAD_INDUSTRY_VALUES)[number]>[] = [
+  { value: "beauty", label: L("Красота и запись клиентов", "Beauty & booking", "יופי והזמנת תורים") },
+  { value: "ecommerce", label: L("Интернет-магазин", "Online store", "חנות אונליין") },
+  { value: "care", label: L("Уход и wellness", "Care & wellness", "טיפול ורווחה") },
+  { value: "education", label: L("Образование", "Education", "חינוך") },
+  { value: "other", label: L("Другое", "Other", "אחר") },
+];
+
+export const LEAD_COMPANY_SIZE_OPTIONS: LeadOption<(typeof LEAD_COMPANY_SIZE_VALUES)[number]>[] = [
+  { value: "solo", label: L("Только я", "Just me", "רק אני") },
+  { value: "small", label: L("2–10 человек", "2–10 people", "2–10 אנשים") },
+  { value: "medium", label: L("11–50 человек", "11–50 people", "11–50 אנשים") },
+  { value: "large", label: L("Больше 50", "50+", "מעל 50") },
+];
+
+export const LEAD_FIELD_LABELS = {
+  name: L("Имя", "Name", "שם"),
+  contact: L("Как связаться: e-mail, телефон или @ник", "Contact: e-mail, phone or @handle", "איך ליצור קשר: אימייל, טלפון או @משתמש"),
+  brief: L("Что построить", "What to build", "מה לבנות"),
+  role: L("Ваша роль", "Your role", "התפקיד שלך"),
+  industry: L("Отрасль", "Industry", "תחום"),
+  companySize: L("Размер компании", "Company size", "גודל החברה"),
+  replyLang: L("Язык ответа", "Reply language", "שפת המענה"),
+} satisfies Record<string, Localized>;
+
+export const LEAD_FORM_UI = {
+  submit: L("Отправить заявку", "Send the request", "שליחת הפנייה"),
+  sending: L("Отправляю…", "Sending…", "שולח…"),
+  success: L(
+    "Спасибо, заявка получена. Отвечу в течение дня.",
+    "Thanks, your request is in. I'll reply within a day.",
+    "תודה, הפנייה התקבלה. אענה תוך יום."
+  ),
+} satisfies Record<string, Localized>;
+
+const LEAD_ERROR_MESSAGES = {
+  required: L("Заполните это поле.", "This field is required.", "שדה חובה."),
+  invalid: L("Проверьте значение.", "Check this value.", "בדקו את הערך."),
+  brief_length: L("От 20 до 2000 символов.", "20 to 2000 characters.", "בין 20 ל-2000 תווים."),
+  body_invalid: L(
+    "Не удалось отправить. Попробуйте ещё раз или напишите напрямую.",
+    "Could not send. Try again or use a direct channel below.",
+    "השליחה נכשלה. נסו שוב או פנו ישירות."
+  ),
+} satisfies Record<string, Localized>;
+
+/** The visitor-facing message for a validation error key from POST /api/lead. */
+export function leadErrorMessage(key: string, lang: keyof Localized): string {
+  if (key === "brief_length") return LEAD_ERROR_MESSAGES.brief_length[lang];
+  if (key === "body_invalid") return LEAD_ERROR_MESSAGES.body_invalid[lang];
+  if (key.endsWith("_required")) return LEAD_ERROR_MESSAGES.required[lang];
+  if (key.endsWith("_invalid")) return LEAD_ERROR_MESSAGES.invalid[lang];
+  return LEAD_ERROR_MESSAGES.body_invalid[lang];
+}

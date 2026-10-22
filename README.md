@@ -49,3 +49,12 @@ WhatsApp, append entries with real handles and map an icon in `components/contac
 - Language persists in `localStorage` (`3td-lang`) and auto-detects from the browser.
 - Hebrew flips the document to `dir="rtl"`; hard shadows and arrows mirror automatically.
 - All three languages share one font (Rubik) so the layout never reflows on switch.
+
+## Leads
+The form on `/contact` (`components/lead-form.tsx`) posts JSON to `POST /api/lead`
+(`app/api/lead/route.ts`): zod validation (`lib/validation/lead-schema.ts`), a
+honeypot field and a 10-second time trap, then delivery to every configured
+channel in parallel (`lib/delivery/`): `LEAD_WEBHOOK_URL` (JSON POST) and Resend
+(`RESEND_API_KEY` + `RESEND_FROM_EMAIL` + `RESEND_TO_EMAIL`). Nothing is stored on
+the site; with no channel configured the route still answers 202 and logs a
+non-personal line. Labels and messages live in `lib/content.ts` (`LEAD_*`).
