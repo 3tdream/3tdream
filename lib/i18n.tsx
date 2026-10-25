@@ -6,7 +6,8 @@ export type Lang = "ru" | "en" | "he";
 export const LANGS: Lang[] = ["ru", "en", "he"];
 export const RTL_LANGS: Lang[] = ["he"];
 
-export type Localized = Record<Lang, string>;
+import type { Localized } from "./localized";
+export { L, type Localized } from "./localized";
 
 type Ctx = {
   lang: Lang;
@@ -70,4 +71,3 @@ export function useI18n() {
 }
 
 /** Shorthand for inline trilingual strings. */
-export const L = (ru: string, en: string, he: string): Localized => ({ ru, en, he });

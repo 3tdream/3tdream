@@ -1,4 +1,4 @@
-import { L, type Localized } from "./i18n";
+import { L, type Localized } from "./localized";
 
 /* ------------------------------------------------------------------ */
 /* BRAND                                                               */
@@ -7,17 +7,8 @@ import { L, type Localized } from "./i18n";
 export const BRAND = {
   name: "3TDream",
   expansion: L("Time To Team Dream", "Time To Team Dream", "Time To Team Dream"),
-  tagline: L(
-    "Цифровые продукты — от брифа до продакшена.",
-    "Digital products — from brief to production.",
-    "מוצרים דיגיטליים — מבריף ועד פרודקשן."
-  ),
-  intro: L(
-    "Я проектирую и собираю веб-приложения, AI-агентов и боты записи. Беру заказ целиком: продукт, дизайн, код, деплой.",
-    "I design and ship web apps, AI agents and booking bots. I take the whole thing: product, design, code, deploy.",
-    "אני מתכנן ובונה אפליקציות web, סוכני AI ובוטים לתורים. לוקח את הכל: מוצר, עיצוב, קוד, דיפלוי."
-  ),
-};
+  tagline: L("Product Designer · AI Product Builder · Lecturer", "Product Designer · AI Product Builder · Lecturer", "Product Designer · AI Product Builder · Lecturer"),
+  intro: L("Проектирую понятные цифровые продукты, создаю AI-инструменты и преподаю UX/UI. Соединяю продуктовую задачу, интерфейс и реализацию.", "I design clear digital products, build AI tools and teach UX/UI. I connect the product problem, the interface and its implementation.", "אני מעצב מוצרים דיגיטליים ברורים, בונה כלי AI ומלמד UX/UI. מחבר בין אתגר המוצר, הממשק והמימוש."),};
 
 /* ------------------------------------------------------------------ */
 /* PROFILE                                                             */
@@ -28,11 +19,7 @@ export const PROFILE = {
   location: L("Хайфа, Израиль", "Haifa, Israel", "חיפה, ישראל"),
   // One-line positioning — the "designer → AI builder" arc that isn't stated
   // anywhere public yet. This is the site's chance to claim it explicitly.
-  headline: L(
-    "Продуктовый дизайнер, который строит AI-продукты",
-    "A product designer who ships AI products",
-    "מעצב מוצר שבונה מוצרי AI"
-  ),
+  headline: L("Product Designer · AI Product Builder · Lecturer", "Product Designer · AI Product Builder · Lecturer", "Product Designer · AI Product Builder · Lecturer"),
   bio: L(
     "Я прошёл путь от графического дизайна в рекламе до продуктового UX/UI, а теперь собираю AI-продукты целиком — от идеи и интерфейса до кода и деплоя. Дизайнерский глаз плюс инженерия: один человек закрывает весь цикл.",
     "I went from graphic design in advertising to product UX/UI, and now I build AI products end to end — from idea and interface to code and deploy. A designer's eye plus engineering: one person covering the whole cycle.",
@@ -56,65 +43,10 @@ export type TimelineEntry = {
 };
 
 export const TIMELINE: TimelineEntry[] = [
-  {
-    period: "~2011–2013",
-    kind: L("Образование", "Foundations", "לימודים"),
-    role: L("Дизайн и анимация", "Design & animation", "עיצוב ואנימציה"),
-    org: L(
-      "Tiltan · School of Design + IAC · Israel Animation College",
-      "Tiltan · School of Design + IAC · Israel Animation College",
-      "טלתן · בית ספר לעיצוב + IAC · המכללה לאנימציה"
-    ),
-    desc: L(
-      "База: визуальная коммуникация, графический дизайн и 3D-анимация в Хайфе.",
-      "The base: visual communication, graphic design and 3D animation in Haifa.",
-      "הבסיס: תקשורת חזותית, עיצוב גרפי ואנימציית תלת-ממד בחיפה."
-    ),
-  },
-  {
-    period: "~2013–2016",
-    kind: L("Реклама", "Advertising", "פרסום"),
-    role: L("Графический дизайнер", "Graphic Designer", "מעצב גרפי"),
-    org: L("McCann Erickson · Тель-Авив", "McCann Erickson · Tel Aviv", "מקאן אריקסון · תל אביב"),
-    desc: L(
-      "Бренд- и рекламная графика для крупных кампаний — школа большого бренд-мышления.",
-      "Brand and advertising graphics for major campaigns — a school of big-brand thinking.",
-      "גרפיקת מותג ופרסום לקמפיינים גדולים — בית ספר לחשיבת מותג."
-    ),
-  },
-  {
-    period: "~2016–2019",
-    kind: L("Студия", "Studio", "סטודיו"),
-    role: L("Графический дизайнер", "Graphic Designer", "מעצב גרפי"),
-    org: L("FIRMA · Тель-Авив", "FIRMA · Tel Aviv", "FIRMA · תל אביב"),
-    desc: L(
-      "Дизайн-студия: айдентика, media-дизайн и работа с разными индустриями.",
-      "A design studio: identity, media design and work across industries.",
-      "סטודיו עיצוב: זהות, עיצוב מדיה ועבודה על תעשיות שונות."
-    ),
-  },
-  {
-    period: "~2019–2023",
-    kind: L("Продукт", "Product", "מוצר"),
-    role: L("Продуктовый / UX-UI дизайнер", "Product / UX-UI Designer", "מעצב מוצר / UX-UI"),
-    org: L("3TDream · фриланс и продукт", "3TDream · freelance & product", "3TDream · פרילנס ומוצר"),
-    desc: L(
-      "Переход в продукт: интерфейсы, прототипы в Figma, работа на стыке цифрового и физического (CAD, 3D-печать).",
-      "Into product: interfaces, Figma prototypes, work on the digital–physical edge (CAD, 3D printing).",
-      "מעבר למוצר: ממשקים, אבות-טיפוס ב-Figma, עבודה על קו התפר הדיגיטלי-פיזי (CAD, הדפסת תלת-ממד)."
-    ),
-  },
-  {
-    period: "2024 →",
-    kind: L("AI-builder", "AI builder", "בונה AI"),
-    role: L("Строю AI-продукты целиком", "Building AI products end to end", "בונה מוצרי AI מקצה לקצה"),
-    org: L("3TDream", "3TDream", "3TDream"),
-    desc: L(
-      "От брифа до продакшена: UX/UI курс, AI-сайты с записью и чатом, и Mission Control — конвейер агентов, превращающий одну фразу в готовый PR.",
-      "From brief to production: a UX/UI course, AI sites with booking & chat, and Mission Control — an agent pipeline that turns one sentence into a merged PR.",
-      "מבריף לפרודקשן: קורס UX/UI, אתרי AI עם תורים וצ׳אט, ו-Mission Control — פייפליין סוכנים שהופך משפט אחד ל-PR מוכן."
-    ),
-  },
+{ period: "Nov 2025–Present", role: L("UX/UI & Game Product Lecturer", "UX/UI & Game Product Lecturer", "UX/UI & Game Product Lecturer"), org: L("Tiltan", "Tiltan", "Tiltan"), desc: L("Part-time", "Part-time", "Part-time"), kind: L("Part-time", "Part-time", "Part-time") },
+{ period: "May 2023–May 2026", role: L("Product Designer / Product Manager", "Product Designer / Product Manager", "Product Designer / Product Manager"), org: L("AR Software", "AR Software", "AR Software"), desc: L("Product", "Product", "Product"), kind: L("Product", "Product", "Product") },
+{ period: "Aug 2020–Jun 2022", role: L("Art Director & Product Manager", "Art Director & Product Manager", "Art Director & Product Manager"), org: L("BrainyOdds", "BrainyOdds", "BrainyOdds"), desc: L("Product", "Product", "Product"), kind: L("Product", "Product", "Product") },
+{ period: "Dec 2017–Nov 2020", role: L("UX/UI & 3D Designer", "UX/UI & 3D Designer", "UX/UI & 3D Designer"), org: L("Freelance", "Freelance", "Freelance"), desc: L("Design", "Design", "Design"), kind: L("Design", "Design", "Design") }
 ];
 
 /* ------------------------------------------------------------------ */
@@ -123,7 +55,7 @@ export const TIMELINE: TimelineEntry[] = [
 
 export const NAV: { href: string; label: Localized; index: string }[] = [
   { href: "/", label: L("Главная", "Home", "בית"), index: "01" },
-  { href: "/projects", label: L("Проекты", "Work", "עבודות"), index: "02" },
+  { href: "/projects", label: L("Проекты", "Projects", "עבודות"), index: "02" },
   { href: "/courses", label: L("Курсы", "Courses", "קורסים"), index: "03" },
   { href: "/about", label: L("Обо мне", "About", "אודות"), index: "04" },
   { href: "/contact", label: L("Контакт", "Contact", "צור קשר"), index: "05" },
@@ -134,10 +66,9 @@ export const NAV: { href: string; label: Localized; index: string }[] = [
 /* ------------------------------------------------------------------ */
 
 export const STATS: { value: string; label: Localized }[] = [
-  { value: "10+", label: L("продуктов собрано", "products shipped", "מוצרים נבנו") },
-  { value: "16", label: L("AI-агентов в работе", "AI agents in the loop", "סוכני AI בעבודה") },
-  { value: "3", label: L("языка интерфейса", "interface languages", "שפות ממשק") },
-  { value: "1", label: L("человек — весь стек", "person — full stack", "אדם — כל הסטאק") },
+{ value: "01", label: L("Продуктовый дизайн и управление", "Product Designer", "עיצוב וניהול מוצר") },
+{ value: "02", label: L("Разработка AI-продуктов", "AI Product Builder", "פיתוח מוצרי AI") },
+{ value: "03", label: L("Преподавание", "Lecturer", "הוראה") }
 ];
 
 /* ------------------------------------------------------------------ */
@@ -216,18 +147,30 @@ export const PROJECTS: Project[] = [
     statuses: ["live", "wip"],
     accent: true,
     url: "https://mc-landing-swart.vercel.app",
-    tagline: L(
-      "Команда AI-агентов, которая превращает бриф в задеплоенный код.",
-      "A team of AI agents that turns a brief into shipped code.",
-      "צוות סוכני AI שהופך בריף לקוד מוכן לפרודקשן."
-    ),
-    description: L(
-      "Платформа-конвейер: бриф на входе → 12 AI-агентов (PM, архитектор, разработчик, QA, безопасность) проходят quality-gates → на выходе репозиторий на GitHub и превью на Vercel. Флагманский продукт.",
-      "A pipeline platform: a brief goes in → 12 AI agents (PM, architect, dev, QA, security) pass quality gates → out comes a GitHub repo and a Vercel preview. The flagship product.",
-      "פלטפורמת פייפליין: בריף נכנס → 12 סוכני AI (PM, ארכיטקט, מפתח, QA, אבטחה) עוברים בקרות איכות → בפלט ריפו ב-GitHub ותצוגה ב-Vercel. מוצר הדגל."
-    ),
+    tagline: L("Многоагентная работа с контролем человеком.", "Multi-agent work with human oversight.", "עבודה מרובת סוכנים עם בקרה אנושית."),
+    description: L("Многоагентный процесс: планирование продукта, архитектура, реализация и проверки качества с контролем человеком.", "A multi-agent workflow connecting product planning, architecture, implementation and quality checks with human oversight.", "תהליך מרובה סוכנים לתכנון מוצר, ארכיטקטורה, פיתוח ובדיקות איכות עם בקרה אנושית."),
+
     role: L("Основатель · продукт и инженерия", "Founder · product & engineering", "מייסד · מוצר והנדסה"),
     tags: ["AI", "Multi-agent", "Next.js", "Pipeline"],
+  },
+  {
+    slug: "cyberguard",
+    title: "CyberGuard",
+    year: "2026",
+    statuses: ["live", "wip"],
+    url: "https://cyberguard-mc.vercel.app",
+    tagline: L(
+      "Личная кибербезопасность: проверка цифрового следа и план по его защите.",
+      "Personal cyber security: check your digital footprint, then close the gaps.",
+      "אבטחת סייבר אישית: בדיקת הטביעה הדיגיטלית ותוכנית לסגירת הפערים."
+    ),
+    description: L(
+      "Проверяем email и телефон по известным утечкам, собираем цифровой след и считаем Cyber Health Score — а дальше выдаём понятный план: пароли, 2FA, настройки приватности. Превенция, а не разбор последствий. Трёхъязычный интерфейс с RTL.",
+      "Checks your email and phone against known breaches, maps your digital footprint and computes a Cyber Health Score — then hands you a plain plan: passwords, 2FA, privacy settings. Prevention, not damage control. Trilingual UI with RTL.",
+      "בודק אימייל וטלפון מול דליפות ידועות, ממפה את הטביעה הדיגיטלית ומחשב Cyber Health Score — ואז נותן תוכנית ברורה: סיסמאות, 2FA, הגדרות פרטיות. מניעה, לא ניהול נזקים. ממשק תלת-לשוני עם RTL."
+    ),
+    role: L("Партнёр · продукт и инженерия", "Partner · product & engineering", "שותף · מוצר והנדסה"),
+    tags: ["Security", "OSINT", "Trilingual", "Next.js"],
   },
   {
     slug: "master-daily",
@@ -292,16 +235,8 @@ export const PROJECTS: Project[] = [
     year: "2025",
     statuses: ["live", "wip"],
     url: "https://uxi-entry-course.vercel.app",
-    tagline: L(
-      "Платформа живого курса по UX/UI — 13 встреч.",
-      "A live UX/UI course platform — 13 meetings.",
-      "פלטפורמת קורס חי ל-UX/UI — 13 מפגשים."
-    ),
-    description: L(
-      "Учебная платформа для авторского курса: программа на 13 встреч, видео-уроки, домашние задания и геймификация прогресса. Авто-деплой через Vercel.",
-      "A learning platform for an author-led course: a 13-meeting curriculum, video lessons, homework and gamified progress. Auto-deployed via Vercel.",
-      "פלטפורמת לימוד לקורס אישי: תכנית ל-13 מפגשים, שיעורי וידאו, שיעורי בית והתקדמות עם גיימיפיקציה. דיפלוי אוטומטי ב-Vercel."
-    ),
+    tagline: L("Платформа обучения UX/UI.", "A UX/UI learning platform.", "פלטפורמת לימוד UX/UI."),
+    description: L("Учебные материалы, задания, прототипирование и итоговый проект. Разбор структуры курса и существующих материалов.", "Learning material, assignments, prototyping and a final project. A closer look at the course structure and existing material.", "חומרי לימוד, משימות, יצירת אב טיפוס ופרויקט גמר. מבט על מבנה הקורס והחומרים הקיימים."),
     role: L("Платформа и контент-движок", "Platform & content engine", "פלטפורמה ומנוע תוכן"),
     tags: ["EdTech", "Course platform", "Video"],
   },
@@ -310,7 +245,7 @@ export const PROJECTS: Project[] = [
     title: "CV Creator",
     year: "2025",
     statuses: ["wip"],
-    url: "https://cv-creator.vercel.app",
+    url: "https://cv-creator-one-woad.vercel.app/",
     tagline: L(
       "AI-конструктор резюме с публикацией на хостинге.",
       "An AI résumé builder that publishes to a hosted page.",

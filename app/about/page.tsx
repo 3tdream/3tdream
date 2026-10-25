@@ -46,13 +46,37 @@ export default function AboutPage() {
           </div>
 
           <p className="mt-6 max-w-2xl text-lg text-ink-soft">{t(PROFILE.bio)}</p>
+          <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <a
+            href="/downloads/Michael_Shigrin_Sokol_CV.pdf"
+            download="Michael_Shigrin_Sokol_CV.pdf"
+            className="inline-flex min-h-11 items-center justify-center gap-2 bg-paper text-ink px-6 py-3 text-center font-bold hard-border hover-shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+          >
+            {t(L(
+              "Скачать CV (PDF, на английском)",
+              "Download CV (PDF, English)",
+              "הורדת קורות חיים (PDF, באנגלית)"
+            ))}
+          </a>
+          <a
+            href="/downloads/Michael_Shigrin_Sokol_CV.docx"
+            download="Michael_Shigrin_Sokol_CV.docx"
+            className="inline-flex min-h-11 items-center justify-center gap-2 bg-paper text-ink px-6 py-3 text-center font-bold hard-border hover-shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+          >
+            {t(L(
+              "Скачать CV — Word (.docx, на английском)",
+              "Download CV — Word (.docx, English)",
+              "הורדת קורות חיים — Word (.docx, באנגלית)"
+            ))}
+          </a>
+          </div>
         </div>
       </section>
 
       {/* stats — same light bordered grid + accent numbers as Home */}
       <section className="border-b-2 border-ink">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-12 sm:py-16">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-ink hard-border">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-ink hard-border">
             {STATS.map((s) => (
               <div key={s.value} className="bg-paper p-5 sm:p-6">
                 <div className="text-4xl sm:text-5xl font-extrabold display text-accent">
@@ -75,13 +99,27 @@ export default function AboutPage() {
           className="mb-12 text-xs text-muted"
           style={{ fontFamily: "var(--font-mono)" }}
         >
-          {t(L("даты ориентировочные", "dates are approximate", "התאריכים משוערים"))}
+          {t(L("Подтверждённая хронология", "Confirmed experience", "ניסיון מאומת"))}
         </p>
         <div className="max-w-3xl">
           <Timeline />
         </div>
       </section>
 
+      <section className="mx-auto max-w-[1400px] px-6 pb-12">
+        <h2 className="text-2xl font-bold">{t(L("Образование", "Education", "השכלה"))}</h2>
+        <div className="mt-6 space-y-6">
+          <div>
+            <h3 className="text-lg font-bold">{t(L("Степень бакалавра в области дизайна и медиа", "Bachelor’s degree in Design and Media", "תואר ראשון בעיצוב ומדיה"))}</h3>
+            <p className="mt-1 text-ink-soft">{t(L("Специализация: 3D", "Specialization: 3D", "התמחות בתלת־ממד"))}</p>
+            <p className="mt-1 text-ink-soft">{t(L("Тильтан", "Tiltan", "תילתן"))} · <bdi>2008–2012</bdi></p>
+          </div>
+          <div>
+            <h3 className="text-lg font-bold">{t(L("Диплом практического инженера по электронике и компьютерам", "Practical Engineer Diploma in Electronics and Computers", "הנדסאי אלקטרוניקה ומחשבים"))}</h3>
+            <p className="mt-1 text-ink-soft">{t(L("Мидрашият ха-Галиль", "Midrashiyat HaGalil", "מדרשיית הגליל"))} · <bdi>2001–2003</bdi></p>
+          </div>
+        </div>
+      </section>
       {/* stack */}
       <section className="border-t-2 border-ink bg-paper-alt">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 sm:py-20">

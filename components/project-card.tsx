@@ -2,11 +2,14 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { useI18n } from "@/lib/i18n";
+import { useI18n, L } from "@/lib/i18n";
 import type { Project } from "@/lib/content";
-import { StatusBadge } from "./status-badge";
+import Link from "next/link";
+import Image from "next/image";
+import { hasCase } from "@/lib/case-slugs";
+import { CASES } from "@/lib/cases";
 
-export function ProjectCard({ project, index }: { project: Project; index: number }) {
+export function ProjectCard({ project, index, showImage = true }: { project: Project; index: number; showImage?: boolean }) {
   const { t } = useI18n();
   const num = String(index + 1).padStart(2, "0");
 
@@ -22,6 +25,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         project.accent ? "hover-shadow-accent" : "hover-shadow",
       ].join(" ")}
     >
+      {showImage && CASES[project.slug] ? <Image src={CASES[project.slug].figures[0].src} alt={t(CASES[project.slug].figures[0].caption)} width={CASES[project.slug].figures[0].width} height={CASES[project.slug].figures[0].height} sizes="(max-width: 768px) 100vw, 50vw" className="w-full aspect-[16/10] object-contain bg-paper-alt border border-ink/20 mb-6" /> : null}
       {/* top row */}
       <div className="flex items-start justify-between gap-3">
         <span
@@ -31,9 +35,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
           {num}
         </span>
         <div className="flex flex-wrap items-center justify-end gap-1.5">
-          {project.statuses.map((s) => (
-            <StatusBadge key={s} status={s} />
-          ))}
+
         </div>
       </div>
 
@@ -45,9 +47,9 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         )}
       </div>
 
-      <p className="mt-2 text-sm font-medium text-ink-soft">{t(project.tagline)}</p>
+      <p className="mt-3 text-base font-medium leading-relaxed text-ink-soft">{t(CASES[project.slug]?.intro ?? project.tagline)}</p>
       <p className="mt-3 text-sm text-muted leading-relaxed flex-1">
-        {t(project.description)}
+        {t(CASES[project.slug]?.deliverable ?? project.description)}
       </p>
 
       {/* role */}
@@ -69,15 +71,11 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
           </span>
         ))}
       </div>
+      <p className="mt-6 pt-4 border-t border-ink/20 font-bold text-sm text-accent">{hasCase(project.slug) ? t(L("Читать кейс", "Read case study", "לקריאת מקרה הבוחן")) : t(L("Открыть проект", "Open project", "פתיחת הפרויקט"))} <span aria-hidden>↗</span></p>
     </motion.article>
   );
 
-  if (project.url) {
-    return (
-      <a href={project.url} target="_blank" rel="noopener noreferrer" className="block h-full">
-        {Inner}
-      </a>
-    );
-  }
+  if (hasCase(project.slug)) return <Link href={`/projects/${project.slug}`} className="block h-full">{Inner}</Link>;
+  if (project.url) return <a href={project.url} target="_blank" rel="noopener noreferrer" className="block h-full">{Inner}</a>;
   return Inner;
 }

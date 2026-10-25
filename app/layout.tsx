@@ -3,12 +3,12 @@ import "./globals.css";
 import { SiteShell } from "@/components/site-shell";
 
 export const metadata: Metadata = {
-  title: "3TDream — Time To Team Dream",
+  title: "Michael Shigrin Sokol | Product Designer",
   description:
-    "Digital products from brief to production. Web apps, AI agents and booking bots — designed and shipped end to end.",
+    "Product Designer · AI Product Builder · Lecturer. Web apps, AI agents and booking bots — designed and shipped end to end.",
   openGraph: {
-    title: "3TDream — Time To Team Dream",
-    description: "Digital products from brief to production.",
+    title: "Michael Shigrin Sokol | Product Designer",
+    description: "Product Designer · AI Product Builder · Lecturer.",
     type: "website",
   },
 };
