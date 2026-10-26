@@ -6,11 +6,11 @@ import { PROJECTS } from "@/lib/content";
 import { CASES, type CaseFigure } from "@/lib/cases";
 import { useI18n, L } from "@/lib/i18n";
 
-function EvidenceFigure({ figure, priority = false }: { figure: CaseFigure; priority?: boolean }) {
+function EvidenceFigure({ figure, priority = false, cover = false }: { figure: CaseFigure; priority?: boolean; cover?: boolean }) {
   const { t } = useI18n();
   return <figure>
     <a href={figure.src} target="_blank" rel="noopener noreferrer" className="block hard-border bg-paper-alt p-2 sm:p-4 focus-visible:outline-offset-4" aria-label={t(L("Открыть экран в полном размере", "Open full-size screen", "פתיחת המסך בגודל מלא"))}>
-      <Image src={figure.src} alt={t(figure.caption)} width={figure.width} height={figure.height} priority={priority} sizes="(max-width: 768px) 100vw, 1000px" className="w-full max-h-[640px] object-contain" />
+      <Image src={figure.src} alt={t(figure.caption)} width={figure.width} height={figure.height} priority={priority} sizes={cover ? "(max-width: 1400px) 100vw, 1320px" : "(max-width: 768px) 100vw, 1000px"} className={cover ? "block w-full h-auto" : "block w-auto max-w-full h-auto max-h-[640px] mx-auto"} />
     </a>
     <figcaption className="mt-3 flex items-start gap-3 text-sm text-muted leading-relaxed">
       <span className="flex-1">{t(figure.caption)}</span><ArrowUpRight aria-hidden className="w-4 h-4 shrink-0 mt-1" />
@@ -34,7 +34,7 @@ export function ProjectDetail({ slug }: { slug: string }) {
         <div className="p-5 sm:p-6"><dt className="label text-muted">{t(L("Что создано", "Deliverable", "התוצר"))}</dt><dd className="mt-3 text-lg font-semibold">{t(study.deliverable)}</dd></div>
       </dl>
     </header>
-    <EvidenceFigure figure={study.figures[0]} priority />
+    <EvidenceFigure figure={study.figures[0]} priority cover />
     <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 pt-14 sm:pt-20">
       <nav aria-label={t(L("Разделы кейса", "Case sections", "פרקי המקרה"))} className="lg:col-span-3">
         <ol className="grid sm:grid-cols-2 lg:grid-cols-1 gap-3 lg:sticky lg:top-24">
