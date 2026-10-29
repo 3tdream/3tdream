@@ -261,7 +261,7 @@ export default function HomePage() {
             {t(L("Запустим ваш продукт", "Let's work together", "בואו נשיק את המוצר"))}
           </h2>
           <Link
-            href="/contact"
+            href="/contact#lead-form"
             className="mt-8 inline-flex items-center gap-2 bg-paper text-ink px-7 py-4 font-bold hard-shadow hover:bg-lime transition-colors"
           >
             {t(L("Написать мне", "Get in touch", "דברו איתי"))}

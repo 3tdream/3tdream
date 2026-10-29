@@ -1,4 +1,95 @@
 import { L, type Localized } from "./localized";
+import type { ValidationErrorKey } from "@/types/lead";
+
+/* ------------------------------------------------------------------ */
+/* LEAD FORM (MC-557) — trilingual lead-capture copy for /contact.     */
+/* Options (role/industry/companySize/replyLang) live in                */
+/* lib/lead-values.ts as the single source of truth; this file only     */
+/* carries field labels, placeholders, and status copy.                 */
+/* ------------------------------------------------------------------ */
+
+export const LEAD_FORM = {
+  title: L("Обсудим проект", "Let's talk about your project", "בואו נדבר על הפרויקט"),
+  subtitle: L(
+    "Коротко опишите задачу — отвечу на удобном вам языке.",
+    "Describe your task briefly — I'll reply in your preferred language.",
+    "תארו בקצרה את המשימה — אשיב בשפה שתבחרו."
+  ),
+  fields: {
+    name: {
+      label: L("Имя", "Name", "שם"),
+      placeholder: L("Как к вам обращаться", "How should I address you", "איך לפנות אליכם"),
+    },
+    contact: {
+      label: L("Контакт", "Contact", "פרטי קשר"),
+      placeholder: L("Email, телефон или мессенджер", "Email, phone, or messenger", "אימייל, טלפון או מסנג'ר"),
+    },
+    role: {
+      label: L("Роль", "Role", "תפקיד"),
+      placeholder: L("Выберите роль", "Select a role", "בחרו תפקיד"),
+    },
+    industry: {
+      label: L("Индустрия", "Industry", "תעשייה"),
+      placeholder: L("Выберите индустрию", "Select an industry", "בחרו תעשייה"),
+    },
+    companySize: {
+      label: L("Размер компании", "Company size", "גודל החברה"),
+      placeholder: L("Выберите размер", "Select a size", "בחרו גודל"),
+    },
+    replyLang: {
+      label: L("Язык ответа", "Reply language", "שפת המענה"),
+    },
+    brief: {
+      label: L("Задача", "Brief", "תיאור המשימה"),
+      placeholder: L(
+        "Расскажите о проекте и сроках",
+        "Tell me about the project and timeline",
+        "ספרו על הפרויקט ועל לוחות הזמנים"
+      ),
+    },
+  },
+  submit: L("Отправить", "Send", "שליחה"),
+  submitting: L("Отправка…", "Sending…", "שולח…"),
+  success: L(
+    "Спасибо! Сообщение отправлено, отвечу в ближайшее время.",
+    "Thanks! Your message is on its way — I'll reply soon.",
+    "תודה! ההודעה נשלחה, אחזור אליכם בהקדם."
+  ),
+  genericError: L(
+    "Не удалось отправить. Попробуйте ещё раз.",
+    "Couldn't send that. Please try again.",
+    "השליחה נכשלה. נסו שוב."
+  ),
+} as const;
+
+export function leadErrorMessage(key: ValidationErrorKey): Localized {
+  switch (key) {
+    case "name_required":
+      return L("Укажите имя", "Please enter your name", "נא להזין שם");
+    case "contact_required":
+      return L("Укажите контакт для связи", "Please enter a contact", "נא להזין פרטי קשר");
+    case "role_required":
+      return L("Выберите роль", "Please select a role", "נא לבחור תפקיד");
+    case "industry_required":
+      return L("Выберите индустрию", "Please select an industry", "נא לבחור תעשייה");
+    case "companySize_required":
+      return L("Выберите размер компании", "Please select a company size", "נא לבחור גודל חברה");
+    case "brief_required":
+      return L("Опишите задачу", "Please describe your task", "נא לתאר את המשימה");
+    case "brief_length":
+      return L(
+        "Описание слишком короткое или длинное",
+        "Brief is too short or too long",
+        "התיאור קצר מדי או ארוך מדי"
+      );
+    case "replyLang_required":
+      return L("Выберите язык ответа", "Please select a reply language", "נא לבחור שפת מענה");
+    case "formRenderedAt_invalid":
+      return LEAD_FORM.genericError;
+    default:
+      return LEAD_FORM.genericError;
+  }
+}
 
 /* ------------------------------------------------------------------ */
 /* BRAND                                                               */
