@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useI18n, L } from "@/lib/i18n";
 import { BRAND, CONTACT_CTA } from "@/lib/content";
 import { ContactButtons } from "@/components/contact-buttons";
+import { LeadForm } from "@/components/lead-form";
 
 export default function ContactPage() {
   const { t } = useI18n();
@@ -62,6 +63,10 @@ export default function ContactPage() {
               )}
             </p>
           </motion.div>
+        </div>
+
+        <div className="mt-16 sm:mt-24 max-w-3xl">
+          <LeadForm />
         </div>
       </div>
     </div>
