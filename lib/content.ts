@@ -1,4 +1,5 @@
 import { L, type Localized } from "./localized";
+import type { ReplyLang } from "@/types/lead";
 
 /* ------------------------------------------------------------------ */
 /* BRAND                                                               */
@@ -420,3 +421,86 @@ export const DESIGN = {
     },
   ] as Discipline[],
 };
+
+/* ------------------------------------------------------------------ */
+/* LEAD FORM  — trilingual copy for components/lead-form.tsx           */
+/* (MC-557 / ADR-001). Field-level error mapping lives in              */
+/* leadErrorMessage() below so both client and any future consumer     */
+/* share one localization source for server-returned zod errors.       */
+/* ------------------------------------------------------------------ */
+
+// Page-level copy for app/contact/page.tsx — distinct from LEAD_FORM below,
+// which only covers the form widget itself (field labels, submit/status
+// copy). Keeps the page header/intro reusable even if the form ever moves.
+export const CONTACT_PAGE = {
+  index: "05",
+  eyebrow: L("Контакт", "Contact", "צור קשר"),
+  heading: L("Давайте сделаем продукт", "Let's build the product", "בואו נבנה את המוצר"),
+  intro: L(
+    "Опишите задачу в форме ниже, либо напишите напрямую — отвечаю обычно в течение дня.",
+    "Describe the project in the form below, or reach out directly — I usually reply within a day.",
+    "תארו את הפרויקט בטופס למטה, או צרו קשר ישירות — אני עונה בדרך כלל תוך יום."
+  ),
+} as const;
+
+export const LEAD_FORM = {
+  heading: L("Расскажите о проекте", "Tell me about your project", "ספרו לי על הפרויקט"),
+  subheading: L(
+    "Коротко опишите задачу — отвечу в выбранном вами языке.",
+    "Describe the task briefly — I'll reply in your chosen language.",
+    "תארו בקצרה את המשימה — אני אענה בשפה שתבחרו."
+  ),
+  fields: {
+    name: L("Имя", "Name", "שם"),
+    contact: L("Контакт (email / телефон / Telegram)", "Contact (email / phone / Telegram)", "פרטי קשר (אימייל / טלפון / טלגרם)"),
+    role: L("Роль", "Role", "תפקיד"),
+    roleOther: L("Уточните роль", "Specify your role", "פרטו את התפקיד"),
+    industry: L("Индустрия", "Industry", "תחום"),
+    industryOther: L("Уточните индустрию", "Specify your industry", "פרטו את התחום"),
+    companySize: L("Размер компании", "Company size", "גודל החברה"),
+    brief: L("Опишите задачу", "Describe the project", "תארו את הפרויקט"),
+    replyLang: L("Язык ответа", "Reply language", "שפת מענה"),
+  },
+  submit: L("Отправить", "Send", "שליחה"),
+  submitting: L("Отправка…", "Sending…", "שולח…"),
+  success: L(
+    "Спасибо! Сообщение получено, отвечу в ближайшее время.",
+    "Thanks! Your message is in — I'll reply soon.",
+    "תודה! ההודעה התקבלה, אחזור אליכם בקרוב."
+  ),
+  genericError: L(
+    "Что-то пошло не так. Попробуйте ещё раз или напишите напрямую.",
+    "Something went wrong. Please try again or reach out directly.",
+    "משהו השתבש. נסו שוב או צרו קשר ישירות."
+  ),
+} as const;
+
+// Maps a server-returned zod field error (field name + raw zod message) to a
+// localized display string. Falls back to a generic "required" copy when the
+// field has no dedicated mapping, so an unexpected zod message never leaks
+// English internals to a RU/HE visitor.
+export function leadErrorMessage(field: string, _zodMessage: string, lang: ReplyLang): string {
+  const required: Record<ReplyLang, string> = {
+    ru: "Это поле обязательно для заполнения.",
+    en: "This field is required.",
+    he: "שדה זה הוא חובה.",
+  };
+  const perField: Record<string, Record<ReplyLang, string>> = {
+    brief: {
+      ru: "Пожалуйста, опишите задачу — поле не может быть пустым.",
+      en: "Please describe the project — this field can't be empty.",
+      he: "נא לתאר את הפרויקט — שדה זה לא יכול להיות ריק.",
+    },
+    contact: {
+      ru: "Укажите email, телефон или Telegram для связи.",
+      en: "Please provide an email, phone, or Telegram handle.",
+      he: "נא לציין אימייל, טלפון או משתמש טלגרם.",
+    },
+    formRenderedAt: {
+      ru: "Не удалось отправить форму. Обновите страницу и попробуйте снова.",
+      en: "Couldn't submit the form. Please refresh and try again.",
+      he: "לא ניתן היה לשלוח את הטופס. רענן ונסה שוב.",
+    },
+  };
+  return perField[field]?.[lang] ?? required[lang];
+}
