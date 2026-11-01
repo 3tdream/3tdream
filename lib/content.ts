@@ -282,6 +282,34 @@ export type Course = {
 
 export const COURSES: Course[] = [
   {
+    slug: "ai-fundamentals",
+    title: "AI Fundamentals",
+    level: L("Для начинающих · старт скоро", "For beginners · starting soon", "למתחילים · מתחיל בקרוב"),
+    tagline: L(
+      "Основы искусственного интеллекта — от понятий к практике и приёмам работы с AI-инструментами.",
+      "AI fundamentals — from the concepts to practice and working habits with AI tools.",
+      "יסודות ה-AI — מהמושגים לפרקטיקה ולעבודה עם כלי AI."
+    ),
+    description: L(
+      "Интерактивный курс: разбираем, что происходит внутри «чёрного ящика» — от математики больших языковых моделей до автономных агентов — и зачем это понимать человеку, который просто пользуется AI. Программа ещё собирается: опубликован первый модуль, дату старта объявлю отдельно.",
+      "An interactive course: what actually happens inside the black box — from the math behind large language models to autonomous agents — and why it matters to someone who simply uses AI. The curriculum is still being assembled: the first module is published, the start date will be announced.",
+      "קורס אינטראקטיבי: מה קורה בתוך ה\"קופסה השחורה\" — מהמתמטיקה של מודלי שפה גדולים ועד סוכנים אוטונומיים — ולמה זה חשוב למי שפשוט משתמש ב-AI. התוכנית עדיין נבנית: המודול הראשון פורסם, מועד הפתיחה יוכרז."
+    ),
+    meta: [
+      L("Пара 90 минут (2 × 45)", "A 90-minute session (2 × 45)", "מפגש 90 דקות (2 × 45)"),
+      L("Интерактивный формат", "Interactive format", "פורמט אינטראקטיבי"),
+      L("Модуль 1 опубликован", "Module 1 published", "מודול 1 פורסם"),
+      L("Программа в разработке", "Curriculum in progress", "התוכנית בבנייה"),
+    ],
+    audience: L(
+      "Для тех, кто пользуется AI и хочет понимать, как он устроен — без математического бэкграунда.",
+      "For people who use AI and want to understand how it works — no maths background needed.",
+      "למי שמשתמש ב-AI ורוצה להבין איך זה עובד — בלי רקע במתמטיקה."
+    ),
+    url: "https://ai-fundamentals-mc.vercel.app/",
+    cta: L("Смотреть программу", "See the programme", "לצפייה בתוכנית"),
+  },
+  {
     slug: "uxi",
     title: "UXI — UX/UI",
     level: L("С нуля · для начинающих", "From scratch · beginners", "מאפס · למתחילים"),
@@ -336,34 +364,6 @@ export const COURSES: Course[] = [
     ),
     url: "/courses/bridge-agent",
     cta: L("Читать курс", "Read the course", "לקריאת הקורס"),
-  },
-  {
-    slug: "ai-fundamentals",
-    title: "AI Fundamentals",
-    level: L("Для начинающих · старт скоро", "For beginners · starting soon", "למתחילים · מתחיל בקרוב"),
-    tagline: L(
-      "Основы искусственного интеллекта — от понятий к практике и приёмам работы с AI-инструментами.",
-      "AI fundamentals — from the concepts to practice and working habits with AI tools.",
-      "יסודות ה-AI — מהמושגים לפרקטיקה ולעבודה עם כלי AI."
-    ),
-    description: L(
-      "Интерактивный курс: разбираем, что происходит внутри «чёрного ящика» — от математики больших языковых моделей до автономных агентов — и зачем это понимать человеку, который просто пользуется AI. Программа ещё собирается: опубликован первый модуль, дату старта объявлю отдельно.",
-      "An interactive course: what actually happens inside the black box — from the math behind large language models to autonomous agents — and why it matters to someone who simply uses AI. The curriculum is still being assembled: the first module is published, the start date will be announced.",
-      "קורס אינטראקטיבי: מה קורה בתוך ה\"קופסה השחורה\" — מהמתמטיקה של מודלי שפה גדולים ועד סוכנים אוטונומיים — ולמה זה חשוב למי שפשוט משתמש ב-AI. התוכנית עדיין נבנית: המודול הראשון פורסם, מועד הפתיחה יוכרז."
-    ),
-    meta: [
-      L("Пара 90 минут (2 × 45)", "A 90-minute session (2 × 45)", "מפגש 90 דקות (2 × 45)"),
-      L("Интерактивный формат", "Interactive format", "פורמט אינטראקטיבי"),
-      L("Модуль 1 опубликован", "Module 1 published", "מודול 1 פורסם"),
-      L("Программа в разработке", "Curriculum in progress", "התוכנית בבנייה"),
-    ],
-    audience: L(
-      "Для тех, кто пользуется AI и хочет понимать, как он устроен — без математического бэкграунда.",
-      "For people who use AI and want to understand how it works — no maths background needed.",
-      "למי שמשתמש ב-AI ורוצה להבין איך זה עובד — בלי רקע במתמטיקה."
-    ),
-    url: "https://ai-fundamentals-mc.vercel.app/",
-    cta: L("Смотреть программу", "See the programme", "לצפייה בתוכנית"),
   },
 ];
 
