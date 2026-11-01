@@ -362,7 +362,7 @@ export const COURSES: Course[] = [
       "For people who use AI and want to understand how it works — no maths background needed.",
       "למי שמשתמש ב-AI ורוצה להבין איך זה עובד — בלי רקע במתמטיקה."
     ),
-    url: "https://ai-fundamentals-mu.vercel.app/",
+    url: "https://ai-fundamentals-mc.vercel.app/",
     cta: L("Смотреть программу", "See the programme", "לצפייה בתוכנית"),
   },
 ];
