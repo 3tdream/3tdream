@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useI18n, L } from "@/lib/i18n";
 import { BRAND, CONTACTS, NAV } from "@/lib/content";
+import { SubscribeForm } from "@/components/subscribe-form";
 
 export function Footer() {
   const { t } = useI18n();
@@ -12,7 +13,7 @@ export function Footer() {
   return (
     <footer className="border-t-2 border-ink bg-ink text-paper">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-12">
-        <div className="grid gap-10 md:grid-cols-3">
+        <div className="grid gap-10 md:grid-cols-4">
           {/* Brand */}
           <div>
             <div className="text-3xl font-extrabold display">3TDream</div>
@@ -67,6 +68,14 @@ export function Footer() {
                 </li>
               ))}
             </ul>
+          </div>
+
+          {/* Subscribe */}
+          <div>
+            <div className="label text-paper/50 mb-4">
+              {t(L("Build Notes", "Build Notes", "Build Notes"))}
+            </div>
+            <SubscribeForm key="footer-subscribe-form" />
           </div>
         </div>
 

@@ -80,3 +80,37 @@ the optional `LEAD_WEBHOOK_URL`, `LEAD_TO_EMAIL`, `RESEND_API_KEY` variables).
 contact channels. It picks role/industry/company-size options from `lib/lead-values.ts`
 (with an "other" free-text fallback) and localizes all copy via `lib/i18n.tsx`'s `L(ru, en, he)`
 helper, independent of the `replyLang` the visitor selects for the reply itself.
+
+## Build Notes subscription (double opt-in, no database)
+A footer-embedded one-field email subscription (`components/subscribe-form.tsx`) backed by two
+stateless, unversioned public endpoints — no subscriber table, no persistence anywhere. The
+signed token mailed to the subscriber is the **sole** state carrier.
+
+- `POST /api/subscribe` — validates `{ email, replyLang, company_website?, formRenderedAt }`
+  via `lib/validation/subscribe-schema.ts` (Zod), filters bots (honeypot + time-trap, same
+  pattern as `/api/lead`), and on a real submission issues a signed HMAC token
+  (`lib/subscribe-token.ts`) embedded in a confirm link, emailed via
+  `lib/subscribe-delivery.ts`. Always returns `202 { ok: true, delivered }` — byte-identical
+  whether the email is new, already subscribed, bot-detected, or undeliverable, so the
+  endpoint never leaks subscription state. Schema failures return `400 { ok: false, errors }`.
+- `GET /api/subscribe/confirm?token=...` — verifies the token (`verifySubscribeToken`:
+  base64url shape check → `timingSafeEqual` MAC compare → `JSON.parse`, in that order, and
+  never throws), sends the owner-notice email if the token is valid and unexpired, then
+  redirects `303` to `/subscribe/done` or `/subscribe/invalid`. Never returns JSON, never 500s
+  on malformed/tampered/expired tokens.
+
+**Token:** `base64url(JSON.stringify({ email, exp, nonce }))` + `.` + HMAC-SHA256 signature,
+signed/verified with `SUBSCRIBE_TOKEN_SECRET`. TTL is 24h with zero clock-skew grace
+(`exp < Date.now()` is rejected, nothing earlier).
+
+**Degrade path:** if `SUBSCRIBE_TOKEN_SECRET`, `SITE_URL`, or `RESEND_API_KEY` is unset, both
+routes still respond normally (`202`/`303`) but log `[subscribe] not configured` and skip
+delivery — previews never break due to missing secrets.
+
+**Frontend:** `components/subscribe-form.tsx` is a client component embedded in the site
+footer. It stamps `formRenderedAt` on mount, carries a visually/programmatically hidden
+honeypot field (`company_website`), and defaults `replyLang` to the visitor's current site
+language from `lib/i18n`. All copy (label, placeholder, submit/submitting/success/error) comes
+from `SUBSCRIBE_FORM` in `lib/content.ts` — trilingual, no hardcoded strings. `app/subscribe/done/page.tsx`
+and `app/subscribe/invalid/page.tsx` are the static redirect targets for the confirm route,
+rendering `SUBSCRIBE_DONE_PAGE` / `SUBSCRIBE_INVALID_PAGE` content with a link back home.

@@ -522,6 +522,50 @@ export const LEAD_FORM = {
   ),
 } as const;
 
+/* ------------------------------------------------------------------ */
+/* SUBSCRIBE FORM (footer "Build Notes" double opt-in, MC-557)         */
+/* Copy is identical regardless of what the server actually did (new /  */
+/* already-subscribed / bot-filtered) — the UI must never reveal which. */
+/* ------------------------------------------------------------------ */
+
+export const SUBSCRIBE_FORM = {
+  label: L("Build Notes на email", "Build Notes by email", "Build Notes במייל"),
+  placeholder: L("you@example.com", "you@example.com", "you@example.com"),
+  submit: L("Подписаться", "Subscribe", "הרשמה"),
+  submitting: L("Отправка…", "Sending…", "שולח…"),
+  success: L(
+    "Если адрес верный, письмо с подтверждением уже в пути.",
+    "If the address is valid, a confirmation email is on its way.",
+    "אם הכתובת תקינה, מייל אישור כבר בדרך."
+  ),
+  genericError: L(
+    "Не удалось отправить форму. Попробуйте ещё раз.",
+    "Couldn't submit the form. Please try again.",
+    "לא ניתן היה לשלוח את הטופס. נסו שוב."
+  ),
+  honeypotLabel: L("Не заполняйте это поле", "Leave this field blank", "השאירו שדה זה ריק"),
+} as const;
+
+export const SUBSCRIBE_DONE_PAGE = {
+  title: L("Подписка подтверждена", "Subscription confirmed", "ההרשמה אושרה"),
+  body: L(
+    "Спасибо! Теперь вы будете получать Build Notes на почту.",
+    "Thanks! You'll now receive Build Notes by email.",
+    "תודה! מעכשיו תקבלו את Build Notes במייל."
+  ),
+  back: L("На главную", "Back to home", "בחזרה לדף הבית"),
+} as const;
+
+export const SUBSCRIBE_INVALID_PAGE = {
+  title: L("Ссылка недействительна", "Link invalid or expired", "הקישור לא תקין או פג תוקף"),
+  body: L(
+    "Эта ссылка подтверждения больше не действует. Попробуйте подписаться заново.",
+    "This confirmation link is no longer valid. Please try subscribing again.",
+    "קישור האישור הזה כבר לא תקף. נסו להירשם מחדש."
+  ),
+  back: L("На главную", "Back to home", "בחזרה לדף הבית"),
+} as const;
+
 // Maps a server-returned zod field error (field name + raw zod message) to a
 // localized display string. Falls back to a generic "required" copy when the
 // field has no dedicated mapping, so an unexpected zod message never leaks
