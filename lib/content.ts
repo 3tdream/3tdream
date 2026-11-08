@@ -130,13 +130,14 @@ export type ProjectStatus = "live" | "wip";
 export type Project = {
   slug: string;
   title: string;
-  year: string;
+  year?: string; // Omit when the project period has not been confirmed.
   statuses: ProjectStatus[]; // one or both of "live" / "wip"
   tagline: Localized;
   description: Localized;
   role: Localized;
   tags: string[];
   url?: string;
+  linkLabel?: Localized;
   accent?: boolean;
 };
 
@@ -148,11 +149,29 @@ export const PROJECTS: Project[] = [
     statuses: ["live", "wip"],
     accent: true,
     url: "https://mc-landing-swart.vercel.app",
-    tagline: L("Многоагентная работа с контролем человеком.", "Multi-agent work with human oversight.", "עבודה מרובת סוכנים עם בקרה אנושית."),
-    description: L("Многоагентный процесс: планирование продукта, архитектура, реализация и проверки качества с контролем человеком.", "A multi-agent workflow connecting product planning, architecture, implementation and quality checks with human oversight.", "תהליך מרובה סוכנים לתכנון מוצר, ארכיטקטורה, פיתוח ובדיקות איכות עם בקרה אנושית."),
-
-    role: L("Основатель · продукт и инженерия", "Founder · product & engineering", "מייסד · מוצר והנדסה"),
+    tagline: {"ru":"Дизайн процесса работы AI-агентов с проверками реальных файлов.","en":"Designing an AI-agent workflow checked against real files.","he":"עיצוב תהליך עבודה לסוכני AI עם בדיקות מול קבצים אמיתיים."},
+    description: {"ru":"Оркестрация AI-агентов и интерфейс контроля S0–S12","en":"AI-agent orchestration and an S0–S12 control interface","he":"תזמור סוכני AI וממשק בקרה לשלבים S0–S12"},
+    role: {"ru":"Product Designer: концепция, процесс и интерфейс","en":"Product Designer: concept, workflow and interface","he":"מעצב מוצר: קונספט, תהליך וממשק"},
     tags: ["AI", "Multi-agent", "Next.js", "Pipeline"],
+  },
+  {
+    slug: "sinornis",
+    title: "Sinornis",
+    statuses: [],
+    url: "https://www.sinornis.com/",
+    linkLabel: L("Сайт проекта", "Visit website", "לאתר הפרויקט"),
+    tagline: L(
+      "AI и IoT для птицеводства.",
+      "AI and IoT for poultry farming.",
+      "AI ו-IoT לענף הלול."
+    ),
+    description: L(
+      "Мой вклад: обновления UX/UI дашборда в рамках работы команды над существующим продуктом.",
+      "My contribution: dashboard UX/UI updates within an existing product and project team.",
+      "התרומה שלי: עדכוני UX/UI לדשבורד כחלק מצוות הפרויקט ובמסגרת מוצר קיים."
+    ),
+    role: L("Участие в UX/UI", "UX/UI contribution", "תרומה ל-UX/UI"),
+    tags: ["AgriTech", "Dashboard", "UX/UI"],
   },
   {
     slug: "cyberguard",

@@ -20,7 +20,7 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-50 bg-paper/90 backdrop-blur-sm border-b-2 border-ink">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10">
-        <div className="flex h-16 items-center justify-between gap-4">
+        <div className="flex h-16 items-center justify-between gap-2 sm:gap-4">
           {/* Brand */}
           <Link href="/" className="group flex items-center gap-2 shrink-0">
             <span
@@ -30,7 +30,7 @@ export function Nav() {
               3
             </span>
             <span className="flex flex-col leading-none">
-              <span className="text-lg font-extrabold tracking-tight display">3TDream</span>
+              <span className="text-base sm:text-lg font-extrabold tracking-tight display">3TDream</span>
               <span
                 className="hidden sm:block text-[10px] text-muted tracking-wide"
                 style={{ fontFamily: "var(--font-mono)" }}
@@ -41,7 +41,7 @@ export function Nav() {
           </Link>
 
           {/* Desktop nav */}
-          <nav aria-label="Primary" className="hidden md:flex items-center gap-1">
+          <nav aria-label="Primary" className="hidden lg:flex items-center gap-1">
             {NAV.map((item) => {
               const active = isActive(item.href);
               return (
@@ -65,12 +65,12 @@ export function Nav() {
             })}
           </nav>
 
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <LangSwitcher />
           </div>
 
           {/* Mobile controls */}
-          <div className="flex items-center gap-3 md:hidden">
+          <div className="flex items-center gap-2 sm:gap-3 lg:hidden">
             <LangSwitcher />
             <button
               onClick={() => setOpen((v) => !v)}
@@ -95,7 +95,7 @@ export function Nav() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="md:hidden overflow-hidden border-t-2 border-ink bg-paper"
+            className="lg:hidden overflow-hidden border-t-2 border-ink bg-paper"
           >
             <ul className="px-4 py-2">
               {NAV.map((item) => {

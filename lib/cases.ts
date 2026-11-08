@@ -1,28 +1,23 @@
 import { L, type Localized } from "./localized";
+import { MISSION_CONTROL } from "./mission-control";
 export type CaseFigure = { src: string; width: number; height: number; caption: Localized };
+export type CaseMeasurements = {
+  title: Localized; intro: Localized; period: Localized; note: Localized;
+  items: { label: Localized; value: string; note: Localized }[];
+};
 export type CaseStudy = {
   intro: Localized; role: Localized; deliverable: Localized; result: Localized;
   sections: { title: Localized; body: Localized }[];
-  figures: CaseFigure[]; evidenceNote: Localized;
+  figures: CaseFigure[]; evidenceNote: Localized; measurements?: CaseMeasurements;
 };
 export const CASES: Record<string, CaseStudy> = {
   "mission-control": {
-    intro: L("Как сделать работу AI-агентов понятной и доступной для проверки человеком.", "Making AI-agent work visible and reviewable by a person.", "להפוך את עבודת סוכני ה-AI לברורה וניתנת לבדיקה אנושית."),
-    role: L("Продукт и разработка", "Product & engineering", "מוצר ופיתוח"),
-    deliverable: L("Многоагентный процесс и интерфейс управления", "Multi-agent workflow & management interface", "תהליך מרובה סוכנים וממשק ניהול"),
-    result: L("Созданы этапы планирования, реализации и проверки, отслеживание задач и повторно используемые знания проекта.", "Built planning, implementation and review stages, task tracking and reusable project knowledge.", "נבנו שלבי תכנון, פיתוח ובדיקה, מעקב משימות וידע פרויקט לשימוש חוזר."),
-    sections: [
-      { title: L("Задача", "The problem", "האתגר"), body: L("Работа с несколькими AI-агентами требует общей структуры: кто выполняет задачу, какие этапы уже пройдены и что нужно проверить перед продолжением. Mission Control объединяет планирование продукта, архитектуру, реализацию, QA и проверку безопасности в одном процессе.", "Working with several AI agents requires a shared structure: who owns a task, which stages have been completed and what needs review before continuing. Mission Control connects product planning, architecture, implementation, QA and security review in one workflow.", "עבודה עם כמה סוכני AI דורשת מבנה משותף: מי אחראי למשימה, אילו שלבים הושלמו ומה דורש בדיקה לפני ההמשך. Mission Control מחבר תכנון מוצר, ארכיטקטורה, פיתוח, QA ובדיקות אבטחה בתהליך אחד.") },
-      { title: L("Моя роль", "My role", "התפקיד שלי"), body: L("Разработал многоагентный процесс, этапы согласования и проверки, отслеживание задач и знания проекта для повторного использования. Работал на стыке продукта и реализации: от структуры процесса до веб-приложения и API-интеграций.", "Built the multi-agent workflow, approval and verification stages, task tracking and reusable project knowledge. Worked across product and implementation: from workflow structure to the web application and API integrations.", "פיתחתי תהליך מרובה סוכנים, שלבי אישור ואימות, מעקב משימות וידע פרויקט לשימוש חוזר. עבדתי על המוצר ועל המימוש: ממבנה התהליך ועד אפליקציית הווב ואינטגרציות API.") },
-      { title: L("Решение: видимая структура", "Decision: make the structure visible", "החלטה: להציג את המבנה"), body: L("Architecture показывает связи между моделями, маршрутизацией, проверками и интеграциями. Отдельная карта Knowledge показывает связи сохранённых знаний. Такое разделение позволяет рассматривать устройство системы и её контекст отдельно.", "Architecture shows relationships among models, routing, checks and integrations. A separate Knowledge map shows relationships in stored knowledge. Separating these views allows the system structure and its context to be examined independently.", "Architecture מציג קשרים בין מודלים, ניתוב, בדיקות ואינטגרציות. מפת Knowledge נפרדת מציגה קשרים בידע שנשמר. ההפרדה מאפשרת לבחון בנפרד את מבנה המערכת ואת ההקשר שלה.") },
-      { title: L("Решение: проверка между этапами", "Decision: review between stages", "החלטה: בדיקה בין השלבים"), body: L("Этапы согласования и проверки встроены в процесс. Человек сохраняет контроль над продолжением работы, а задачи и знания остаются доступны для следующей итерации. Это основа процесса, а не обещание полностью автономной разработки.", "Approval and verification stages are part of the workflow. A person retains oversight as work progresses, while tasks and knowledge remain available for the next iteration. This is a reviewable process, not a claim of fully autonomous development.", "שלבי אישור ואימות הם חלק מהתהליך. אדם שומר על בקרה לאורך העבודה, והמשימות והידע זמינים לאיטרציה הבאה. זהו תהליך שניתן לבדוק, ולא טענה לפיתוח אוטונומי מלא.") },
-    ],
+    ...MISSION_CONTROL,
     figures: [
       {src:"/projects/mission-control-dashboard.webp",width:2000,height:1237,caption:L("Главный экран Mission Control: флот агентов, идущий прогон и живая лента событий. Снимок рабочего состояния системы.", "The Mission Control home screen: the agent fleet, a run in progress and the live event feed. A capture of the system at work.", "מסך הבית של Mission Control: צי הסוכנים, הרצה מתבצעת ופיד האירועים החי. צילום של המערכת בעבודה.")},
       {src:"/projects/mission-control-architecture.png",width:941,height:919,caption:L("Карта Architecture. Сохранённый экран проекта; числа относятся к моменту снимка.", "Architecture map. Saved project screen; counts refer to the captured state.", "מפת Architecture. צילום מסך שמור; המספרים מתייחסים למועד הצילום.")},
       {src:"/projects/mission-control-knowledge.png",width:870,height:919,caption:L("Карта Knowledge. Связи сохранённых знаний проекта.", "Knowledge map. Relationships in stored project knowledge.", "מפת Knowledge. קשרים בידע הפרויקט שנשמר.")}
     ],
-    evidenceNote:L("Основание: материалы проекта и подтверждённый вклад из резюме. Числа на снимках — состояние системы на момент съёмки, а не заявленные показатели продукта.", "Evidence: project material and the contribution documented in my résumé. Numbers visible in the screenshots are the system state at the moment of capture, not claimed product metrics.", "מקורות: חומרי הפרויקט והתרומה המתועדת בקורות החיים. המספרים בצילומים הם מצב המערכת ברגע הצילום, ולא מדדי מוצר מוצהרים.")
   },
   "uxi-course": {
     intro:L("От разрозненных тем UX/UI к последовательному пути обучения и итоговому проекту.", "From individual UX/UI topics to a structured learning path and a final project.", "מנושאי UX/UI נפרדים למסלול לימוד מובנה ולפרויקט גמר."),
