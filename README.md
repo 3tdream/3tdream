@@ -1,4 +1,15 @@
-# 3TDream — Portfolio
+# 3TDream
+
+## Build notes
+
+### Subscribe (footer build notes)
+
+- `POST /api/subscribe` accepts `{ email, replyLang, company_website, formRenderedAt }`
+  from the footer `SubscribeForm` component, bot-gates via honeypot + timing-trap,
+  and best-effort sends a signed-token confirmation email.
+- `GET /api/subscribe/confirm?token=...` verifies the token and redirects to
+  `/subscribe/done` or `/subscribe/invalid` — both static trilingual pages.
+- Required env: `SUBSCRIBE_TOKEN_SECRET`, `SITE_URL`, `RESEND_API_KEY` (see `.env.example`). — Portfolio
 
 > **Time To Team Dream** — a trilingual (RU / EN / HE) brutalist-creative portfolio for taking
 > digital-product orders. No login. Direct-contact channels (Telegram / WhatsApp / Email / LinkedIn).
@@ -35,6 +46,10 @@ lib/
   i18n.tsx          # trilingual context, RTL handling, localStorage persistence
   content.ts        # ALL copy + projects + services + contacts (edit here)
   qr-code.ts        # zero-import ISO 18004 QR encoder (qrMatrix, qrSvg)
+  subscribe-token.ts    # HMAC sign/verify of the stateless subscribe token
+  subscribe-values.ts   # Build Notes subscription copy (isolated from i18n.tsx)
+  subscribe-delivery.ts # best-effort Resend sends for subscribe/confirm
+  validation/subscribe-schema.ts  # Zod schema for POST /api/subscribe
 ```
 
 ## Editing content
@@ -85,6 +100,38 @@ the optional `LEAD_WEBHOOK_URL`, `LEAD_TO_EMAIL`, `RESEND_API_KEY` variables).
 contact channels. It picks role/industry/company-size options from `lib/lead-values.ts`
 (with an "other" free-text fallback) and localizes all copy via `lib/i18n.tsx`'s `L(ru, en, he)`
 helper, independent of the `replyLang` the visitor selects for the reply itself.
+
+## Build Notes subscription (double opt-in, no database)
+The footer (`components/footer.tsx`, Brand column) renders a one-field `SubscribeForm`
+(email + language) backed by two public, unversioned, Node-runtime endpoints — no
+subscriber table, no persistence layer anywhere:
+
+- `POST /api/subscribe` — validates the body (`lib/validation/subscribe-schema.ts`,
+  Zod), runs the same honeypot (`company_website`) + `formRenderedAt` timing-trap
+  anti-bot checks as the lead form, and — on a genuine pass — signs a token
+  (`lib/subscribe-token.ts`) carrying `{ email, replyLang, exp, nonce }` via
+  HMAC-SHA256 (`SUBSCRIBE_TOKEN_SECRET`). The response is **always**
+  `202 { ok: true, delivered: boolean }`, byte-identical whether the address is
+  new, already pending, honeypot-triggered, timing-trap-triggered, or no delivery
+  channel is configured — this prevents subscriber-status probing. Only a
+  malformed `email`/`replyLang`/`formRenderedAt` fails schema validation and
+  returns `400 { ok: false, errors }`.
+- `GET /api/subscribe/confirm?token=...` — verifies the token (length-checked
+  `timingSafeEqual` before any `JSON.parse`, strict `exp` check with no clock-skew
+  grace) and, only on success, sends a one-line notice to the site owner. It
+  **never** throws and **never** returns JSON: every outcome is a `303` redirect,
+  to `/subscribe/done` (valid) or `/subscribe/invalid` (malformed, tampered, or
+  expired token).
+
+**No database, by design:** the signed token embedded in the confirmation email
+link *is* the pending-subscription record — there is no subscriber list, no
+resend, no revoke, and a link may be clicked more than once (each click is
+independently valid until `exp`). Copy constants (email subject/body, static page
+text) live in `lib/subscribe-values.ts`, deliberately isolated from `lib/i18n.tsx`'s
+`Localized`/`L` chain. Required env: `SUBSCRIBE_TOKEN_SECRET` (see `.env.example`);
+`RESEND_API_KEY`/`SITE_URL` are reused from the existing lead/QR configuration —
+with any of these unset the form still responds `202 { ok: true, delivered: false }`
+and logs `[subscribe] not configured`, never a 500.
 
 ## Share a case
 Each case page (`/projects/<slug>`) shows a `ShareCase` panel (copy-link + QR + SVG download) after the "Open project" link, backed

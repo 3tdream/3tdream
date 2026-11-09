@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useI18n, L } from "@/lib/i18n";
 import { BRAND, CONTACTS, NAV } from "@/lib/content";
+import { SubscribeForm } from "@/components/subscribe-form";
 
 export function Footer() {
   const { t } = useI18n();
@@ -26,6 +27,8 @@ export function Footer() {
               {t(BRAND.expansion)}
             </p>
             <p className="mt-4 max-w-xs text-sm text-paper/70">{t(BRAND.tagline)}</p>
+
+            <SubscribeForm />
           </div>
 
           {/* Nav */}

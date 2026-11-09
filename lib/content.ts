@@ -51,6 +51,25 @@ export const TIMELINE: TimelineEntry[] = [
 ];
 
 /* ------------------------------------------------------------------ */
+/* FOOTER — Build Notes subscribe form (MC-557)                       */
+/* Server-side email/page copy lives in lib/subscribe-values.ts,      */
+/* isolated from this Localized/L chain by design (ADR A4); this is   */
+/* only the on-page UI text for components/subscribe-form.tsx.        */
+/* ------------------------------------------------------------------ */
+
+export const FOOTER_SUBSCRIBE = {
+  heading: L("Build Notes", "Build Notes", "Build Notes"),
+  label: L("Подпишитесь на заметки о разработке", "Subscribe to build notes", "הירשמו לעדכוני פיתוח"),
+  placeholder: L("Ваш email", "Your email", "האימייל שלכם"),
+  button: L("Подписаться", "Subscribe", "הרשמה"),
+  honeypotLabel: L("Оставьте это поле пустым", "Leave this field empty", "השאירו שדה זה ריק"),
+  pending: L("Отправляем письмо для подтверждения…", "Sending a confirmation email…", "שולחים מייל לאישור…"),
+  sent: L("Проверьте почту и подтвердите подписку.", "Check your inbox to confirm.", "בדקו את תיבת הדואר כדי לאשר."),
+  error: L("Проверьте email и попробуйте снова.", "Check the email and try again.", "בדקו את האימייל ונסו שוב."),
+  ariaLabel: L("Подписка на заметки о разработке", "Subscribe to build notes", "הרשמה לעדכוני פיתוח"),
+};
+
+/* ------------------------------------------------------------------ */
 /* NAV                                                                 */
 /* ------------------------------------------------------------------ */
 
