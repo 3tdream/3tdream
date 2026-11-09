@@ -67,6 +67,7 @@ function rsEncode(data: number[], ecCount: number): number[] {
 }
 
 function selectVersion(byteLength: number): VersionInfo {
+  if (byteLength === 0) throw new RangeError("text is empty");
   for (const v of VERSION_TABLE) if (byteLength <= v.capacity) return v;
   throw new RangeError("text too long for supported QR versions (1-6)");
 }
@@ -160,12 +161,12 @@ function drawFormatBits(m: boolean[][], r: boolean[][], size: number, bits: numb
 
 function computeFormatBits(maskPattern: number): number[] {
   const GEN = 0b10100110111;
-  const data = (0b01 << 3) | maskPattern; // EC level L (01) + 3-bit mask id
+  const data = maskPattern; // EC level M is 00, so the 5 data bits are just the mask id
   let g = data << 10;
   for (let i = 4; i >= 0; i--) if ((g >>> (i + 10)) & 1) g ^= GEN << i;
   const full = ((data << 10) | g) ^ 0b101010000010010;
   const bits: number[] = [];
-  for (let i = 14; i >= 0; i--) bits.push((full >>> i) & 1);
+  for (let i = 0; i < 15; i++) bits.push((full >>> i) & 1); // drawFormatBits indexes from the LSB
   return bits;
 }
 
@@ -187,13 +188,59 @@ function placeData(m: boolean[][], r: boolean[][], size: number, codewords: numb
   }
 }
 
-function applyMask(m: boolean[][], r: boolean[][], size: number) {
+const MASKS: ((row: number, col: number) => boolean)[] = [
+  (r, c) => (r + c) % 2 === 0,
+  (r) => r % 2 === 0,
+  (_, c) => c % 3 === 0,
+  (r, c) => (r + c) % 3 === 0,
+  (r, c) => (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0,
+  (r, c) => ((r * c) % 2) + ((r * c) % 3) === 0,
+  (r, c) => (((r * c) % 2) + ((r * c) % 3)) % 2 === 0,
+  (r, c) => (((r + c) % 2) + ((r * c) % 3)) % 2 === 0,
+];
+
+function applyMask(m: boolean[][], r: boolean[][], size: number, mask: number) {
   for (let row = 0; row < size; row++) {
     for (let col = 0; col < size; col++) {
       if (r[row][col]) continue;
-      if ((row + col) % 2 === 0) m[row][col] = !m[row][col];
+      if (MASKS[mask](row, col)) m[row][col] = !m[row][col];
     }
   }
+}
+
+const FINDER_LIKE = ["10111010000", "00001011101"];
+
+function linePenalty(line: boolean[]): number {
+  let score = 0;
+  let run = 1;
+  for (let i = 1; i <= line.length; i++) {
+    if (i < line.length && line[i] === line[i - 1]) { run++; continue; }
+    if (run >= 5) score += 3 + (run - 5);
+    run = 1;
+  }
+  // The quiet zone is light, so a finder-like pattern at the edge still counts.
+  const padded = `0000${line.map((dark) => (dark ? "1" : "0")).join("")}0000`;
+  for (let i = 0; i + 11 <= padded.length; i++) {
+    if (FINDER_LIKE.includes(padded.slice(i, i + 11))) score += 40;
+  }
+  return score;
+}
+
+function penalty(m: boolean[][]): number {
+  const size = m.length;
+  let score = 0;
+  let dark = 0;
+  for (let i = 0; i < size; i++) {
+    score += linePenalty(m[i]);
+    score += linePenalty(m.map((row) => row[i]));
+  }
+  for (let r = 0; r < size; r++) {
+    for (let c = 0; c < size; c++) {
+      if (m[r][c]) dark++;
+      if (r < size - 1 && c < size - 1 && m[r][c] === m[r][c + 1] && m[r][c] === m[r + 1][c] && m[r][c] === m[r + 1][c + 1]) score += 3;
+    }
+  }
+  return score + Math.floor(Math.abs((dark * 100) / (size * size) - 50) / 5) * 10;
 }
 
 export function qrMatrix(text: string): boolean[][] {
@@ -220,21 +267,32 @@ export function qrMatrix(text: string): boolean[][] {
     }
   }
 
+  // Reserves the format modules so data placement skips them; each mask redraws them below.
   drawFormatBits(matrix, reserved, size, computeFormatBits(0));
   placeData(matrix, reserved, size, finalCw);
-  applyMask(matrix, reserved, size);
 
-  return matrix;
+  let best = matrix;
+  let bestScore = Infinity;
+  for (let mask = 0; mask < MASKS.length; mask++) {
+    const candidate = matrix.map((row) => row.slice());
+    applyMask(candidate, reserved, size, mask);
+    drawFormatBits(candidate, reserved, size, computeFormatBits(mask));
+    const score = penalty(candidate);
+    if (score < bestScore) { best = candidate; bestScore = score; }
+  }
+  return best;
 }
 
 export function qrSvg(text: string): string {
   const matrix = qrMatrix(text);
+  const quiet = 4;
   const size = matrix.length;
+  const n = size + quiet * 2;
   let d = "";
   for (let r = 0; r < size; r++) {
     for (let c = 0; c < size; c++) {
-      if (matrix[r][c]) d += `M${c} ${r}h1v1h-1z`;
+      if (matrix[r][c]) d += `M${c + quiet} ${r + quiet}h1v1h-1z`;
     }
   }
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" shape-rendering="crispEdges"><rect width="${size}" height="${size}" fill="#fff"/><path d="${d}" fill="#000"/></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${n} ${n}" shape-rendering="crispEdges"><rect width="${n}" height="${n}" fill="#fff"/><path d="${d}" fill="#000"/></svg>`;
 }

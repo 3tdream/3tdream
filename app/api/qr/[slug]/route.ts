@@ -18,7 +18,7 @@ export async function GET(
 
   // Sole validity gate (ADR) — no other slug source is ever consulted.
   if (!hasCase(slug)) {
-    return jsonError(404, `Unknown case slug: ${slug}`);
+    return jsonError(404, "unknown_case");
   }
 
   // Accessed via globalThis (not the bare `process` identifier) so this file
@@ -27,7 +27,7 @@ export async function GET(
   const siteUrl = (globalThis as { process?: { env?: Record<string, string | undefined> } })
     .process?.env?.NEXT_PUBLIC_SITE_URL;
   if (!siteUrl) {
-    return jsonError(503, "NEXT_PUBLIC_SITE_URL is not configured");
+    return jsonError(503, "not_configured");
   }
 
   const origin = siteUrl.replace(/\/$/, "");
@@ -36,17 +36,15 @@ export async function GET(
   let svg: string;
   try {
     svg = qrSvg(text);
-  } catch {
-    // Any thrown value (RangeError on oversized input, or any other encoder
-    // irregularity) maps to a fixed, non-leaking JSON error. Never 500, never
-    // the thrown error's message/stack (cyber fix: no internal detail leak).
-    return jsonError(400, "too_long");
+  } catch (error) {
+    if (error instanceof RangeError) return jsonError(500, "too_long");
+    throw error;
   }
 
   return new Response(svg, {
     status: 200,
     headers: {
-      "Content-Type": "image/svg+xml",
+      "Content-Type": "image/svg+xml; charset=utf-8",
       "Cache-Control": "public, max-age=86400",
       "X-Content-Type-Options": "nosniff",
       "Content-Security-Policy": "default-src 'none'",

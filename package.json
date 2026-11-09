@@ -1,13 +1,13 @@
 {
   "name": "3tdream-portfolio",
   "version": "1.0.0",
-  "description": "Trilingual brutalist-creative portfolio with Share Case QR (zero-dependency ISO 18004 SVG encoder, GET /api/qr/[slug]).",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3099",
     "build": "next build",
     "start": "next start -p 3099",
-    "lint": "next lint"
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "framer-motion": "^12.6.0",
