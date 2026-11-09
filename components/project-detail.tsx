@@ -6,6 +6,7 @@ import { PROJECTS } from "@/lib/content";
 import { CASE_SLUGS } from "@/lib/case-slugs";
 import { CASES, type CaseFigure } from "@/lib/cases";
 import { useI18n, L } from "@/lib/i18n";
+import { ShareCase } from "@/components/share-case";
 
 function EvidenceFigure({ figure, priority = false, cover = false }: { figure: CaseFigure; priority?: boolean; cover?: boolean }) {
   const { t } = useI18n();
@@ -77,6 +78,7 @@ export function ProjectDetail({ slug }: { slug: string }) {
           {project.url ? <a href={project.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-ink text-paper px-6 py-4 font-bold hard-shadow">{t(L("Открыть проект", "Open project", "פתיחת הפרויקט"))}<ArrowUpRight aria-hidden className="w-4 h-4"/></a>:null}
           <Link href="/contact" className="font-bold underline underline-offset-4">{t(L("Обсудить работу", "Discuss working together", "לדבר על עבודה משותפת"))}</Link>
         </div>
+        <ShareCase slug={slug} />
       </div>
     </div>
     {nextProject ? <div className="border-t-2 border-ink mt-16 pt-8"><Link href={`/projects/${nextSlug}`} className="inline-flex items-center gap-3 text-lg font-bold">{t(L("Следующий кейс", "Next case study", "מקרה הבוחן הבא"))}: {nextProject.title}<ArrowRight aria-hidden className="w-5 h-5 rtl:rotate-180"/></Link></div> : null}
