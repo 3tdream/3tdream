@@ -6,7 +6,8 @@
     "dev": "next dev -p 3099",
     "build": "next build",
     "start": "next start -p 3099",
-    "lint": "next lint"
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "framer-motion": "^12.6.0",
