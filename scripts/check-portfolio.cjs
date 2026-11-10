@@ -114,3 +114,21 @@ assert(detail.includes('id="measurements"') && detail.includes('href="#measureme
 console.log("PASS: Author-reported MC case, separate metric series, caveats, localized copy and preserved screens.");
 
 assert(!detail.slice(detail.indexOf("<nav"),detail.indexOf("</nav>")).includes("<a "), "Case anchors use router-managed links so Back restores the correct case");
+
+// AI-generated artifacts must stay disclosed on the card, not only in prose.
+const card = fs.readFileSync(path.join(root, "components/project-card.tsx"), "utf8");
+assert(card.includes("project.aiGenerated"), "Cards render the AI-generated disclosure");
+assert(card.includes("PORTFOLIO.aiGenerated"), "The disclosure uses localized copy");
+const storefront = PROJECTS.find(p => p.slug === "storefront-runtime");
+assert(storefront, "Danan Store is present");
+assert.equal(storefront.aiGenerated, true, "Danan Store is marked AI-generated");
+assert.equal(new URL(storefront.url).host, "storefront-runtime.vercel.app");
+assert(storefront.tags.includes("AI-generated"), "The AI-generated tag stays on the card");
+for (const lang of ["ru", "en", "he"]) {
+  assert(PORTFOLIO.aiGenerated[lang]?.trim(), `Missing ${lang} AI disclosure`);
+  assert(storefront.role[lang].includes("Agent Academy"), `Role names the generator in ${lang}`);
+  for (const value of [storefront.tagline[lang], storefront.description[lang]]) assert(value?.trim(), `Missing ${lang} Danan Store copy`);
+}
+assert(storefront.description.en.includes("not hand-built work"), "Copy says the output is generated, not hand-built");
+for (const p of PROJECTS) assert(p.aiGenerated === undefined || p.slug === "storefront-runtime", "Only disclosed projects carry the AI flag");
+console.log(`PASS: AI-generated disclosure for Danan Store, localized badge and card rendering.`);

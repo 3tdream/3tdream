@@ -39,6 +39,7 @@ export const PORTFOLIO = {
     "עבודות מתוך תיק העבודות שלי ב-Behance. בחרו נושא או חפשו לפי שם הפרויקט."
   ),
   invention: L("Изобретение", "Invention", "המצאה"),
+  aiGenerated: L("Сгенерировано AI", "AI-generated", "נוצר על ידי AI"),
   source: L("Смотреть на Behance", "View on Behance", "לצפייה ב-Behance"),
   patent: L("Открыть патент", "View patent", "לצפייה בפטנט"),
   opensNew: L("откроется в новой вкладке", "opens in a new tab", "נפתח בלשונית חדשה"),

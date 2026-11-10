@@ -33,6 +33,11 @@ export function ProjectCard({ project, index, showImage = true }: { project: Pro
       <div className="flex items-start justify-between gap-3">
         <span className="text-4xl font-extrabold text-ink/15 display leading-none font-mono" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
         {isCase ? <span className="label text-accent text-end">{t(L("Кейс", "Case study", "מקרה בוחן"))}</span> : null}
+        {project.aiGenerated ? (
+          <span className="shrink-0 border border-ink/30 bg-paper-alt px-2 py-1 text-[10px] uppercase tracking-wider font-mono text-ink-soft text-end">
+            {t(PORTFOLIO.aiGenerated)}
+          </span>
+        ) : null}
       </div>
       <h3 className="mt-5 text-2xl sm:text-[28px] font-extrabold leading-tight break-words">{project.title}</h3>
       <p className="mt-3 text-base font-medium leading-relaxed text-ink-soft">{t(study?.intro ?? project.tagline)}</p>
