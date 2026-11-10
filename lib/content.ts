@@ -576,3 +576,51 @@ export function leadErrorMessage(field: string, _zodMessage: string, lang: Reply
   };
   return perField[field]?.[lang] ?? required[lang];
 }
+
+/* ------------------------------------------------------------------ */
+/* BUILD NOTES SUBSCRIBE (footer form + double opt-in result pages)    */
+/* ------------------------------------------------------------------ */
+
+// E-mail bodies live server-side in lib/subscribe-values.ts; this block only
+// holds UI copy for the footer form and the /subscribe/done|invalid pages.
+export const SubscribeCopy = {
+  form: {
+    label: L("Build Notes — на почту", "Build Notes by e-mail", "Build Notes במייל"),
+    placeholder: L("you@example.com", "you@example.com", "you@example.com"),
+    submit: L("Подписаться", "Subscribe", "הרשמה"),
+    submitting: L("Отправка…", "Sending…", "שולח…"),
+    sent: L(
+      "Проверьте почту — отправили ссылку для подтверждения.",
+      "Check your inbox — we sent a confirmation link.",
+      "בדקו את תיבת הדואר — שלחנו קישור לאישור."
+    ),
+    invalid: L(
+      "Проверьте адрес e-mail и попробуйте снова.",
+      "Check the e-mail address and try again.",
+      "בדקו את כתובת המייל ונסו שוב."
+    ),
+    failed: L(
+      "Что-то пошло не так. Попробуйте позже.",
+      "Something went wrong. Please try again later.",
+      "משהו השתבש. נסו שוב מאוחר יותר."
+    ),
+  },
+  done: {
+    heading: L("Подписка подтверждена", "Subscription confirmed", "ההרשמה אושרה"),
+    body: L(
+      "Спасибо! Вы в списке Build Notes.",
+      "Thanks! You're on the Build Notes list.",
+      "תודה! אתם ברשימת Build Notes."
+    ),
+    back: L("На главную", "Back to home", "חזרה לדף הבית"),
+  },
+  invalidLink: {
+    heading: L("Ссылка недействительна", "This link isn't valid", "הקישור אינו תקף"),
+    body: L(
+      "Ссылка устарела или повреждена. Подпишитесь заново в футере сайта.",
+      "The link has expired or is damaged. Subscribe again from the site footer.",
+      "הקישור פג תוקף או פגום. הירשמו שוב מתחתית האתר."
+    ),
+    back: L("На главную", "Back to home", "חזרה לדף הבית"),
+  },
+} as const;
