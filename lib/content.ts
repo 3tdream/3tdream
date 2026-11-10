@@ -12,6 +12,30 @@ export const BRAND = {
   intro: L("Проектирую понятные цифровые продукты, создаю AI-инструменты и преподаю UX/UI. Соединяю продуктовую задачу, интерфейс и реализацию.", "I design clear digital products, build AI tools and teach UX/UI. I connect the product problem, the interface and its implementation.", "אני מעצב מוצרים דיגיטליים ברורים, בונה כלי AI ומלמד UX/UI. מחבר בין אתגר המוצר, הממשק והמימוש."),};
 
 /* ------------------------------------------------------------------ */
+/* SUBSCRIBE — footer "Build Notes" double opt-in form copy (MC-557).  */
+/* Localized via the shared L()/Localized chain, like the rest of the  */
+/* site's UI strings. Email body copy lives separately in              */
+/* lib/subscribe-values.ts, which is deliberately isolated from this   */
+/* file so server-only email rendering never imports client i18n.      */
+/* ------------------------------------------------------------------ */
+
+export const SUBSCRIBE = {
+  heading: L("Build Notes", "Build Notes", "Build Notes"),
+  placeholder: L("Ваш email", "Your email", "האימייל שלך"),
+  button: L("Подписаться", "Subscribe", "הרשמה"),
+  pending: L("Отправляем письмо для подтверждения…", "Sending confirmation email…", "שולחים מייל אישור…"),
+  success: L("Проверьте почту, чтобы подтвердить подписку.", "Check your inbox to confirm your subscription.", "בדקו את תיבת הדואר כדי לאשר את ההרשמה."),
+  error: L("Не получилось отправить. Попробуйте ещё раз.", "Couldn't send. Please try again.", "לא הצלחנו לשלוח. נסו שוב."),
+};
+
+/** Honeypot field name + timing-trap threshold (ms) shared by
+ *  components/subscribe-form.tsx and the POST /api/subscribe handler.
+ *  Kept here (not in lib/subscribe-values.ts) since this module is the
+ *  client-safe copy source; subscribe-values.ts is server/email-only. */
+export const SUBSCRIBE_HONEYPOT_FIELD = "company_website";
+export const SUBSCRIBE_TIMING_THRESHOLD_MS = 3000;
+
+/* ------------------------------------------------------------------ */
 /* PROFILE                                                             */
 /* ------------------------------------------------------------------ */
 

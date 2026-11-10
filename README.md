@@ -100,3 +100,69 @@ returns `503 { ok: false, error: "not_configured" }` instead of guessing an orig
 **Validity gate:** `hasCase(slug)` from `lib/case-slugs.ts` is the sole check; unknown slugs get
 `404 { ok: false, error: "unknown_case" }`. A URL beyond the encoder's version-6 capacity (106 bytes)
 is a configuration fault and returns `500 { ok: false, error: "too_long" }`.
+
+## Build notes
+
+### Form location
+`<SubscribeForm />` (`components/subscribe-form.tsx`) is rendered as the last child of the Brand
+column in `components/footer.tsx`, directly below the tagline. It shows a single email input, a
+submit button, and a `<p role="status">` for feedback — no other visible controls. The visitor's
+current UI language is captured silently as `replyLang` (no selector shown). The component is
+keyboard-reachable and works in RTL (Hebrew).
+
+### Route behaviours
+
+#### `POST /api/subscribe` — `export const runtime = "nodejs"`
+Accepts JSON body `{ email, replyLang, formRenderedAt, company_website? }`.
+
+| Condition | Status | Body |
+|---|---|---|
+| Body is not valid JSON | 400 | `{ ok: false, error: "invalid_json" }` |
+| Schema validation fails | 400 | `{ ok: false, error: "invalid_field", field: "<first failing field>" }` |
+| Honeypot (`company_website`) non-empty, or `Date.now() - formRenderedAt < 3000` | 202 | `{ ok: true, delivered: false }` — nothing sent |
+| Any of `SUBSCRIBE_TOKEN_SECRET`, `SITE_URL`, `RESEND_API_KEY` missing | 202 | `{ ok: true, delivered: false }` — logs `[subscribe] not configured` |
+| Confirmation email sent successfully | 202 | `{ ok: true, delivered: true }` |
+| Confirmation email send failed | 202 | `{ ok: true, delivered: false }` — logs `[subscribe] delivery failed: <status>` |
+
+The response for a valid address is **byte-identical** regardless of whether the address was seen
+before — this is intentional anti-enumeration, not a bug. The route never logs the email address
+or the token.
+
+#### `GET /api/subscribe/confirm` — `export const runtime = "nodejs"`
+Accepts `?token=<signed-token>` query parameter. Always responds with a `303` redirect.
+
+| Condition | Redirect destination |
+|---|---|
+| `SUBSCRIBE_TOKEN_SECRET` or `SITE_URL` missing | `${SITE_URL}/subscribe/invalid` (falls back to relative `/subscribe/invalid` when `SITE_URL` is absent) |
+| Token missing, malformed, tampered, or expired | `${SITE_URL}/subscribe/invalid` |
+| Token valid → owner email sent | `${SITE_URL}/subscribe/done` |
+| Token valid → owner email failed | `${SITE_URL}/subscribe/done` — logs `[subscribe] owner notice failed: <status>` |
+
+A repeat click on a still-valid token re-sends the owner notification (stateless trade-off — no
+subscriber list exists to deduplicate against).
+
+### Token internals (`lib/subscribe-token.ts`)
+Format: `<base64url(JSON { email, replyLang, exp })>.<hex HMAC-SHA256>`, keyed by
+`SUBSCRIBE_TOKEN_SECRET`. TTL is 24 hours (`exp = Date.now() + 86400000`). Verification
+length-checks the MAC **before** calling `crypto.timingSafeEqual` (which throws on mismatched
+buffer lengths) and only `JSON.parse`s the payload after the MAC is proven valid. The entire
+function body is wrapped in `try/catch` — it returns `null` on any error and never throws.
+
+### Required environment variables
+
+| Variable | Purpose | Required for delivery |
+|---|---|---|
+| `SUBSCRIBE_TOKEN_SECRET` | HMAC signing key for confirmation tokens | Yes |
+| `SITE_URL` | Base URL for confirmation links (e.g. `https://3tdream.vercel.app`) | Yes |
+| `RESEND_API_KEY` | Resend HTTP API key for sending emails | Yes |
+| `LEAD_FROM_EMAIL` | Sender address (falls back to `leads@3tdream.vercel.app`) | No |
+| `LEAD_TO_EMAIL` | Owner notification recipient | Yes (for owner notice) |
+
+All five variables are documented in `.env.example`. **The site renders and the form accepts
+submissions without any of them** — missing configuration causes `202 { ok: true, delivered: false }`
+with a `[subscribe] not configured` log line, never a 500 or a broken page.
+
+### Dev / staging behaviour
+With no env vars set, `POST /api/subscribe` returns `202 { ok: true, delivered: false }` and logs
+`[subscribe] not configured`. This is the dominant observed path in local development and is not a
+bug. To test the full flow locally, set all five variables in `.env.local`.
