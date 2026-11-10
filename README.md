@@ -100,3 +100,39 @@ returns `503 { ok: false, error: "not_configured" }` instead of guessing an orig
 **Validity gate:** `hasCase(slug)` from `lib/case-slugs.ts` is the sole check; unknown slugs get
 `404 { ok: false, error: "unknown_case" }`. A URL beyond the encoder's version-6 capacity (106 bytes)
 is a configuration fault and returns `500 { ok: false, error: "too_long" }`.
+
+## Build notes (double opt-in e-mail subscription)
+A footer `SubscribeForm` (RU/EN/HE, RTL for Hebrew) calls `POST /api/subscribe`, which e-mails a
+Resend confirmation link. `GET /api/subscribe/confirm?token=` verifies it, sends **one** owner
+e-mail to `LEAD_TO_EMAIL` and answers `303` to `/subscribe/done` (or `/subscribe/invalid`).
+Resend is called with `fetch` (5 s timeout) — no new dependency, no database, no storage.
+
+**Stateless token:** `base64url(JSON{email, replyLang, exp}).hexMAC`, HMAC-SHA256 keyed with
+`SUBSCRIBE_TOKEN_SECRET`, valid for 24 h. The payload is signed, not encrypted: the address is
+readable by whoever holds the link (it is mailed to the address owner).
+
+**Endpoints**
+- `POST /api/subscribe` — body `{email, replyLang, formRenderedAt, company_website?}`. `400`
+  `invalid_json` / `invalid_field` (names only the field); everything else is
+  `202 {ok:true, delivered:boolean}` with an identical shape for new/repeat addresses, honeypot
+  or timing hits (under 3000 ms), missing config and Resend failure, so nobody can probe who is
+  subscribed. The UI always shows "check your inbox" and never reads `delivered`.
+- `GET /api/subscribe/confirm?token=` — always `303`, never JSON or `500`. `HEAD` always
+  redirects to `/subscribe/invalid` without verifying, so a probe cannot trigger the owner e-mail.
+
+**Env vars** (see `.env.example`; all read per request, so missing values never break a build or
+preview): `SUBSCRIBE_TOKEN_SECRET` and `SITE_URL` are new and server-only. `SITE_URL` is distinct
+from `NEXT_PUBLIC_SITE_URL`. `RESEND_API_KEY`, `LEAD_TO_EMAIL` and `LEAD_FROM_EMAIL` are reused.
+With config missing, POST logs `[subscribe] not configured` and returns `202 delivered:false`;
+confirm redirects to `/subscribe/invalid`. Logs never contain an address or token.
+
+**Known limits (accepted by the ADR)**
+- The owner inbox is the subscriber record. There is no list, dedupe, unsubscribe or revocation.
+- A valid token can be replayed for 24 h; each replay sends another owner e-mail.
+- A mail scanner that pre-fetches the confirm link with a real `GET` can confirm an address.
+- No rate limiting: third-party e-mail bombing is possible (only honeypot + timing rule).
+- `LEAD_FROM_EMAIL` must be on a domain verified in Resend; the fallback sender
+  `leads@3tdream.vercel.app` may be unverified, which ends as `delivered:false`.
+- The UI shows "check your inbox" even when `delivered:false`.
+- The form language is read once at mount.
+- Sending the notes themselves is future work, as is a GDPR / Israeli anti-spam review.

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useI18n, L } from "@/lib/i18n";
 import { BRAND, CONTACTS, NAV } from "@/lib/content";
+import { SubscribeForm } from "@/components/subscribe-form";
 
 export function Footer() {
   const { t } = useI18n();
@@ -68,6 +69,11 @@ export function Footer() {
               ))}
             </ul>
           </div>
+        </div>
+
+        {/* Build notes: double opt-in subscribe */}
+        <div className="mt-12 pt-8 border-t border-paper/15">
+          <SubscribeForm />
         </div>
 
         <div className="mt-12 pt-6 border-t border-paper/15 flex flex-col sm:flex-row gap-2 justify-between text-xs text-paper/50">
