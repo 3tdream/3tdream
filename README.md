@@ -100,3 +100,32 @@ returns `503 { ok: false, error: "not_configured" }` instead of guessing an orig
 **Validity gate:** `hasCase(slug)` from `lib/case-slugs.ts` is the sole check; unknown slugs get
 `404 { ok: false, error: "unknown_case" }`. A URL beyond the encoder's version-6 capacity (106 bytes)
 is a configuration fault and returns `500 { ok: false, error: "too_long" }`.
+
+## Build notes
+A footer "Build notes" e-mail subscription with **double opt-in** and **no storage** — nothing is
+kept in a database, cache or file. A signed token (`base64url(payload).HMAC-SHA256`, 24h expiry,
+carrying the e-mail, `replyLang` and `exp`) is the only state.
+
+- `POST /api/subscribe` — validates `{ email, replyLang, formRenderedAt, company_website? }`
+  (`400 invalid_json` / `400 invalid_field`), then returns `202 { ok: true, delivered }` for every
+  other outcome (new or repeat address, honeypot, faster than 3000 ms, missing config, Resend
+  failure), so the address list cannot be probed. It e-mails a confirmation link built from `SITE_URL`.
+- `GET /api/subscribe/confirm?token=` — always `303`: to `/subscribe/done` for a valid token (and one
+  e-mail goes to `LEAD_TO_EMAIL`), to `/subscribe/invalid` for anything else, never a 500. `HEAD`
+  answers 303 without verifying or sending anything.
+- Logs never contain an address or a token.
+
+**Env vars** (see `.env.example`): `SUBSCRIBE_TOKEN_SECRET` (at least 32 chars) and `SITE_URL`
+(server-only link base, http/https — not `NEXT_PUBLIC_SITE_URL`) are new; `RESEND_API_KEY`,
+`LEAD_TO_EMAIL` and `LEAD_FROM_EMAIL` are shared with the lead form. With any of them missing the
+site still builds and runs: POST returns `202 { delivered: false }`, confirm redirects to `/subscribe/invalid`.
+
+**Known limits:**
+- A valid token can be replayed for 24h; every replay sends another e-mail to the owner.
+- A mail scanner that pre-fetches the GET confirm link can confirm an address.
+- The form says "check your inbox" even when nothing was sent (not configured, bot rule, Resend failure).
+- `LEAD_FROM_EMAIL` must be on a domain verified in Resend, otherwise delivery fails silently as `delivered: false`.
+- The token is signed, not encrypted: the address is readable by anyone who holds the link.
+- There is no unsubscribe, subscriber list, revocation or **rate limiting** — the only abuse controls
+  are the honeypot and the 3000 ms timing rule, so the endpoint could be used to mail-bomb third parties.
+- A GDPR / Israeli anti-spam (Amendment 40) legal review is a follow-up.

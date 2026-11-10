@@ -576,3 +576,52 @@ export function leadErrorMessage(field: string, _zodMessage: string, lang: Reply
   };
   return perField[field]?.[lang] ?? required[lang];
 }
+
+/* ------------------------------------------------------------------ */
+/* SUBSCRIBE — "Build notes" double opt-in (footer form, e-mails,      */
+/* /subscribe/done, /subscribe/invalid)                                */
+/* ------------------------------------------------------------------ */
+
+// Form
+export const SUBSCRIBE_TITLE = L("Заметки о сборке", "Build notes", "הערות בנייה");
+export const SUBSCRIBE_HINT = L(
+  "Редкие письма о том, как я собираю AI-продукты. Без спама.",
+  "Occasional notes on how I build AI products. No spam.",
+  "מכתבים נדירים על האופן שבו אני בונה מוצרי AI. בלי ספאם."
+);
+export const SUBSCRIBE_EMAIL_LABEL = L("Ваш email", "Your email", "האימייל שלך");
+export const SUBSCRIBE_PLACEHOLDER = L("you@example.com", "you@example.com", "you@example.com");
+export const SUBSCRIBE_SUBMIT = L("Подписаться", "Subscribe", "הרשמה");
+export const SUBSCRIBE_SENDING = L("Отправляем…", "Sending…", "שולח…");
+export const SUBSCRIBE_SUCCESS = L(
+  "Проверьте почту — мы отправили ссылку для подтверждения.",
+  "Check your inbox — we sent you a confirmation link.",
+  "בדקו את תיבת הדואר — שלחנו לכם קישור לאישור."
+);
+export const SUBSCRIBE_ERROR_EMAIL = L(
+  "Похоже, этот email указан неверно. Проверьте адрес.",
+  "That email address doesn't look right. Please check it.",
+  "כתובת האימייל לא נראית תקינה. נא לבדוק אותה."
+);
+export const SUBSCRIBE_ERROR_GENERIC = L(
+  "Не удалось отправить. Попробуйте ещё раз чуть позже.",
+  "Couldn't submit. Please try again in a moment.",
+  "לא ניתן היה לשלוח. נסו שוב בעוד רגע."
+);
+
+// /subscribe/done
+export const SUBSCRIBE_DONE_TITLE = L("Подписка подтверждена", "Subscription confirmed", "ההרשמה אושרה");
+export const SUBSCRIBE_DONE_BODY = L(
+  "Спасибо! Вы в списке — следующая заметка придёт на вашу почту.",
+  "Thank you! You're on the list — the next note will land in your inbox.",
+  "תודה! אתם ברשימה — ההערה הבאה תגיע לתיבת הדואר שלכם."
+);
+
+// /subscribe/invalid
+export const SUBSCRIBE_INVALID_TITLE = L("Ссылка недействительна", "This link isn't valid", "הקישור אינו תקף");
+export const SUBSCRIBE_INVALID_BODY = L(
+  "Ссылка подтверждения неверна или устарела. Заполните форму в подвале сайта ещё раз.",
+  "The confirmation link is invalid or has expired. Please submit the form in the site footer again.",
+  "קישור האישור אינו תקף או שפג תוקפו. מלאו שוב את הטופס בתחתית האתר."
+);
+export const SUBSCRIBE_BACK_HOME = L("На главную", "Back to home", "חזרה לדף הבית");
