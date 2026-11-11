@@ -3,6 +3,8 @@
 // Never logs; verify never throws. exp is epoch milliseconds (valid strictly before exp).
 // No nonce: a valid token can be replayed until exp (accepted limit, see README).
 // Runtime: Node only (node:crypto). Routes importing this must export runtime = "nodejs".
+// Any failure (missing secret, bad MAC, bad payload, expired) yields null, which the confirm
+// route maps to a 303 redirect to /subscribe/invalid.
 import { createHmac, timingSafeEqual } from "node:crypto";
 import {
   SUBSCRIBE_TOKEN_MAX,

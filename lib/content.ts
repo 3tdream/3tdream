@@ -572,9 +572,18 @@ export const SUBSCRIBE_FORM = {
     "Enter a valid e-mail address.",
     "הזינו כתובת אימייל תקינה."
   ),
+  // 3-step strip: where the visitor is in the double opt-in flow.
+  stepsLabel: L("Как это работает", "How it works", "איך זה עובד"),
+  steps: [
+    L("Email", "Email", "אימייל"),
+    L("Почта", "Inbox", "תיבת דואר"),
+    L("Готово", "Confirmed", "אושר"),
+  ],
+  honeypotLabel: L("Не заполняйте это поле", "Leave this field empty", "אל תמלאו שדה זה"),
 } as const;
 
 export const SUBSCRIBE_DONE = {
+  stamp: L("Подтверждено", "Confirmed", "אושר"),
   heading: L("Подписка подтверждена", "Subscription confirmed", "ההרשמה אושרה"),
   body: L(
     "Спасибо! Вы в списке заметок о разработке 3TDream.",
@@ -585,6 +594,7 @@ export const SUBSCRIBE_DONE = {
 } as const;
 
 export const SUBSCRIBE_INVALID = {
+  stamp: L("Просрочено", "Expired", "פג תוקף"),
   heading: L("Ссылка недействительна", "Link invalid or expired", "הקישור לא תקף או שפג תוקפו"),
   body: L(
     "Ссылка устарела или повреждена. Подпишитесь заново через форму внизу страницы.",

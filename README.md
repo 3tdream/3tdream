@@ -41,6 +41,10 @@ lib/
   i18n.tsx          # trilingual context, RTL handling, localStorage persistence
   content.ts        # ALL copy + projects + services + contacts (edit here)
   qr-code.ts        # zero-import ISO 18004 QR encoder (qrMatrix, qrSvg)
+  subscribe-values.ts           # zero-import constants and e-mail copy builders (Build notes)
+  subscribe-token.ts            # HMAC-SHA256 signed 24h token; valid strictly before exp (epoch ms)
+  subscribe-delivery.ts         # Resend via fetch, 5s abort, never throws
+  validation/subscribe-schema.ts  # Zod schema for POST /api/subscribe
 ```
 
 ## Editing content

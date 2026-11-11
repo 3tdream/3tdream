@@ -4,6 +4,9 @@
 // HEAD is explicit and fail-closed: a probe can never verify a token or send mail.
 // The redirect is built by hand: NextResponse.redirect() throws on a relative or
 // malformed URL, which would turn a missing SITE_URL into a 500.
+// Accepted limits (README): a valid token can be replayed until exp (24h) and each
+// replay sends one owner e-mail; a mail scanner following the GET link can confirm.
+// Audited in the build-fix pass: typecheck clean, no code change needed.
 import type { NextRequest } from "next/server";
 import { getSubscribeSecret, verifySubscribeToken } from "@/lib/subscribe-token";
 import { sendOwnerEmail } from "@/lib/subscribe-delivery";

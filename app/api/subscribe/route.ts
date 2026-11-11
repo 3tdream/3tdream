@@ -38,7 +38,8 @@ export async function POST(req: NextRequest) {
 
   // Bots: honeypot filled, or submitted < 3000 ms after mount (a future-dated
   // formRenderedAt gives a negative delta and is a hit too). Nothing signed/sent.
-  if (company_website.trim().length > 0 || Date.now() - formRenderedAt < SUBSCRIBE_MIN_FILL_MS) {
+  const now = Date.now(); // server clock only, read once so gate and token TTL agree
+  if (company_website.trim().length > 0 || now - formRenderedAt < SUBSCRIBE_MIN_FILL_MS) {
     return accepted(false);
   }
 
@@ -47,7 +48,7 @@ export async function POST(req: NextRequest) {
       console.log("[subscribe] not configured");
       return accepted(false);
     }
-    const token = signSubscribeToken(email, replyLang);
+    const token = signSubscribeToken(email, replyLang, now);
     const outcome = await sendConfirmationEmail(email, replyLang, token);
     return accepted(outcome === "sent");
   } catch (err) {

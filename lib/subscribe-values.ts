@@ -48,8 +48,10 @@ type Copy = {
   confirmIntro: string;
   confirmCta: string;
   confirmIgnore: string;
-  ownerSubject: string;
 };
+
+// Owner-facing notice: one subject for every language (the owner reads English).
+export const SUBSCRIBE_OWNER_SUBJECT = "New build notes subscriber";
 
 export const SUBSCRIBE_EMAIL_COPY: Record<ReplyLang, Copy> = {
   ru: {
@@ -57,21 +59,18 @@ export const SUBSCRIBE_EMAIL_COPY: Record<ReplyLang, Copy> = {
     confirmIntro: "Подтвердите подписку на заметки о разработке 3TDream по ссылке:",
     confirmCta: "Подтвердить подписку",
     confirmIgnore: "Ссылка действует 24 часа. Если вы не подписывались, просто проигнорируйте это письмо.",
-    ownerSubject: "New build notes subscriber",
   },
   en: {
     confirmSubject: "Confirm your 3TDream build notes",
     confirmIntro: "Confirm your subscription to 3TDream build notes with this link:",
     confirmCta: "Confirm subscription",
     confirmIgnore: "The link is valid for 24 hours. If you did not subscribe, ignore this e-mail.",
-    ownerSubject: "New build notes subscriber",
   },
   he: {
     confirmSubject: "Confirm your 3TDream build notes",
     confirmIntro: "אשרו את ההרשמה לעדכוני הפיתוח של 3TDream בקישור הזה:",
     confirmCta: "אישור הרשמה",
     confirmIgnore: "הקישור תקף ל-24 שעות. אם לא נרשמתם, אפשר להתעלם מהודעה זו.",
-    ownerSubject: "New build notes subscriber",
   },
 };
 
@@ -103,9 +102,8 @@ export function buildConfirmationEmail(confirmUrl: string, lang: ReplyLang): Sub
 }
 
 export function buildOwnerEmail(email: string, lang: ReplyLang): SubscribeEmail {
-  const c = SUBSCRIBE_EMAIL_COPY[lang];
   return {
-    subject: c.ownerSubject,
+    subject: SUBSCRIBE_OWNER_SUBJECT,
     text: `Email: ${email}\nLanguage: ${lang}`,
   };
 }

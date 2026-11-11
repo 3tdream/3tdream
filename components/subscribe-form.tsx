@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { useI18n } from "@/lib/i18n";
 import { SUBSCRIBE_FORM } from "@/lib/content";
 
@@ -15,14 +15,11 @@ export function SubscribeForm() {
   const [email, setEmail] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [status, setStatus] = useState<Status>("idle");
-  const renderedAt = useRef(0);
+  // Stamped once when the form mounts (lazy initializer), so a submit can never send 0.
+  const [renderedAt] = useState(() => Date.now());
   const inputRef = useRef<HTMLInputElement>(null);
   const busy = status === "submitting";
   const invalid = status === "invalid";
-
-  useEffect(() => {
-    renderedAt.current = Date.now();
-  }, []);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -43,7 +40,7 @@ export function SubscribeForm() {
         body: JSON.stringify({
           email: value,
           replyLang,
-          formRenderedAt: renderedAt.current,
+          formRenderedAt: renderedAt,
           company_website: honeypot,
         }),
       });
@@ -63,9 +60,9 @@ export function SubscribeForm() {
     status === "success" ? t(copy.success) : status === "error" ? t(copy.error) : invalid ? t(copy.invalid) : "";
   const messageClass =
     status === "success"
-      ? "border-2 border-lime px-4 py-3 font-medium text-lime"
+      ? "subscribe-slip border-2 border-lime px-4 py-3 font-medium text-lime"
       : message
-        ? "border-s-4 border-lime ps-3 text-sm font-medium text-paper"
+        ? "subscribe-slip border-s-4 border-lime ps-3 text-sm font-medium text-paper"
         : "sr-only";
 
   return (
