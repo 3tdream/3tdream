@@ -50,8 +50,9 @@ export async function POST(req: NextRequest) {
     const token = signSubscribeToken(email, replyLang);
     const outcome = await sendConfirmationEmail(email, replyLang, token);
     return accepted(outcome === "sent");
-  } catch {
-    console.error("[subscribe] delivery failed: Error");
+  } catch (err) {
+    // Error NAME only — a message could echo the address or token.
+    console.error(`[subscribe] delivery failed: ${err instanceof Error ? err.name : "Error"}`);
     return accepted(false);
   }
 }

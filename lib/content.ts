@@ -572,6 +572,8 @@ export const SUBSCRIBE_FORM = {
     "Enter a valid e-mail address.",
     "הזינו כתובת אימייל תקינה."
   ),
+  // Accessible name for the hidden honeypot field (never shown to real users).
+  honeypot: L("Не заполняйте это поле", "Leave this field empty", "אין למלא שדה זה"),
 } as const;
 
 export const SUBSCRIBE_DONE = {

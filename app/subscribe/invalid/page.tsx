@@ -17,12 +17,12 @@ export default function SubscribeInvalidPage() {
       <h1 id="subscribe-result-title" className="text-4xl font-extrabold sm:text-5xl">
         {t(SUBSCRIBE_INVALID.heading)}
       </h1>
-      <p role="status" className="max-w-[60ch] text-start text-base text-ink">
+      <p role="alert" className="max-w-[60ch] text-start text-base text-ink">
         {t(SUBSCRIBE_INVALID.body)}
       </p>
       <Link
         href="/"
-        className="hard-border inline-flex min-h-12 items-center justify-center bg-lime px-6 py-3 font-bold text-ink transition-[transform,background-color] duration-150 ease-out hover:bg-paper active:scale-[0.98]"
+        className="hard-border hard-shadow-sm inline-flex min-h-12 items-center justify-center bg-ink px-6 py-3 text-base font-bold text-paper transition-colors hover:bg-accent focus-visible:bg-accent"
       >
         {t(SUBSCRIBE_INVALID.home)}
       </Link>

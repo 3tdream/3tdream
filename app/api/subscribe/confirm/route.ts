@@ -7,7 +7,7 @@
 import type { NextRequest } from "next/server";
 import { getSubscribeSecret, verifySubscribeToken } from "@/lib/subscribe-token";
 import { sendOwnerEmail } from "@/lib/subscribe-delivery";
-import { getSiteOrigin } from "@/lib/subscribe-values";
+import { SUBSCRIBE_TOKEN_MAX, getSiteOrigin } from "@/lib/subscribe-values";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -27,9 +27,11 @@ function redirectTo(path: "/subscribe/done" | "/subscribe/invalid"): Response {
 
 export async function GET(req: NextRequest): Promise<Response> {
   try {
-    // Missing secret or SITE_URL: nothing is verified or sent, and nothing is logged.
-    if (!getSubscribeSecret() || getSiteOrigin() === null) return redirectTo("/subscribe/invalid");
+    // Order: token present and within SUBSCRIBE_TOKEN_MAX, then secret/SITE_URL, then verify.
+    // Nothing is verified or sent on any early exit, and nothing is logged.
     const token = req.nextUrl.searchParams.get("token");
+    if (!token || token.length > SUBSCRIBE_TOKEN_MAX) return redirectTo("/subscribe/invalid");
+    if (!getSubscribeSecret() || getSiteOrigin() === null) return redirectTo("/subscribe/invalid");
     const payload = verifySubscribeToken(token);
     if (!payload) return redirectTo("/subscribe/invalid");
     // Best-effort: sendOwnerEmail never throws and logs no address or token.
