@@ -20,7 +20,10 @@ export default function SubscribeDonePage() {
       <p role="status" className="max-w-[60ch] text-start text-base text-ink">
         {t(SUBSCRIBE_DONE.body)}
       </p>
-      <Link href="/" className="label inline-flex items-center border-2 border-ink bg-lime px-5 py-2.5 font-bold text-ink transition-colors hover:bg-ink hover:text-lime focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink active:scale-[0.97]">
+      <Link
+        href="/"
+        className="hard-border inline-flex min-h-12 items-center justify-center bg-lime px-6 py-3 font-bold text-ink transition-[transform,background-color] duration-150 ease-out hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink active:scale-[0.98]"
+      >
         {t(SUBSCRIBE_DONE.home)}
       </Link>
     </section>
