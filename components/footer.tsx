@@ -27,9 +27,12 @@ export function Footer() {
               {t(BRAND.expansion)}
             </p>
             <p className="mt-4 max-w-xs text-sm text-paper/70">{t(BRAND.tagline)}</p>
-            <div className="mt-6 max-w-xs">
+            <section
+              aria-label={t(L("Подписка на заметки", "Build Notes subscription", "הרשמה להערות בנייה"))}
+              className="mt-6 max-w-xs border-t border-paper/15 pt-6 text-start"
+            >
               <SubscribeForm />
-            </div>
+            </section>
           </div>
 
           {/* Nav */}

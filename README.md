@@ -11,8 +11,10 @@
 
 ## Run
 ```bash
-pnpm --filter 3tdream-portfolio dev     # http://localhost:3099
-pnpm --filter 3tdream-portfolio build
+npm install
+npm run dev        # http://localhost:3099
+npm run build
+npm run typecheck
 ```
 
 ## Structure
@@ -23,6 +25,10 @@ app/
   projects/page.tsx # Work — full grid + live/wip filter
   about/page.tsx    # About — principles, stats, stack
   contact/page.tsx  # Contact — direct channels
+  subscribe/done/page.tsx     # confirmed outcome (303 target of a valid token)
+  subscribe/invalid/page.tsx  # invalid/expired outcome (303 target of every other case)
+  api/subscribe/route.ts          # POST — footer sign-up, sends the confirmation e-mail
+  api/subscribe/confirm/route.ts  # GET/HEAD — token check, owner notice, always 303
 components/
   site-shell.tsx    # I18nProvider + Nav + Footer
   nav.tsx · footer.tsx · lang-switcher.tsx
@@ -101,7 +107,9 @@ file store. The only state is a 24h HMAC-SHA256 signed token (`base64url(payload
   link probes cannot confirm an address.
 
 **Env vars** (see `.env.example`; all read per request, so builds and previews never break):
-- `SUBSCRIBE_TOKEN_SECRET` — server-only HMAC key (empty or unset counts as missing).
+- `SUBSCRIBE_TOKEN_SECRET` — server-only HMAC key (empty or unset counts as missing; generate
+  with `openssl rand -hex 32`). When missing, sends degrade to `delivered:false` and only the
+  `[subscribe] not configured` line is logged.
 - `SITE_URL` — server-only absolute origin (`http:`/`https:`) for every confirm link and redirect.
   It is **distinct from `NEXT_PUBLIC_SITE_URL`** (used by Checkout and the QR route); the origin is
   never taken from `Host`/`Origin`.

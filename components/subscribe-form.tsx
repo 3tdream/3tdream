@@ -34,20 +34,21 @@ export function SubscribeForm() {
       return;
     }
     setStatus("submitting");
+    // AC-19: replyLang is the current UI language; the annotation makes tsc prove it is ru | en | he.
+    const replyLang: "ru" | "en" | "he" = lang;
     try {
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: value,
-          replyLang: lang,
+          replyLang,
           formRenderedAt: renderedAt.current,
           company_website: honeypot,
         }),
       });
       if (res.status === 202) {
         setStatus("success");
-        setEmail("");
         return;
       }
       const body = (await res.json().catch(() => null)) as { field?: string } | null;
@@ -64,7 +65,7 @@ export function SubscribeForm() {
     status === "success"
       ? "border-2 border-lime px-4 py-3 font-medium text-lime"
       : message
-        ? "text-sm font-medium text-red-300"
+        ? "border-s-4 border-lime ps-3 text-sm font-medium text-paper"
         : "sr-only";
 
   return (
@@ -90,7 +91,7 @@ export function SubscribeForm() {
         disabled={busy}
         aria-invalid={invalid || undefined}
         aria-describedby="subscribe-status"
-        className={`w-full border-2 bg-transparent px-3 py-2.5 text-start text-base text-paper placeholder:text-paper/50 focus:bg-paper/10 disabled:opacity-60 ${RING} ${invalid ? "border-red-300" : "border-paper"}`}
+        className={`w-full border-2 bg-transparent px-3 py-2.5 text-start text-base text-paper placeholder:text-paper/60 focus:bg-paper/10 disabled:opacity-60 ${RING} ${invalid ? "border-lime" : "border-paper"}`}
       />
       {/* Honeypot: off-screen, out of tab order, hidden from assistive tech */}
       <input

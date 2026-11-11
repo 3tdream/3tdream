@@ -5,7 +5,7 @@
 // The redirect is built by hand: NextResponse.redirect() throws on a relative or
 // malformed URL, which would turn a missing SITE_URL into a 500.
 import type { NextRequest } from "next/server";
-import { verifySubscribeToken } from "@/lib/subscribe-token";
+import { getSubscribeSecret, verifySubscribeToken } from "@/lib/subscribe-token";
 import { sendOwnerEmail } from "@/lib/subscribe-delivery";
 import { getSiteOrigin } from "@/lib/subscribe-values";
 
@@ -27,8 +27,8 @@ function redirectTo(path: "/subscribe/done" | "/subscribe/invalid"): Response {
 
 export async function GET(req: NextRequest): Promise<Response> {
   try {
-    // Missing SITE_URL: nothing is verified or sent; relative redirect to invalid.
-    if (getSiteOrigin() === null) return redirectTo("/subscribe/invalid");
+    // Missing/weak secret: nothing is verified or sent, and nothing is logged.
+    if (!getSubscribeSecret()) return redirectTo("/subscribe/invalid");
     const token = req.nextUrl.searchParams.get("token");
     const payload = verifySubscribeToken(token);
     if (!payload) return redirectTo("/subscribe/invalid");
