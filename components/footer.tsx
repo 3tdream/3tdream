@@ -28,7 +28,7 @@ export function Footer() {
             </p>
             <p className="mt-4 max-w-xs text-sm text-paper/70">{t(BRAND.tagline)}</p>
             <section
-              aria-label={t(L("Подписка на заметки", "Build Notes subscription", "הרשמה להערות בנייה"))}
+              aria-label={t(L("Подписка на заметки", "Build Notes subscription", "הרשמה לעדכוני פיתוח"))}
               className="mt-6 max-w-xs border-t border-paper/15 pt-6 text-start"
             >
               <SubscribeForm />

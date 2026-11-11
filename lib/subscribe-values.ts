@@ -11,8 +11,6 @@ export type SubscribeEmail = { subject: string; text: string; html?: string };
 export const SUBSCRIBE_TOKEN_TTL_MS = 86_400_000;
 export const SUBSCRIBE_TOKEN_MAX = 2048;
 export const SUBSCRIBE_COMPANY_WEBSITE_MAX = 500;
-// Honeypot field name: shared by the footer form (client) and POST /api/subscribe (server).
-export const SUBSCRIBE_HONEYPOT_FIELD = "company_website";
 export const SUBSCRIBE_MIN_FILL_MS = 3000;
 export const SUBSCRIBE_EMAIL_MAX = 254;
 export const DEFAULT_FROM_EMAIL = "leads@3tdream.vercel.app";

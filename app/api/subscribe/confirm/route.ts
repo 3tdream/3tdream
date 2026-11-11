@@ -27,8 +27,8 @@ function redirectTo(path: "/subscribe/done" | "/subscribe/invalid"): Response {
 
 export async function GET(req: NextRequest): Promise<Response> {
   try {
-    // Missing/weak secret: nothing is verified or sent, and nothing is logged.
-    if (!getSubscribeSecret()) return redirectTo("/subscribe/invalid");
+    // Missing secret or SITE_URL: nothing is verified or sent, and nothing is logged.
+    if (!getSubscribeSecret() || getSiteOrigin() === null) return redirectTo("/subscribe/invalid");
     const token = req.nextUrl.searchParams.get("token");
     const payload = verifySubscribeToken(token);
     if (!payload) return redirectTo("/subscribe/invalid");
