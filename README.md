@@ -96,6 +96,10 @@ helper, independent of the `replyLang` the visitor selects for the reply itself.
 A footer e-mail subscription with **double opt-in**, fully stateless — no database, cache or
 file store. The only state is a 24h HMAC-SHA256 signed token (`base64url(payload).hexMAC`).
 
+**Where it lives:** `<SubscribeForm />` (`components/subscribe-form.tsx`) is rendered in the site
+footer (`components/footer.tsx`), as the last child of the first column, under the tagline. Server
+e-mail text and constants live in `lib/subscribe-values.ts`; the token in `lib/subscribe-token.ts`.
+
 - `POST /api/subscribe` — body `{email, replyLang, formRenderedAt, company_website?}`. Sends a
   localized (RU/EN/HE) confirmation e-mail through Resend (`fetch`, 5s timeout). Always `202
   {ok, delivered}` after validation (same shape for new/repeat addresses, bots, missing config
@@ -126,6 +130,8 @@ file store. The only state is a 24h HMAC-SHA256 signed token (`base64url(payload
 - The UI shows "check your inbox" even when `delivered:false`; the cause is logged server-side
   (never the address or token).
 - Rotating `SUBSCRIBE_TOKEN_SECRET` invalidates all outstanding links.
+- **The owner's inbox (`LEAD_TO_EMAIL`) is the subscriber list.** Nothing is stored server-side, so
+  there is no list to export or query, and the owner notice is the only record of a confirmation.
 
 **Follow-up:** a GDPR and Israeli anti-spam (Communications Law §30A) review.
 

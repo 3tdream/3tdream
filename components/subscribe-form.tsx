@@ -108,7 +108,8 @@ export function SubscribeForm() {
         type="submit"
         data-testid="subscribe-submit"
         disabled={busy}
-        className={`hard-border self-start bg-lime px-5 py-2.5 font-semibold text-ink transition-[transform,background-color] duration-150 ease-out hover:bg-paper enabled:active:scale-[0.97] disabled:opacity-60 ${RING}`}
+        aria-busy={busy || undefined}
+        className={`label self-start border-2 border-lime bg-lime px-5 py-2.5 font-bold text-ink hover:bg-transparent hover:text-lime disabled:opacity-60 ${RING}`}
       >
         {busy ? t(copy.submitting) : t(copy.submit)}
       </button>
