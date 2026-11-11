@@ -547,6 +547,50 @@ export const LEAD_FORM = {
   ),
 } as const;
 
+// Build notes double opt-in: footer form + the /subscribe/done and
+// /subscribe/invalid landing pages (redirect targets of /api/subscribe/confirm).
+export const SUBSCRIBE_FORM = {
+  label: L("Заметки о разработке", "Build notes", "עדכוני פיתוח"),
+  placeholder: L("you@example.com", "you@example.com", "you@example.com"),
+  submit: L("Подписаться", "Subscribe", "הרשמה"),
+  submitting: L("Отправка…", "Sending…", "שולח…"),
+  success: L(
+    "Проверьте почту: отправили ссылку для подтверждения.",
+    "Check your inbox: we sent a confirmation link.",
+    "בדקו את תיבת הדואר: שלחנו קישור לאישור."
+  ),
+  error: L(
+    "Не удалось отправить. Попробуйте ещё раз.",
+    "Couldn't send that. Please try again.",
+    "השליחה נכשלה. נסו שוב."
+  ),
+  invalid: L(
+    "Введите корректный email.",
+    "Enter a valid e-mail address.",
+    "הזינו כתובת אימייל תקינה."
+  ),
+} as const;
+
+export const SUBSCRIBE_DONE = {
+  heading: L("Подписка подтверждена", "Subscription confirmed", "ההרשמה אושרה"),
+  body: L(
+    "Спасибо! Вы в списке заметок о разработке 3TDream.",
+    "Thanks! You're on the 3TDream build notes list.",
+    "תודה! נרשמתם לעדכוני הפיתוח של 3TDream."
+  ),
+  home: L("На главную", "Back to home", "חזרה לדף הבית"),
+} as const;
+
+export const SUBSCRIBE_INVALID = {
+  heading: L("Ссылка недействительна", "Link invalid or expired", "הקישור לא תקף או שפג תוקפו"),
+  body: L(
+    "Ссылка устарела или повреждена. Подпишитесь заново через форму внизу страницы.",
+    "This link has expired or is broken. Subscribe again with the form in the footer.",
+    "הקישור פג תוקף או שגוי. הירשמו שוב דרך הטופס בתחתית העמוד."
+  ),
+  home: L("На главную", "Back to home", "חזרה לדף הבית"),
+} as const;
+
 // Maps a server-returned zod field error (field name + raw zod message) to a
 // localized display string. Falls back to a generic "required" copy when the
 // field has no dedicated mapping, so an unexpected zod message never leaks
