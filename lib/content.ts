@@ -549,6 +549,9 @@ export const LEAD_FORM = {
 
 // Build notes double opt-in: footer form + the /subscribe/done and
 // /subscribe/invalid landing pages (redirect targets of /api/subscribe/confirm).
+// Contract: `success` is shown for EVERY 202 (new, repeat, bot, unconfigured) so the
+// endpoint cannot be probed; `invalid` is the 400 invalid_field copy; `error` is for
+// network failures and invalid_json. All strings are RU / EN / HE.
 export const SUBSCRIBE_FORM = {
   label: L("Заметки о разработке", "Build notes", "עדכוני פיתוח"),
   placeholder: L("you@example.com", "you@example.com", "you@example.com"),

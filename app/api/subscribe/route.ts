@@ -26,6 +26,10 @@ export async function POST(req: NextRequest) {
     return rejected({ ok: false, error: "invalid_json" });
   }
 
+  if (typeof raw !== "object" || raw === null || Array.isArray(raw)) {
+    return rejected({ ok: false, error: "invalid_json" });
+  }
+
   const parsed = parseSubscribeRequest(raw);
   if (!parsed.ok) {
     return rejected({ ok: false, error: "invalid_field", field: parsed.field });

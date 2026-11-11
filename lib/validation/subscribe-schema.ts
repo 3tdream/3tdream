@@ -2,7 +2,13 @@
 // constants) but checks fields in the fixed contract order — email, replyLang,
 // formRenderedAt, company_website — so the FIRST failure names the field.
 import { z } from "zod";
-import { SUBSCRIBE_EMAIL_MAX, isReplyLang, isValidEmail, type ReplyLang } from "@/lib/subscribe-values";
+import {
+  SUBSCRIBE_COMPANY_WEBSITE_MAX,
+  SUBSCRIBE_EMAIL_MAX,
+  isReplyLang,
+  isValidEmail,
+  type ReplyLang,
+} from "@/lib/subscribe-values";
 
 export type SubscribeLang = ReplyLang;
 
@@ -18,7 +24,7 @@ export const subscribeFieldSchemas = {
     .refine((v: string) => isReplyLang(v), { message: "replyLang must be one of ru, en, he" })
     .transform((v: string) => v as SubscribeLang),
   formRenderedAt: z.number().finite("formRenderedAt must be a finite number"),
-  company_website: z.string().max(500, "company_website is too long").optional().default(""),
+  company_website: z.string().max(SUBSCRIBE_COMPANY_WEBSITE_MAX, "company_website is too long").optional().default(""),
 };
 
 export type SubscribeRequest = {
