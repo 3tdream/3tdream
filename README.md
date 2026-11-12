@@ -28,7 +28,7 @@ app/
   subscribe/done/page.tsx     # confirmed outcome (303 target of a valid token)
   subscribe/invalid/page.tsx  # invalid/expired outcome (303 target of every other case)
   api/subscribe/route.ts          # POST — footer sign-up, sends the confirmation e-mail
-  api/subscribe/confirm/route.ts  # GET/HEAD — token check, owner notice, always 303
+  api/subscribe/confirm/route.ts  # GET/HEAD — token check, owner notice, always 303 (HEAD never verifies or sends)
 components/
   site-shell.tsx    # I18nProvider + Nav + Footer
   nav.tsx · footer.tsx · lang-switcher.tsx

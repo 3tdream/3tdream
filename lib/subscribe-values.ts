@@ -13,6 +13,8 @@ export const SUBSCRIBE_TOKEN_MAX = 2048;
 export const SUBSCRIBE_COMPANY_WEBSITE_MAX = 500;
 export const SUBSCRIBE_MIN_FILL_MS = 3000;
 export const SUBSCRIBE_EMAIL_MAX = 254;
+// Fallback sender only. Resend rejects a sender whose domain is not verified, so set
+// LEAD_FROM_EMAIL to an address on a verified domain; otherwise sends return delivered:false.
 export const DEFAULT_FROM_EMAIL = "leads@3tdream.vercel.app";
 
 const LANGS: readonly ReplyLang[] = ["ru", "en", "he"];

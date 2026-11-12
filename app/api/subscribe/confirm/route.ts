@@ -21,7 +21,8 @@ function redirectTo(path: "/subscribe/done" | "/subscribe/invalid"): Response {
   }
   return new Response(null, {
     status: 303,
-    headers: { Location: `${origin}${path}`, "Cache-Control": "no-store" },
+    // no-referrer: the request URL carries the live token; keep it out of Referer on the next hop.
+    headers: { Location: `${origin}${path}`, "Cache-Control": "no-store", "Referrer-Policy": "no-referrer" },
   });
 }
 

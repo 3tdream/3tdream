@@ -2,6 +2,7 @@
 // (HMAC-SHA256). The token is the ONLY state of the Build notes double opt-in.
 // Never logs; verify never throws. exp is epoch milliseconds (valid strictly before exp).
 // No nonce: a valid token can be replayed until exp (accepted limit, see README).
+// No rate limiting exists anywhere in the subscribe flow (honeypot + 3 s timing check only).
 // Runtime: Node only (node:crypto). Routes importing this must export runtime = "nodejs".
 import { createHmac, timingSafeEqual } from "node:crypto";
 import {
@@ -61,6 +62,7 @@ export function verifySubscribeToken(
     const { email, replyLang, exp } = raw as Record<string, unknown>;
     if (!isValidEmail(email)) return null;
     if (!isReplyLang(replyLang)) return null;
+    // Expired at or after exp (exp <= now), matching the confirm-route contract.
     if (typeof exp !== "number" || !Number.isFinite(exp) || exp <= now) return null;
     return { email, replyLang, exp };
   } catch {

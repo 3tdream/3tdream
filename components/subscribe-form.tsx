@@ -48,6 +48,7 @@ export function SubscribeForm() {
         }),
       });
       if (res.status === 202) {
+        setEmail("");
         setStatus("success");
         return;
       }
@@ -82,6 +83,7 @@ export function SubscribeForm() {
         dir="ltr"
         inputMode="email"
         autoComplete="email"
+        maxLength={254}
         value={email}
         onChange={(ev) => {
           setEmail(ev.target.value);

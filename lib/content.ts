@@ -551,12 +551,18 @@ export const LEAD_FORM = {
 // /subscribe/invalid landing pages (redirect targets of /api/subscribe/confirm).
 // Contract: `success` is shown for EVERY 202 (new, repeat, bot, unconfigured) so the
 // endpoint cannot be probed; `invalid` is the 400 invalid_field copy; `error` is for
-// network failures and invalid_json. All strings are RU / EN / HE.
+// network failures and invalid_json. All strings are RU / EN / HE (key parity is
+// enforced by L()). No copy here may claim the endpoint is rate-limited.
 export const SUBSCRIBE_FORM = {
   label: L("Заметки о разработке", "Build notes", "עדכוני פיתוח"),
   placeholder: L("you@example.com", "you@example.com", "you@example.com"),
   submit: L("Подписаться", "Subscribe", "הרשמה"),
   submitting: L("Отправка…", "Sending…", "שולח…"),
+  hint: L(
+    "Одно письмо для подтверждения, без спама.",
+    "One confirmation e-mail, no spam.",
+    "אימייל אישור אחד, בלי ספאם."
+  ),
   success: L(
     "Проверьте почту: отправили ссылку для подтверждения.",
     "Check your inbox: we sent a confirmation link.",
