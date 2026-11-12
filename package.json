@@ -1,6 +1,7 @@
 {
   "name": "3tdream-portfolio",
   "version": "1.0.0",
+  "description": "3tdream portfolio: Next.js site with Build notes double opt-in (Resend via fetch, HMAC-signed tokens, no extra dependencies)",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3099",

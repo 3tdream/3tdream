@@ -3,6 +3,9 @@
 // 202 shape { ok: true, delivered } so the address list cannot be probed.
 // Order: JSON -> schema -> honeypot/timing -> config -> sign -> send.
 // Logs only cause categories — never an address, a token or a link.
+// Env (SUBSCRIBE_TOKEN_SECRET, SITE_URL, RESEND_API_KEY) is read per request,
+// never at module load, so a missing variable cannot break typecheck or build.
+// SITE_URL is the only base for the confirm link — never Host/Origin.
 import { NextResponse, type NextRequest } from "next/server";
 import { parseSubscribeRequest } from "@/lib/validation/subscribe-schema";
 import { getSubscribeSecret, signSubscribeToken } from "@/lib/subscribe-token";

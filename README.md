@@ -33,10 +33,11 @@ components/
   site-shell.tsx    # I18nProvider + Nav + Footer
   nav.tsx · footer.tsx · lang-switcher.tsx
   project-card.tsx · status-badge.tsx · marquee.tsx · contact-buttons.tsx
+  project-detail.tsx · share-case.tsx  # ShareCase panel — copy-link, bdi raw URL, QR img, SVG download
+  subscribe-form.tsx  # footer "Build notes" form (honeypot + formRenderedAt)
+app/ (continued)
   projects/[slug]/page.tsx  # Case detail — renders <ShareCase slug={slug} />
   api/qr/[slug]/route.ts    # GET /api/qr/[slug] — public SVG QR endpoint
-components/
-  share-case.tsx    # ShareCase panel — copy-link, bdi raw URL, QR img, SVG download
 lib/
   i18n.tsx          # trilingual context, RTL handling, localStorage persistence
   content.ts        # ALL copy + projects + services + contacts (edit here)

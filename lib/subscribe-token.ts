@@ -1,6 +1,7 @@
 // lib/subscribe-token.ts — stateless signed token: base64url(payload).hexMAC
 // (HMAC-SHA256). The token is the ONLY state of the Build notes double opt-in.
-// Never logs; verify never throws. exp is epoch milliseconds (valid strictly before exp).
+// Never logs; verify never throws. exp is epoch milliseconds: a token is valid strictly
+// before exp and expired at or after it (now >= exp -> null), matching the API contract.
 // No nonce: a valid token can be replayed until exp (accepted limit, see README).
 // Runtime: Node only (node:crypto). Routes importing this must export runtime = "nodejs".
 import { createHmac, timingSafeEqual } from "node:crypto";

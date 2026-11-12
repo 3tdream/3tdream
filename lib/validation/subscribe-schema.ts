@@ -23,7 +23,10 @@ export const subscribeFieldSchemas = {
     .string()
     .refine((v: string) => isReplyLang(v), { message: "replyLang must be one of ru, en, he" })
     .transform((v: string) => v as SubscribeLang),
+  // Finite epoch ms only: missing / string / null / NaN / Infinity -> 400 (AC-12).
+  // Future-dated values are NOT rejected here; the route treats them as a timing hit (202).
   formRenderedAt: z.number().finite("formRenderedAt must be a finite number"),
+  // Honeypot: absent -> "", non-string or > 500 chars -> 400 (AC-12).
   company_website: z.string().max(SUBSCRIBE_COMPANY_WEBSITE_MAX, "company_website is too long").optional().default(""),
 };
 

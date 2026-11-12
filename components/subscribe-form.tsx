@@ -3,12 +3,13 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useI18n } from "@/lib/i18n";
 import { SUBSCRIBE_FORM } from "@/lib/content";
+import { isValidEmail, type ReplyLang } from "@/lib/subscribe-values";
 
 // API: POST /api/subscribe. Every 202 shows the same success text; `delivered` is never read.
 type Status = "idle" | "submitting" | "success" | "error" | "invalid";
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const RING = "focus-visible:shadow-[0_0_0_2px_var(--color-lime)]";
+// Two-tone ring (ink gap, then lime): readable on the ink footer and around lime surfaces.
+const RING = "focus-visible:shadow-[0_0_0_2px_var(--color-ink),0_0_0_4px_var(--color-lime)]";
 
 export function SubscribeForm() {
   const { t, lang } = useI18n();
@@ -28,14 +29,14 @@ export function SubscribeForm() {
     e.preventDefault();
     if (busy) return;
     const value = email.trim();
-    if (!EMAIL_RE.test(value) || value.length > 254) {
+    if (!isValidEmail(value)) {
       setStatus("invalid");
       inputRef.current?.focus();
       return;
     }
     setStatus("submitting");
     // AC-19: replyLang is the current UI language; the annotation makes tsc prove it is ru | en | he.
-    const replyLang: "ru" | "en" | "he" = lang;
+    const replyLang: ReplyLang = lang;
     try {
       const res = await fetch("/api/subscribe", {
         method: "POST",
@@ -48,6 +49,7 @@ export function SubscribeForm() {
         }),
       });
       if (res.status === 202) {
+        setEmail("");
         setStatus("success");
         return;
       }
@@ -85,7 +87,7 @@ export function SubscribeForm() {
         value={email}
         onChange={(ev) => {
           setEmail(ev.target.value);
-          if (status === "invalid" || status === "error") setStatus("idle");
+          if (status === "invalid" || status === "error" || status === "success") setStatus("idle");
         }}
         placeholder={t(copy.placeholder)}
         disabled={busy}

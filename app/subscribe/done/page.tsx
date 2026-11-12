@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n";
 import { SUBSCRIBE_DONE } from "@/lib/content";
@@ -7,6 +8,12 @@ import { SUBSCRIBE_DONE } from "@/lib/content";
 // 303 target of GET /api/subscribe/confirm for a valid token.
 export default function SubscribeDonePage() {
   const { t } = useI18n();
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  // The visitor arrives from an e-mail link: land focus on the outcome for screen readers.
+  useEffect(() => {
+    headingRef.current?.focus();
+  }, []);
 
   return (
     <section
@@ -14,7 +21,12 @@ export default function SubscribeDonePage() {
       aria-labelledby="subscribe-result-title"
       className="mx-auto flex min-h-[60dvh] w-full max-w-3xl flex-col items-start justify-center gap-6 px-6 py-24 sm:px-8"
     >
-      <h1 id="subscribe-result-title" className="text-4xl font-extrabold sm:text-5xl">
+      <h1
+        id="subscribe-result-title"
+        ref={headingRef}
+        tabIndex={-1}
+        className="text-4xl font-extrabold outline-none sm:text-5xl"
+      >
         {t(SUBSCRIBE_DONE.heading)}
       </h1>
       <p role="status" className="max-w-[60ch] text-start text-base text-ink">

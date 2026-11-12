@@ -31,7 +31,7 @@ export async function GET(req: NextRequest): Promise<Response> {
     // Nothing is verified or sent on any early exit, and nothing is logged.
     const token = req.nextUrl.searchParams.get("token");
     if (!token || token.length > SUBSCRIBE_TOKEN_MAX) return redirectTo("/subscribe/invalid");
-    if (!getSubscribeSecret() || getSiteOrigin() === null) return redirectTo("/subscribe/invalid");
+    if (!getSubscribeSecret() || !getSiteOrigin()) return redirectTo("/subscribe/invalid");
     const payload = verifySubscribeToken(token);
     if (!payload) return redirectTo("/subscribe/invalid");
     // Best-effort: sendOwnerEmail never throws and logs no address or token.

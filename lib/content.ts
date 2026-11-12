@@ -558,9 +558,9 @@ export const SUBSCRIBE_FORM = {
   submit: L("Подписаться", "Subscribe", "הרשמה"),
   submitting: L("Отправка…", "Sending…", "שולח…"),
   success: L(
-    "Проверьте почту: отправили ссылку для подтверждения.",
-    "Check your inbox: we sent a confirmation link.",
-    "בדקו את תיבת הדואר: שלחנו קישור לאישור."
+    "Проверьте почту: я отправил ссылку для подтверждения.",
+    "Check your inbox: I sent a confirmation link.",
+    "בדקו את תיבת הדואר: שלחתי קישור לאישור."
   ),
   error: L(
     "Не удалось отправить. Попробуйте ещё раз.",

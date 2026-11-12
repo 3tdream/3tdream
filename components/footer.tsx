@@ -6,6 +6,9 @@ import { useI18n, L } from "@/lib/i18n";
 import { BRAND, CONTACTS, NAV } from "@/lib/content";
 import { SubscribeForm } from "@/components/subscribe-form";
 
+// id of the <h2> rendered inside SubscribeForm; the footer section is named by it.
+const BUILD_NOTES_HEADING_ID = "build-notes-heading";
+
 export function Footer() {
   const { t } = useI18n();
   const year = "2026";
@@ -28,7 +31,7 @@ export function Footer() {
             </p>
             <p className="mt-4 max-w-xs text-sm text-paper/70">{t(BRAND.tagline)}</p>
             <section
-              aria-label={t(L("Подписка на заметки", "Build Notes subscription", "הרשמה לעדכוני פיתוח"))}
+              aria-labelledby={BUILD_NOTES_HEADING_ID}
               className="mt-6 max-w-xs border-t border-paper/15 pt-6 text-start"
             >
               <SubscribeForm />
