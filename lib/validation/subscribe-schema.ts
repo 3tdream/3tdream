@@ -43,8 +43,10 @@ export type SubscribeParseResult =
 const ORDER: readonly SubscribeField[] = ["email", "replyLang", "formRenderedAt", "company_website"];
 
 export function parseSubscribeRequest(raw: unknown): SubscribeParseResult {
+  // Defensive only: the route maps a non-object body to 400 invalid_json before
+  // calling this; if it ever reaches here, the first contract field is reported.
   if (typeof raw !== "object" || raw === null || Array.isArray(raw)) {
-    return { ok: false, field: "email" };
+    return { ok: false, field: ORDER[0] };
   }
   const body = raw as Record<string, unknown>;
   const out: Record<string, unknown> = {};

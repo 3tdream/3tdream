@@ -38,7 +38,10 @@ export async function POST(req: NextRequest) {
 
   // Bots: honeypot filled, or submitted < 3000 ms after mount (a future-dated
   // formRenderedAt gives a negative delta and is a hit too). Nothing signed/sent.
-  if (company_website.trim().length > 0 || Date.now() - formRenderedAt < SUBSCRIBE_MIN_FILL_MS) {
+  const now = Date.now(); // server clock only, never client-supplied
+  const honeypotHit = company_website.trim().length > 0;
+  const timingHit = now - formRenderedAt < SUBSCRIBE_MIN_FILL_MS;
+  if (honeypotHit || timingHit) {
     return accepted(false);
   }
 

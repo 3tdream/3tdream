@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { useI18n } from "@/lib/i18n";
+import { Check } from "lucide-react";
+import { useI18n, L } from "@/lib/i18n";
 import { SUBSCRIBE_FORM } from "@/lib/content";
+import { SUBSCRIBE_EMAIL_MAX } from "@/lib/subscribe-values";
 
 // API: POST /api/subscribe. Every 202 shows the same success text; `delivered` is never read.
 type Status = "idle" | "submitting" | "success" | "error" | "invalid";
@@ -28,7 +30,7 @@ export function SubscribeForm() {
     e.preventDefault();
     if (busy) return;
     const value = email.trim();
-    if (!EMAIL_RE.test(value) || value.length > 254) {
+    if (!EMAIL_RE.test(value) || value.length > SUBSCRIBE_EMAIL_MAX) {
       setStatus("invalid");
       inputRef.current?.focus();
       return;
@@ -53,20 +55,45 @@ export function SubscribeForm() {
       }
       const body = (await res.json().catch(() => null)) as { field?: string } | null;
       setStatus(res.status === 400 && body?.field === "email" ? "invalid" : "error");
+      inputRef.current?.focus();
     } catch {
       setStatus("error");
+      inputRef.current?.focus();
     }
   }
 
+  function reset() {
+    setEmail("");
+    setStatus("idle");
+    requestAnimationFrame(() => inputRef.current?.focus());
+  }
+
   const copy = SUBSCRIBE_FORM;
-  const message =
-    status === "success" ? t(copy.success) : status === "error" ? t(copy.error) : invalid ? t(copy.invalid) : "";
-  const messageClass =
-    status === "success"
-      ? "border-2 border-lime px-4 py-3 font-medium text-lime"
-      : message
-        ? "border-s-4 border-lime ps-3 text-sm font-medium text-paper"
-        : "sr-only";
+
+  if (status === "success") {
+    return (
+      <div data-testid="subscribe-success" className="flex w-full max-w-md flex-col items-start gap-3 text-start">
+        <p
+          role="status"
+          aria-live="polite"
+          className="flex items-start gap-3 border-2 border-lime px-4 py-3 text-sm font-medium text-paper"
+        >
+          <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-lime" strokeWidth={3} />
+          <span>{t(copy.success)}</span>
+        </p>
+        <button
+          type="button"
+          onClick={reset}
+          className={`label text-paper/70 underline decoration-paper/40 underline-offset-4 transition-colors duration-150 hover:text-lime ${RING}`}
+        >
+          {t(L("Другой адрес", "Use another address", "כתובת אחרת"))}
+        </button>
+      </div>
+    );
+  }
+
+  const message = status === "error" ? t(copy.error) : invalid ? t(copy.invalid) : "";
+  const messageClass = message ? "border-s-4 border-lime ps-3 text-sm font-medium text-paper" : "sr-only";
 
   return (
     <form onSubmit={onSubmit} noValidate data-testid="subscribe-form" className="relative flex w-full max-w-md flex-col gap-3">
@@ -106,6 +133,7 @@ export function SubscribeForm() {
       />
       <button
         type="submit"
+        id="subscribe-submit"
         data-testid="subscribe-submit"
         disabled={busy}
         aria-busy={busy || undefined}

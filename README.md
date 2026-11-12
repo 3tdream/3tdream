@@ -29,13 +29,13 @@ app/
   subscribe/invalid/page.tsx  # invalid/expired outcome (303 target of every other case)
   api/subscribe/route.ts          # POST — footer sign-up, sends the confirmation e-mail
   api/subscribe/confirm/route.ts  # GET/HEAD — token check, owner notice, always 303
+  projects/[slug]/page.tsx  # Case detail — renders <ShareCase slug={slug} />
+  api/qr/[slug]/route.ts    # GET /api/qr/[slug] — public SVG QR endpoint
 components/
   site-shell.tsx    # I18nProvider + Nav + Footer
   nav.tsx · footer.tsx · lang-switcher.tsx
   project-card.tsx · status-badge.tsx · marquee.tsx · contact-buttons.tsx
-  projects/[slug]/page.tsx  # Case detail — renders <ShareCase slug={slug} />
-  api/qr/[slug]/route.ts    # GET /api/qr/[slug] — public SVG QR endpoint
-components/
+  subscribe-form.tsx  # footer Build notes sign-up form
   share-case.tsx    # ShareCase panel — copy-link, bdi raw URL, QR img, SVG download
 lib/
   i18n.tsx          # trilingual context, RTL handling, localStorage persistence

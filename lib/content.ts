@@ -591,6 +591,7 @@ export const SUBSCRIBE_INVALID = {
     "This link has expired or is broken. Subscribe again with the form in the footer.",
     "הקישור פג תוקף או שגוי. הירשמו שוב דרך הטופס בתחתית העמוד."
   ),
+  retry: L("Запросить новую ссылку", "Request a new link", "בקשת קישור חדש"),
   home: L("На главную", "Back to home", "חזרה לדף הבית"),
 } as const;
 
