@@ -69,7 +69,13 @@ export function SubscribeForm() {
         : "sr-only";
 
   return (
-    <form onSubmit={onSubmit} noValidate data-testid="subscribe-form" className="relative flex w-full max-w-md flex-col gap-3">
+    <form
+      onSubmit={onSubmit}
+      noValidate
+      data-testid="subscribe-form"
+      aria-busy={busy}
+      className="relative flex w-full max-w-md flex-col gap-3"
+    >
       <label htmlFor="subscribe-email" className="label text-paper/60">
         {t(copy.label)}
       </label>
@@ -91,7 +97,8 @@ export function SubscribeForm() {
         disabled={busy}
         aria-invalid={invalid || undefined}
         aria-describedby="subscribe-status"
-        className={`w-full border-2 bg-transparent px-3 py-2.5 text-start text-base text-paper placeholder:text-paper/60 focus:bg-paper/10 disabled:opacity-60 ${RING} ${invalid ? "border-lime" : "border-paper"}`}
+        style={{ outlineColor: "var(--color-lime)" }}
+        className={`min-h-11 w-full border-2 bg-transparent px-3 py-2.5 text-start text-base text-paper placeholder:text-paper/60 focus:bg-paper/10 disabled:opacity-60 ${RING} ${invalid ? "border-lime" : "border-paper"}`}
       />
       {/* Honeypot: off-screen, out of tab order, hidden from assistive tech */}
       <input

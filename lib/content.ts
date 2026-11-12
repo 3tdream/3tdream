@@ -572,6 +572,8 @@ export const SUBSCRIBE_FORM = {
     "Enter a valid e-mail address.",
     "הזינו כתובת אימייל תקינה."
   ),
+  another: L("Другой адрес", "Use another address", "כתובת אחרת"),
+  emailLabel: L("Ваш email", "Your e-mail", "האימייל שלכם"),
 } as const;
 
 export const SUBSCRIBE_DONE = {

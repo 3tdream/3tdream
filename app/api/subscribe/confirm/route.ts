@@ -21,7 +21,7 @@ function redirectTo(path: "/subscribe/done" | "/subscribe/invalid"): Response {
   }
   return new Response(null, {
     status: 303,
-    headers: { Location: `${origin}${path}`, "Cache-Control": "no-store" },
+    headers: { Location: `${origin}${path}`, "Cache-Control": "no-store", "Referrer-Policy": "no-referrer" },
   });
 }
 

@@ -6,7 +6,6 @@ import {
   SUBSCRIBE_COMPANY_WEBSITE_MAX,
   SUBSCRIBE_EMAIL_MAX,
   isReplyLang,
-  isValidEmail,
   type ReplyLang,
 } from "@/lib/subscribe-values";
 
@@ -18,7 +17,7 @@ export const subscribeFieldSchemas = {
     .trim()
     .max(SUBSCRIBE_EMAIL_MAX)
     .transform((v: string) => v.toLowerCase())
-    .refine((v: string) => isValidEmail(v), { message: "invalid email" }),
+    .pipe(z.string().email()),
   replyLang: z
     .string()
     .refine((v: string) => isReplyLang(v), { message: "replyLang must be one of ru, en, he" })

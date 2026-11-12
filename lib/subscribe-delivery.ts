@@ -35,6 +35,7 @@ async function sendViaResend(
         text: mail.text,
       }),
       signal: controller.signal,
+      cache: "no-store",
     });
     if (!res.ok) {
       console.error(`${failTag}: ${res.status}`);
