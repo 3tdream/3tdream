@@ -29,14 +29,16 @@ app/
   subscribe/invalid/page.tsx  # invalid/expired outcome (303 target of every other case)
   api/subscribe/route.ts          # POST — footer sign-up, sends the confirmation e-mail
   api/subscribe/confirm/route.ts  # GET/HEAD — token check, owner notice, always 303
+  projects/[slug]/page.tsx        # Case detail — renders <ProjectDetail>, which mounts <ShareCase>
+  api/qr/[slug]/route.ts          # GET /api/qr/[slug] — public SVG QR endpoint
 components/
   site-shell.tsx    # I18nProvider + Nav + Footer
   nav.tsx · footer.tsx · lang-switcher.tsx
   project-card.tsx · status-badge.tsx · marquee.tsx · contact-buttons.tsx
-  projects/[slug]/page.tsx  # Case detail — renders <ShareCase slug={slug} />
-  api/qr/[slug]/route.ts    # GET /api/qr/[slug] — public SVG QR endpoint
-components/
-  share-case.tsx    # ShareCase panel — copy-link, bdi raw URL, QR img, SVG download
+  project-detail.tsx  # case page body; <ShareCase slug={slug} /> sits after the CTA row
+  share-case.tsx      # ShareCase panel — copy-link, bdi raw URL, QR img, SVG download
+  # Share panel needs NEXT_PUBLIC_SITE_URL (absolute https:// origin); without it the panel
+  # is hidden and /api/qr/[slug] answers 503.
 lib/
   i18n.tsx          # trilingual context, RTL handling, localStorage persistence
   content.ts        # ALL copy + projects + services + contacts (edit here)
@@ -143,9 +145,13 @@ by `GET /api/qr/[slug]` (public, unauthenticated, no database). The QR code is g
 
 **Env requirement:** `NEXT_PUBLIC_SITE_URL` must be set (see `.env.example`). The encoded/copied
 URL is derived **only** from this variable — never from request headers (`Host`/`Origin`) — so a
-request can't steer the QR target to another domain. If the variable is unset, the endpoint
+request can't steer the QR target to another domain. It must be an absolute `http(s)://` origin
+(trailing slash stripped). If the variable is unset, blank or not `http(s)`, the endpoint
 returns `503 { ok: false, error: "not_configured" }` instead of guessing an origin, and the panel renders nothing.
+All JSON error responses carry `Cache-Control: no-store`; only the 200 SVG is cacheable (`max-age=86400`).
 
 **Validity gate:** `hasCase(slug)` from `lib/case-slugs.ts` is the sole check; unknown slugs get
 `404 { ok: false, error: "unknown_case" }`. A URL beyond the encoder's version-6 capacity (106 bytes)
-is a configuration fault and returns `500 { ok: false, error: "too_long" }`.
+is a configuration fault and returns `500 { ok: false, error: "too_long" }`; any other encoder failure
+returns `500 { ok: false, error: "encode_failed" }` (fixed strings, no stack/message leakage). The encoder
+uses ECC level M (capacities 14/26/42/62/84/106 bytes).

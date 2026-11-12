@@ -7,7 +7,10 @@ import { qrSvg } from "@/lib/qr-code";
 export const runtime = "nodejs";
 
 function jsonError(status: number, error: string) {
-  return Response.json({ ok: false, error }, { status });
+  return Response.json(
+    { ok: false, error },
+    { status, headers: { "Cache-Control": "no-store" } },
+  );
 }
 
 export async function GET(
@@ -24,9 +27,12 @@ export async function GET(
   // Accessed via globalThis (not the bare `process` identifier) so this file
   // type-checks even when @types/node is unavailable; behavior is unchanged —
   // the nodejs runtime above guarantees `process.env` exists at runtime.
-  const siteUrl = (globalThis as { process?: { env?: Record<string, string | undefined> } })
-    .process?.env?.NEXT_PUBLIC_SITE_URL;
-  if (!siteUrl) {
+  const siteUrl = (
+    (globalThis as { process?: { env?: Record<string, string | undefined> } })
+      .process?.env?.NEXT_PUBLIC_SITE_URL ?? ""
+  ).trim();
+  // Unset, blank, or non-http(s) origin is treated as not configured (503).
+  if (!/^https?:\/\//i.test(siteUrl)) {
     return jsonError(503, "not_configured");
   }
 
@@ -37,8 +43,9 @@ export async function GET(
   try {
     svg = qrSvg(text);
   } catch (error) {
+    // Fixed strings only — never expose error.message / error.stack.
     if (error instanceof RangeError) return jsonError(500, "too_long");
-    throw error;
+    return jsonError(500, "encode_failed");
   }
 
   return new Response(svg, {

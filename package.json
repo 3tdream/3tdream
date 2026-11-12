@@ -1,6 +1,7 @@
 {
   "name": "3tdream-portfolio",
   "version": "1.0.0",
+  "description": "3tdream portfolio: trilingual case studies with a share panel (copy link, QR, SVG download).",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3099",
