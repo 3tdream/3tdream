@@ -7,6 +7,8 @@ import { CASE_SLUGS } from "@/lib/case-slugs";
 import { CASES, type CaseFigure } from "@/lib/cases";
 import { useI18n, L } from "@/lib/i18n";
 import { ShareCase } from "@/components/share-case";
+import { CaseSteps } from "@/components/case-steps";
+import { CaseFlow } from "@/components/case-flow";
 
 function EvidenceFigure({ figure, priority = false, cover = false }: { figure: CaseFigure; priority?: boolean; cover?: boolean }) {
   const { t } = useI18n();
@@ -51,6 +53,14 @@ export function ProjectDetail({ slug }: { slug: string }) {
         {study.sections.map((section,i)=><section id={`section-${i}`} key={section.title.en} className="scroll-mt-24 mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl font-extrabold leading-tight">{t(section.title)}</h2>
           <p className="mt-5 text-base sm:text-lg leading-[1.75] max-w-[70ch] text-ink-soft">{t(section.body)}</p>
+          {section.bullets ? <ul className="mt-6 space-y-4 max-w-[70ch]">
+            {section.bullets.map(bullet => <li key={bullet.name} className="flex gap-3 text-base sm:text-lg leading-relaxed text-ink-soft">
+              <span aria-hidden className="mt-[0.6em] w-2 h-2 shrink-0 bg-accent" />
+              <span><bdi dir="ltr" className="font-mono font-bold text-ink">{bullet.name}</bdi> — {t(bullet.text)}</span>
+            </li>)}
+          </ul> : null}
+          {section.flow ? <CaseFlow flow={section.flow} /> : null}
+          {section.steps ? <CaseSteps steps={section.steps} /> : null}
         </section>)}
         {study.measurements ? <section id="measurements" aria-labelledby="measurements-heading" className="scroll-mt-24 mb-14 hard-border bg-paper-alt p-5 sm:p-8">
           <h2 id="measurements-heading" className="text-2xl sm:text-3xl font-extrabold leading-tight">{t(study.measurements.title)}</h2>
