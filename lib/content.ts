@@ -156,6 +156,24 @@ export const PROJECTS: Project[] = [
     tags: ["AI", "Multi-agent", "Next.js", "Pipeline"],
   },
   {
+    slug: "mc-plugins",
+    title: "MC Plugins",
+    year: "2026",
+    statuses: ["live", "wip"],
+    tagline: L(
+      "Правила и навыки Mission Control как плагин Claude Code.",
+      "Mission Control's rules and skills as a Claude Code plugin.",
+      "הכללים והמיומנויות של Mission Control כתוסף ל-Claude Code."
+    ),
+    description: L(
+      "Приватный маркетплейс 3tdream-mc: плагин mc-marketing с шестью навыками для маркетинга и исследований. Установка одной командой, версия закреплена.",
+      "Private marketplace 3tdream-mc: the mc-marketing plugin with six skills for marketing and research. One-command install, pinned version.",
+      "מרקטפלייס פרטי 3tdream-mc: התוסף mc-marketing עם שש מיומנויות לשיווק ומחקר. התקנה בפקודה אחת, גרסה נעולה."
+    ),
+    role: L("Автор: состав, правила и упаковка", "Author: contents, rules and packaging", "יוצר: תוכן, כללים ואריזה"),
+    tags: ["Claude Code", "Plugins", "AI", "Marketing"],
+  },
+  {
     slug: "sinornis",
     title: "Sinornis",
     statuses: [],

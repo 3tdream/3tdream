@@ -1,13 +1,22 @@
 import { L, type Localized } from "./localized";
 import { MISSION_CONTROL } from "./mission-control";
-export type CaseFigure = { src: string; width: number; height: number; caption: Localized };
+import { MC_PLUGINS } from "./mc-plugins";
+/** A copyable command; `label` names the platform when a step differs between systems. */
+export type CaseCommand = { label?: string; code: string };
+export type CaseStep = { text: Localized; commands?: CaseCommand[] };
+/** An animated left-to-right flow; `loop` is the label of the return path from the last stage back to the first. */
+export type CaseFlow = { stages: { title: Localized; text: Localized }[]; loop?: Localized };
+/** A bulleted list item; `name` is a literal identifier (e.g. a skill name) shown as-is in every language. */
+export type CaseBullet = { name: string; text: Localized };
+export type CaseSection = { title: Localized; body: Localized; steps?: CaseStep[]; flow?: CaseFlow; bullets?: CaseBullet[] };
+export type CaseFigure ={ src: string; width: number; height: number; caption: Localized };
 export type CaseMeasurements = {
   title: Localized; intro: Localized; period: Localized; note: Localized;
   items: { label: Localized; value: string; note: Localized }[];
 };
 export type CaseStudy = {
   intro: Localized; role: Localized; deliverable: Localized; result: Localized;
-  sections: { title: Localized; body: Localized }[];
+  sections: CaseSection[];
   figures: CaseFigure[]; evidenceNote: Localized; measurements?: CaseMeasurements;
 };
 export const CASES: Record<string, CaseStudy> = {
@@ -19,6 +28,7 @@ export const CASES: Record<string, CaseStudy> = {
       {src:"/projects/mission-control-knowledge.png",width:870,height:919,caption:L("Карта Knowledge. Связи сохранённых знаний проекта.", "Knowledge map. Relationships in stored project knowledge.", "מפת Knowledge. קשרים בידע הפרויקט שנשמר.")}
     ],
   },
+  "mc-plugins": MC_PLUGINS,
   "uxi-course": {
     intro:L("От разрозненных тем UX/UI к последовательному пути обучения и итоговому проекту.", "From individual UX/UI topics to a structured learning path and a final project.", "מנושאי UX/UI נפרדים למסלול לימוד מובנה ולפרויקט גמר."),
     role:L("Платформа, содержание и преподавание", "Platform, content & teaching", "פלטפורמה, תוכן והוראה"),
