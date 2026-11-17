@@ -18,9 +18,16 @@ export const BRAND = {
 export const PROFILE = {
   name: "Michael Shigrin Sokol",
   location: L("Хайфа, Израиль", "Haifa, Israel", "חיפה, ישראל"),
-  // One-line positioning — the "designer → AI builder" arc that isn't stated
+  // The positioning — the "designer → AI builder" arc that isn't stated
   // anywhere public yet. This is the site's chance to claim it explicitly.
-  headline: L("Product Designer · AI Product Builder · Lecturer", "Product Designer · AI Product Builder · Lecturer", "Product Designer · AI Product Builder · Lecturer"),
+  // One role per entry: the display heading sets each on its own line, so a
+  // role is never split mid-phrase by a line break. Titles stay in English
+  // in every locale.
+  roles: [
+    L("Product Designer", "Product Designer", "Product Designer"),
+    L("AI Product Builder", "AI Product Builder", "AI Product Builder"),
+    L("Lecturer", "Lecturer", "Lecturer"),
+  ],
   bio: L(
     "Я прошёл путь от графического дизайна в рекламе до продуктового UX/UI, а теперь собираю AI-продукты целиком — от идеи и интерфейса до кода и деплоя. Дизайнерский глаз плюс инженерия: один человек закрывает весь цикл.",
     "I went from graphic design in advertising to product UX/UI, and now I build AI products end to end — from idea and interface to code and deploy. A designer's eye plus engineering: one person covering the whole cycle.",
